@@ -1,4 +1,15 @@
 # DELTA SŠIE - Lekce
+- [DELTA SŠIE - Lekce](#delta-s-ie---lekce)
+  * [Teoretická informatika](#teoretick--informatika)
+    + [Osnova přednášek](#osnova-p-edn--ek)
+  * [Praktický seminář](#praktick--semin--)
+    + [Osnovy individuálních projektů](#osnovy-individu-ln-ch-projekt-)
+      - [Fullstack webová aplikace](#fullstack-webov--aplikace)
+      - [Devops](#devops)
+      - [Praktické programování v jazyce Java](#praktick--programov-n--v-jazyce-java)
+      - [Praktické programování v PHP](#praktick--programov-n--v-php)
+      - [Hands-on metody strojového učení](#hands-on-metody-strojov-ho-u-en-)
+      - [Hands-on metody kryptografie](#hands-on-metody-kryptografie)
 
 ## Teoretická informatika
 
