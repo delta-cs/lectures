@@ -1,14 +1,15 @@
 # DELTA SŠIE - Lekce
-- [DELTA SŠIE - Lekce](#delta-s-ie---lekce)
-  * [Teoretická informatika](#teoretick--informatika)
-    + [Osnova přednášek](#osnova-p-edn--ek)
-  * [Praktický seminář](#praktick--semin--)
-    + [Osnovy individuálních projektů](#osnovy-individu-ln-ch-projekt-)
-      - [Fullstack webová aplikace](#fullstack-webov--aplikace)
+
+- [DELTA SŠIE - Lekce](#delta-sšie---lekce)
+  - [Teoretická informatika](#teoretická-informatika)
+    - [Osnova přednášek](#osnova-přednášek)
+  - [Praktický seminář](#praktický-seminář)
+    - [Osnovy individuálních projektů](#osnovy-individuálních-projektů)
+      - [Fullstack webová aplikace](#fullstack-webová-aplikace)
       - [Devops](#devops)
-      - [Praktické programování v jazyce Java](#praktick--programov-n--v-jazyce-java)
-      - [Praktické programování v PHP](#praktick--programov-n--v-php)
-      - [Hands-on metody strojového učení](#hands-on-metody-strojov-ho-u-en-)
+      - [Praktické programování v jazyce Java](#praktické-programování-v-jazyce-java)
+      - [Praktické programování v PHP](#praktické-programování-v-php)
+      - [Hands-on metody strojového učení](#hands-on-metody-strojového-učení)
       - [Hands-on metody kryptografie](#hands-on-metody-kryptografie)
 
 ## Teoretická informatika
@@ -104,11 +105,12 @@
 | 8   | Recenze vědeckého článku                                                                                                                                                       |
 | 9   | End-to-end machine-learning projekt (analýza a předpoklady problému, získání dat, předzpracování dat a vizualizace, selekce modelu, trénování modelu, fine-tuning, deployment) |
 
-#### Hands-on metody kryptografie 
-| # | Hands-on metody kryptografie                              |
-|---|-----------------------------------------------------------|
-| 1 | Historické kryprografické systémy                         |
-| 2 | Zřízení společného klíče                                  |
-| 3 | Hašovací funkce                                           |
-| 4 | Blokové šifrování a operační módy blokových šifer         |
-| 5 | Asymetrická kryptografie - kryptografie s veřejným klíčem |
+#### Hands-on metody kryptografie
+
+| #   | Hands-on metody kryptografie                              |
+| --- | --------------------------------------------------------- |
+| 1   | Historické kryprografické systémy                         |
+| 2   | Zřízení společného klíče                                  |
+| 3   | Hašovací funkce                                           |
+| 4   | Blokové šifrování a operační módy blokových šifer         |
+| 5   | Asymetrická kryptografie - kryptografie s veřejným klíčem |
