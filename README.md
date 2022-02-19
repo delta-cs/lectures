@@ -18,7 +18,7 @@
 
 | #   | Téma                                                                                                                                                                |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0   | [Úvod do programu Delta TopGun, úvod do kurzu Teoretická informatika, úvod do kurzu Praktický seminář](https://github.com/delta-cs/lectures/00_uvod)                                                               |
+| 0   | [Úvod do programu Delta TopGun, úvod do kurzu Teoretická informatika, úvod do kurzu Praktický seminář](00_uvod)                                                     |
 | 1   | První kód v C, kompilace, datové typy, zpracování vstupu a výstupu (scanf, printf), kontrola validity vstupu, formátování výstupu, debugging                        |
 | 2   | Reprezentace čísel v počítači (celočíselné, s plovoucí čárkou), problematika čísel se znaménkem (doplňkový/aditivní/přímý kód), bitwise                             |
 | 3   | Pole - základní alokace paměti, průchody polem, segmentation fault (+ vysvětlení), řetězce znaků (null character), kopírování řetězců                               |
