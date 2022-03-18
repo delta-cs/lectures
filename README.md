@@ -21,7 +21,7 @@
 | 0   | [Úvod do programu Delta TopGun, úvod do kurzu Teoretická informatika, úvod do kurzu Praktický seminář](00_uvod)                                                                    |
 | 1   | [První kód v C, kompilace, datové typy, zpracování vstupu a výstupu (scanf, printf), kontrola validity vstupu, formátování výstupu, debugging](01_uvod_do_programovaciho_jazyka_c) |
 | 2   | [Reprezentace čísel v počítači (celočíselné, s plovoucí čárkou), problematika čísel se znaménkem (doplňkový/aditivní/přímý kód), bitwise](02_reprezentace_cisel_v_pocitaci)        |
-| 3   | Pole - základní alokace paměti, průchody polem, segmentation fault (+ vysvětlení), řetězce znaků (null character), kopírování řetězců                                              |
+| 3   | [Pole a paměť, segmentace paměti, základní alokace paměti, průchody polem, segmentation fault, řetězce znaků (null character), kopírování řetězců](03_pole_a_pamet)                           |
 | 4   | Reprezentace datových struktur v paměti. Asymptotická složitost, rozdíly mezi omikron, omega, theta, ukázky algoritmů a jejich složitostí                                          |
 | 5   | Sorting algoritmy - insertion, selection, bubble, quick sort                                                                                                                       |
 | 6   | Paměť - Stack vs Heap, referenční a hodnotové předávání parametrů (pointery), garbage collector, manuální správa paměti, efektivita programu z pohledu cache pamětí                |
