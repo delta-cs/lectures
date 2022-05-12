@@ -28,7 +28,7 @@
 | 7   | Dynamické pole, asymptotická vs amortizovaná složitost                                                                                                                             |
 | 8   | [Spojový seznam - základní operace (vkládání, mazání, průchod seznamem), obousměrně zřetězené a kruhově zřetězené seznamy a jejich aplikace](05_spojovy_seznam)                                         |
 | 9   | [Rekurze - koncová vs nekoncová rekurze, rozděl a panuj](06_rekurze)                                                                                                                             |
-| 10  | Stromové struktury, LCA (nejbližší společný předek)                                                                                                                                |
+| 10  | [Stromové struktury](07_stromove_struktury)
 | 11  | Vyhledávaci stromy - BVS (binární vyhledávací strom)                                                                                                                               |
 | 12  | AVL stromy - definice, algoritmus na vyvažování                                                                                                                                    |
 | 13  | Grafy - zobecnění předchozích témat                                                                                                                                                |
