@@ -29,7 +29,7 @@
 | 8   | [Spojový seznam - základní operace (vkládání, mazání, průchod seznamem), obousměrně zřetězené a kruhově zřetězené seznamy a jejich aplikace](05_spojovy_seznam)                                         |
 | 9   | [Rekurze - koncová vs nekoncová rekurze, rozděl a panuj](06_rekurze)                                                                                                                             |
 | 10  | [Stromové struktury](07_stromove_struktury)
-| 11  | Vyhledávaci stromy - BVS (binární vyhledávací strom)                                                                                                                               |
+| 11  | [Vyhledávaci stromy - BVS (binární vyhledávací strom)](08_binarni_vyhledavaci_strom)                                                                                                                               |
 | 12  | AVL stromy - definice, algoritmus na vyvažování                                                                                                                                    |
 | 13  | Grafy - zobecnění předchozích témat                                                                                                                                                |
 | 14  | Zásobník, Fronta - využití, fifo, lifo                                                                                                                                             |
