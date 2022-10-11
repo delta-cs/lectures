@@ -31,9 +31,9 @@
 | 10  | [Stromové struktury](07_stromove_struktury)                                                                                                                                        |
 | 11  | [Vyhledávaci stromy - BVS (binární vyhledávací strom)](08_binarni_vyhledavaci_strom)                                                                                               |
 | 12  | [AVL stromy - definice, algoritmus na vyvažování](09_vyvazene_stromy)                                                                                                              |
-| 13  | [Grafy - zobecnění předchozích témat](10_uvod_do_teorie_grafu)                                                                                                                                                |
-| 14  | Zásobník, Fronta - využití, fifo, lifo                                                                                                                                             |
-| 15  | Průchody grafem - in/out/pre order průchod stromem, BFS, DFS                                                                                                                       |
+| 13  | [Grafy - zobecnění předchozích témat](10_uvod_do_teorie_grafu)                                                                                                                                                
+| 14  | [Zásobník, Fronta - využití, fifo, lifo](11_pruchody_grafem)                                                                                                                                             
+| 15  | [Průchody grafem - in/out/pre order průchod stromem, BFS, DFS](11_pruchody_grafem)                                                                                                                     
 | 16  | Datová struktura binární minimová halda, heapsort algoritmus                                                                                                                       |
 | 17  | Hledání nejkratší cesty v grafu - BFS, Dijkstrův algoritmus, Bellman-Ford algoritmus                                                                                               |
 
