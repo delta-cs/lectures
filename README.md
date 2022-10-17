@@ -1,18 +1,8 @@
-# DELTA SŠIE - Lekce
+# DELTA SŠIE - TopGun
+Talentový program [DELTA TopGun](https://www.delta-skola.cz/talentovy-program-delta-topgun) jsme založili, abychom dokázali v programátorských dovednostech efektivně posouvat i zkušené programátory.
 
-- [DELTA SŠIE - Lekce](#delta-sšie---lekce)
-  - [Teoretická informatika](#teoretická-informatika)
-    - [Osnova přednášek](#osnova-přednášek)
-  - [Praktický seminář](#praktický-seminář)
-    - [Osnovy individuálních projektů](#osnovy-individuálních-projektů)
-      - [Fullstack webová aplikace](#fullstack-webová-aplikace)
-      - [Devops](#devops)
-      - [Praktické programování v jazyce Java](#praktické-programování-v-jazyce-java)
-      - [Praktické programování v PHP](#praktické-programování-v-php)
-      - [Hands-on metody strojového učení](#hands-on-metody-strojového-učení)
-      - [Hands-on metody kryptografie](#hands-on-metody-kryptografie)
-
-## Teoretická informatika
+![DELTA TopGun poster](/assets/logo.jpg)
+## Sylabus kurzu *Teoretická* *informatika*
 
 ### Osnova přednášek
 
@@ -37,10 +27,54 @@
 | 16  | Datová struktura binární minimová halda, heapsort algoritmus                                                                                                                       |
 | 17  | Hledání nejkratší cesty v grafu - BFS, Dijkstrův algoritmus, Bellman-Ford algoritmus                                                                                               |
 
-## Praktický seminář
+## Sylabus kurzu *Praktický projekt*
+### Zaměření kurzu
+Kurz *Praktický projekt* nabízí studentovi příležitost věnovat se realizaci softwarového projektu v konkrétní oblasti vlastního zájmu. Každý student má k dispozici lektora, pod jehož vedením svůj projekt zpracovává. Od každého studenta je očekáván návrh zadání individuálního projektu a jeho následné zpracování. Praktický kurz je rovněž jednou za 3 týdny proložen workshopem (prezenčně ve škole), který je věnován konkrétní problematice z oboru (viz [Harmonogram praktických workshopů](#harmonogram-praktických-workshopů)).
 
-### Osnovy individuálních projektů
+### Párování student × lektor – Pitch Day
+Párování studenta s lektorem je vyhodnoceno na základě průniku zaměření studentova projektu a oblasti zájmu lektora. Párování proběhne v reakci na tzv. Pitch Day – nultou hodinu kurzu, kdy studenti prezentují své projektové záměry a lektoři poskytují zpětnou vazbu. Datum konání Pitch Day je v každém ročníku individuální a bude komunikováno s dostatečným předstihem.
 
+### Povinnosti zapsaných studentů
+1. Odprezentovat svůj projektový záměr (viz [Náležitosti projektového záměru](#náležitosti-projektového-záměru))
+2. Absolvovat úvodní schůzku s přiděleným lektorem
+3. Každý pracovní den zapisovat svou aktivitu do on-line journalu (viz [Náležitosti každodenního zápisu do on-line journalu](#náležitosti-každodenního-zápisu-do-on-line-journalu))
+4. Vypracovat rámcovou analýzu softwarového projektu (viz [Náležitosti rámcové analýzy](#náležitosti-rámcové-analýzy))
+5. Vypracovat projektovou roadmapu
+6. Průběžně (minimálně však jednou za týden) s lektorem konzultovat aktuální stav projektu, řešené problémy a plán dalšího postupu (periodicita konzultací a jejich forma je v kompetenci lektora)
+7. Před každým praktických workshopem veřejně odprezentovat svůj postup – tzv. *status update* (viz [Náležitosti "status update"](#náležitosti-status-update))
+8. Pravidelně (minimálně však jednou za týden) lektorovi odeslat *pull-request* ke code-review (periodicita code-review a jejich forma je v kompetenci lektora)
+9. Pravidelně (minimálně však jednou za týden) poskytnout code-review projektu spolužáka (bude přihlédnuto k přidruženosti technologického stacku)
+
+### Neplnění povinností kurzu
+Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů) bude přistoupeno k vyřazení studenta z programu. A to zejména v následujích případech:
+- Student, bez předchozí omluvy, během školního pololetí 5x nezapsal aktivitu do on-line journalu (viz [Náležitosti každodenního zápisu do on-line journalu](#náležitosti-každodenního-zápisu-do-on-line-journalu))
+- Student, bez předchozí omluvy, během školního pololetí 2x neodprezentoval *status update* dle náležitostí (viz [Náležitosti "status update"](#náležitosti-status-update))
+- Student, bez předchozí omluvy, 3x neodeslal lektorovi pull-request ke code-review
+- Student, bez předchozí omluvy, 3x neposkytnul code-review přidruženému projektu
+- Student, bez předchozí omluvy, 2x nereaguje na výzvu lektora ohledně nenaplnění cíle, který si student sám stanovil během *status update*
+
+
+#### Náležitosti projektového záměru
+Jedno z "Realizace vlastního projektu", "Realizace projektu pro rozvoj školního ekosystému", "Realizace modelového projektu".
+-- tba
+#### Náležitosti rámcové analýzy
+-- tba
+#### Náležitosti každodenního zápisu do on-line journalu
+Student každý pracovní den do on-line journalu zapíše, čemu se daný den v rámci svého praktického projektu věnoval. Je naprosto v pořádku, když se student v daném dnu praktickému projektu nevěnoval vůbec, tuto skutečnsot však rovněž musí do on-line journalu zapsat. Zápisy do on-line journalu poskytují lektorům nástroj, jakým dodatečně vyhodnotit aktivitu studentů. Zápisy do on-line journalu probíhají na platformě Discord, kam je na dedikovaného server každý student při začátku programu přizván.
+#### Náležitosti "status update"
+Během *status update* student nejprve **živě** odprezentuje dosavadní výsledek svého softwarového projektu. Následně stručně odpoví a vyhodnotí následující otázky:
+
+- *Splnil jsem cíl, který jsem si na uplynulé 3 týdny stanovil?*
+- *Cíl jsem nesplnil. Jaké chyby jsem udělal? Jak se z nich příště poučím?*
+- *Cíl jsem splnil. Co se mi povedlo a budu v tom nadále pokračovat?*
+- *Jaký cíl plánuji splnit v následujících 3 týdnech? Jaká je jeho hlavní náplň a jak budu postupovat k jeho dosažení?*
+  
+### Realizace vlastního projektu
+-- tba
+### Realizace projektu pro rozvoj školního ekosystému
+-- tba
+### Realizace modelového projektu
+#### Osnovy pro modelová zadání projektů
 #### Fullstack webová aplikace
 
 | #   | Fullstack webová aplikace                                                                                                           |
@@ -51,18 +85,8 @@
 | 4   | Realizace webového frontend rozhraní (JavaScript (vanilla)/React.js/Vue.js) (případně možnost realizovat hybridní mobilní aplikaci) |
 | 5   | Automatizované otestování aplikace (unit, e2e)                                                                                      |
 | 6   | Optimalizace výkonnosti webové aplikace                                                                                             |
-| 7   | Deployment aplikace (možnost spojit s osnovou “Docker/devops”)                                                                      |
+| 7   | Deployment aplikace                                                                   |
 
-#### Devops
-
-| #   | Devops                                         |
-| --- | ---------------------------------------------- |
-| 1   | Containerizace, co to je a k čemu se dá využít |
-| 2   | Docker, docker-compose                         |
-| 3   | CI                                             |
-| 4   | Clusters, Docker swarm (monitoring, logging)   |
-| 5   | Cloud - AWS (alerts, budgets)                  |
-| 6   | Deployment webové aplikace                     |
 
 #### Praktické programování v jazyce Java
 
@@ -91,26 +115,8 @@
 | 7   | Tvorba REST API                                  |
 | 8   | Tvorba modulů a pluginů do existujících projektů |
 
-#### Hands-on metody strojového učení
 
-| #   | Hands-on metody strojového učení                                                                                                                                               |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1   | Systémy strojového učení                                                                                                                                                       |
-| 2   | Úvod do jazyka Python - práce s realnými daty (předzpracování, vizualizace)                                                                                                    |
-| 3   | Vybrané metody strojového učení: Rozhodovací stromy, náhodné lesy                                                                                                              |
-| 4   | Evaluace modelů                                                                                                                                                                |
-| 5   | Vybrané metody strojového učení: Shlukování                                                                                                                                    |
-| 6   | Vybrané metody strojového učení: Lineární regrese, logistická regrese, metoda největšího spádu                                                                                 |
-| 7   | Vybrané metody strojového učení: Umělé neuronové sítě a jejich architektury                                                                                                    |
-| 8   | Recenze vědeckého článku                                                                                                                                                       |
-| 9   | End-to-end machine-learning projekt (analýza a předpoklady problému, získání dat, předzpracování dat a vizualizace, selekce modelu, trénování modelu, fine-tuning, deployment) |
-
-#### Hands-on metody kryptografie
-
-| #   | Hands-on metody kryptografie                              |
-| --- | --------------------------------------------------------- |
-| 1   | Historické kryprografické systémy                         |
-| 2   | Zřízení společného klíče                                  |
-| 3   | Hašovací funkce                                           |
-| 4   | Blokové šifrování a operační módy blokových šifer         |
-| 5   | Asymetrická kryptografie - kryptografie s veřejným klíčem |
+### Harmonogram praktických workshopů
+| # | Datum        | Téma                            | Lektor         |
+|---|--------------|---------------------------------|----------------|
+| 1 | 18. 10. 2022 | Úvod do verzovacího systému git | Michal Havelka |
