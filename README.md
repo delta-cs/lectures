@@ -44,6 +44,7 @@ Párování studenta s lektorem je vyhodnoceno na základě průniku zaměření
 7. Před každým praktických workshopem veřejně odprezentovat svůj postup – tzv. *status update* (viz [Náležitosti "status update"](#náležitosti-status-update))
 8. Pravidelně (minimálně však jednou za týden) lektorovi odeslat *pull-request* ke code-review (periodicita code-review a jejich forma je v kompetenci lektora)
 9. Pravidelně (minimálně však jednou za týden) poskytnout code-review projektu spolužáka (bude přihlédnuto k přidruženosti technologického stacku)
+10. Pravidelně kód praktického projektu verzovat dle lektorem doporučené verzovací strategie
 
 ### Neplnění povinností kurzu
 Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů) bude přistoupeno k vyřazení studenta z programu. A to zejména v následujích případech:
@@ -62,7 +63,7 @@ Jedno z "Realizace vlastního projektu", "Realizace projektu pro rozvoj školní
 #### Náležitosti každodenního zápisu do on-line journalu
 Student každý pracovní den do on-line journalu zapíše, čemu se daný den v rámci svého praktického projektu věnoval. Je naprosto v pořádku, když se student v daném dnu praktickému projektu nevěnoval vůbec, tuto skutečnsot však rovněž musí do on-line journalu zapsat. Zápisy do on-line journalu poskytují lektorům nástroj, jakým dodatečně vyhodnotit aktivitu studentů. Zápisy do on-line journalu probíhají na platformě Discord, kam je na dedikovaného server každý student při začátku programu přizván.
 #### Náležitosti "status update"
-Během *status update* student nejprve **živě** odprezentuje dosavadní výsledek svého softwarového projektu. Následně stručně odpoví a vyhodnotí následující otázky:
+Během *status update* student nejprve **živě** odprezentuje dosavadní výsledek svého softwarového projektu a ukáže jeho historii verzování. Následně stručně odpoví a vyhodnotí následující otázky:
 
 - *Splnil jsem cíl, který jsem si na uplynulé 3 týdny stanovil?*
 - *Cíl jsem nesplnil. Jaké chyby jsem udělal? Jak se z nich příště poučím?*
