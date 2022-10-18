@@ -29,18 +29,33 @@ Párování studenta s lektorem je vyhodnoceno na základě průniku zaměření
 Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů) bude přistoupeno k vyřazení studenta z programu DELTA TopGun. A to zejména v následujích případech:
 - Student, bez předchozí omluvy, během školního roku 5x nezapsal aktivitu do on-line journalu (viz [Náležitosti každodenního zápisu do on-line journalu](#náležitosti-každodenního-zápisu-do-on-line-journalu))
 - Student, bez předchozí omluvy, během školního roku 2x neodprezentoval *status update* dle náležitostí (viz [Náležitosti "status update"](#náležitosti-status-update))
-- Student, bez předchozí omluvy, 2x neodeslal lektorovi pull-request ke code-review
-- Student, bez předchozí omluvy, 2x neposkytnul code-review přidruženému projektu
-- Student, bez předchozí omluvy, 2x nereaguje na výzvu lektora ohledně nenaplnění cíle, který si student sám stanovil během *status update*
+- Student, bez předchozí omluvy, běhěm školního roku 2x neodeslal lektorovi pull-request ke code-review
+- Student, bez předchozí omluvy, během školního roku 2x neposkytnul code-review přidruženému projektu
+- Student, bez předchozí omluvy, během školního roku 2x nereaguje na výzvu lektora ohledně nenaplnění cíle, který si student sám stanovil během *status update*
 
 
 #### Náležitosti projektového záměru
-Jedno z "Realizace vlastního projektu", "Realizace projektu pro rozvoj školního ekosystému", "Realizace modelového projektu".
--- tba
+Student volí kategorii realizace svého individuálního projektu a jeho zadání – a to konkrétně jedno z: 
+[Realizace vlastního projektu](#realizace-vlastního-projektu), [Realizace projektu pro rozvoj školního ekosystému](#realizace-projektu-pro-rozvoj-školního-ekosystému), [Realizace modelového projektu](#realizace-modelového-projektu).
+
+**Každý** projektový záměr musí obsahovat:
+1. Představení projektu, jeho myšlenky, využití a cíle
+2. Zmapování konkurenčních projektů: Existují již podobné projekty? V jaké fázi jsou? V čem bude můj jiný?
+3. Plánovaný rozsah projektu: Co student plánuje v rámci programu TopGun dokončit?
+4. Technologický stack pro realizaci projektu
+
 #### Náležitosti rámcové analýzy
--- tba
+V každé rámcové analýze musí být obsaženy následující náležitosti pro zpracování zadání softwarovéh projektu:
+1. Stručná verze projektového záměru
+2. Rozsah realizace projektu
+3. Technologický stack a zdůvodnění výběru daných technologí
+4. Hrubá časová osa zpracování projektu (*milestones*)
+5. Component diagram systému dle notace UML (případně alespoň obdobný diagaram, který zachytí klíčové komponenty analyzovaného systému) 
+
+
+Z rámcové analýzy **musí být jinému vývojáří zřejmé** "*co má vyrábět*", "*jak to má vyrábět*" a "*do kdy to má stihnout*". Korektnost rámcové analýzy je vyhodnocena lektorem a bez validní ramcové analýzy nelze začít projekt realizovat.
 #### Náležitosti každodenního zápisu do on-line journalu
-Student každý pracovní den do on-line journalu zapíše, čemu se daný den v rámci svého praktického projektu věnoval. Je naprosto v pořádku, když se student v daném dnu praktickému projektu nevěnoval vůbec, tuto skutečnsot však rovněž musí do on-line journalu zapsat. Zápisy do on-line journalu poskytují lektorům nástroj, jakým dodatečně vyhodnotit aktivitu studentů. Zápisy do on-line journalu probíhají na platformě Discord, kam je na dedikovaného server každý student při začátku programu přizván.
+Student každý pracovní den do on-line journalu zapíše, čemu se daný den v rámci svého praktického projektu věnoval. Je naprosto v pořádku, když se student v daném dnu praktickému projektu nevěnoval vůbec, tuto skutečnsot však rovněž musí do on-line journalu zapsat. Zápisy do on-line journalu poskytují lektorům nástroj, jakým dodatečně vyhodnotit aktivitu studentů. Zápisy do on-line journalu probíhají na platformě Discord, kam je na dedikovaný server každý student před začátku programu přizván.
 #### Náležitosti "status update"
 Během *status update* student nejprve **živě** odprezentuje dosavadní výsledek svého softwarového projektu a ukáže jeho historii verzování. Následně stručně odpoví a vyhodnotí následující otázky:
 
@@ -50,10 +65,15 @@ Během *status update* student nejprve **živě** odprezentuje dosavadní výsle
 - *Jaký cíl plánuji splnit v následujících 3 týdnech? Jaká je jeho hlavní náplň a jak budu postupovat k jeho dosažení?*
   
 ### Realizace vlastního projektu
--- tba
+Každému studentovi je **důrazně doporučena realizace vlastního projektu**. Student může přijít s libovolným projektovým záměrem z oblasti svého zájmu – je to ideální způso, jak v rámci kurzu pracovat na něčem, co studenta opravdu zajímá a baví. Za předpokladu splnění veškerých [náležitosti projektového záměru](#náležitosti-projektového-záměru) je studentovi realizace vlastního tématu vždy umožněna a je podpořena přidělením vhodného lektora. **Podpořena je rovněž realizace vlastního projektu v týmu**. A to za stejných podmínek, a za dodatečného předpokladu rozumného rozdělení zodpovědností v rámci týmu, které je posouzeno lektorem.
+
 ### Realizace projektu pro rozvoj školního ekosystému
--- tba
+Pro studenty, kteří chtějí pracovat na projektech, které podpoří rozvoj školního ekosystému jsou připravena předem definovaná reálná zadání. Pro studenty realizující projekt pro rozvoj školního ekosystému platí stejné podmínky zpracování projektu (viz [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů)), a to včetně zpracování a přednesení projektového záměru při Pitch Day dle náležitostí (viz [Náležitosti projektového záměru](#náležitosti-projektového-záměru)). **Podpořena je rovněž realizace vlastního projektu v týmu**. A to za stejných podmínek, a za dodatečného předpokladu rozumného rozdělení zodpovědností v rámci týmu, které je posouzeno lektorem. Zde si škola vymezuje právo na výběr studenta, či týmu studentů, kterým bude projekt přidělen.
+
+Aktuálně nabízené projekty pro rozvoj školního ekosystému:
+- Informační systém pro výběr studentů na stáž Erasmus+ 
 ### Realizace modelového projektu
+Jako poslední možnost je studentům umožněno realizovat projekt v rámci jedné z modelových osnov. Pro studenty realizující projekt dle modelového zadání platí stejné podmínky zpracování projektu (viz [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů)), a to včetně zpracování a přednesení projektového záměru při Pitch Day dle náležitostí (viz [Náležitosti projektového záměru](#náležitosti-projektového-záměru)).
 #### Osnovy pro modelová zadání projektů
 #### Fullstack webová aplikace
 
@@ -65,7 +85,7 @@ Během *status update* student nejprve **živě** odprezentuje dosavadní výsle
 | 4   | Realizace webového frontend rozhraní (JavaScript (vanilla)/React.js/Vue.js) (případně možnost realizovat hybridní mobilní aplikaci) |
 | 5   | Automatizované otestování aplikace (unit, e2e)                                                                                      |
 | 6   | Optimalizace výkonnosti webové aplikace                                                                                             |
-| 7   | Deployment aplikace                                                                   |
+| 7   | Deployment aplikace                                                                                                                 |
 
 
 #### Praktické programování v jazyce Java
@@ -73,13 +93,13 @@ Během *status update* student nejprve **živě** odprezentuje dosavadní výsle
 | #   | Praktické programování v jazyce Java                                          |
 | --- | ----------------------------------------------------------------------------- |
 | 1   | Základní syntaxe                                                              |
-| 2   | Build a správa závislostí - Maven                                             |
-| 3   | Objektově orientované programování (polymorfismus, rozhraní)                  |
-| 4   | Datové struktury                                                              |
-| 5   | Automatizované unit testy, ladění aplikací (debugging)                        |
-| 6   | Práce s relační databází, mapování objektů do relačních databází              |
-| 7   | Návrhové vzory a principy                                                     |
-| 8   | Objektově orientovaná analýza a návrh - charakteristika UML, přehled diagramů |
+| 2   | Objektově orientovaná analýza a návrh - charakteristika UML, přehled diagramů |
+| 3   | Build a správa závislostí - Maven                                             |
+| 4   | Objektově orientované programování (polymorfismus, rozhraní)                  |
+| 5   | Datové struktury                                                              |
+| 6   | Automatizované unit testy, ladění aplikací (debugging)                        |
+| 7   | Práce s relační databází, mapování objektů do relačních databází              |
+| 8   | Návrhové vzory a principy                                                     |
 | 9   | Praktický projekt - REST API/CLI aplikace                                     |
 
 #### Praktické programování v PHP
@@ -133,9 +153,9 @@ Během *status update* student nejprve **živě** odprezentuje dosavadní výsle
 
 
 ### Harmonogram praktických workshopů
-| # | Datum        | Téma                            | Lektor         |
-|---|--------------|---------------------------------|----------------|
-| 1 | 18. 10. 2022 | Úvod do verzovacího systému git | Michal Havelka |
+| #   | Datum        | Téma                            | Lektor         |
+| --- | ------------ | ------------------------------- | -------------- |
+| 1   | 18. 10. 2022 | Úvod do verzovacího systému git | Michal Havelka |
 
 
 ## Sylabus kurzu *Teoretická* *informatika*
@@ -146,7 +166,7 @@ Kurz *Teoretická informatiky* nabízí kompilaci vybraných oblastí teoretick�
 ### Osnova přednášek
 
 | #   | Téma                                                                                                                                                                               |
-| --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 0   | [Úvod do programu Delta TopGun, úvod do kurzu Teoretická informatika, úvod do kurzu Praktický seminář](00_uvod)                                                                    |
 | 1   | [První kód v C, kompilace, datové typy, zpracování vstupu a výstupu (scanf, printf), kontrola validity vstupu, formátování výstupu, debugging](01_uvod_do_programovaciho_jazyka_c) |
 | 2   | [Reprezentace čísel v počítači (celočíselné, s plovoucí čárkou), problematika čísel se znaménkem (doplňkový/aditivní/přímý kód), bitwise](02_reprezentace_cisel_v_pocitaci)        |
@@ -160,9 +180,9 @@ Kurz *Teoretická informatiky* nabízí kompilaci vybraných oblastí teoretick�
 | 10  | [Stromové struktury](07_stromove_struktury)                                                                                                                                        |
 | 11  | [Vyhledávaci stromy - BVS (binární vyhledávací strom)](08_binarni_vyhledavaci_strom)                                                                                               |
 | 12  | [AVL stromy - definice, algoritmus na vyvažování](09_vyvazene_stromy)                                                                                                              |
-| 13  | [Grafy - zobecnění předchozích témat](10_uvod_do_teorie_grafu)                                                                                                                                                
-| 14  | [Zásobník, Fronta - využití, fifo, lifo](11_pruchody_grafem)                                                                                                                                             
-| 15  | [Průchody grafem - in/out/pre order průchod stromem, BFS, DFS](11_pruchody_grafem)                                                                                                                     
+| 13  | [Grafy - zobecnění předchozích témat](10_uvod_do_teorie_grafu)                                                                                                                     |
+| 14  | [Zásobník, Fronta - využití, fifo, lifo](11_pruchody_grafem)                                                                                                                       |
+| 15  | [Průchody grafem - in/out/pre order průchod stromem, BFS, DFS](11_pruchody_grafem)                                                                                                 |
 | 16  | Datová struktura binární minimová halda, heapsort algoritmus                                                                                                                       |
 | 17  | Hledání nejkratší cesty v grafu - BFS, Dijkstrův algoritmus, Bellman-Ford algoritmus                                                                                               |
 
