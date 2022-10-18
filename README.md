@@ -2,30 +2,9 @@
 Talentový program [DELTA TopGun](https://www.delta-skola.cz/talentovy-program-delta-topgun) jsme založili, abychom dokázali v programátorských dovednostech efektivně posouvat i zkušené programátory.
 
 ![DELTA TopGun poster](/assets/logo.jpg)
-## Sylabus kurzu *Teoretická* *informatika*
 
-### Osnova přednášek
-
-| #   | Téma                                                                                                                                                                               |
-| --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 0   | [Úvod do programu Delta TopGun, úvod do kurzu Teoretická informatika, úvod do kurzu Praktický seminář](00_uvod)                                                                    |
-| 1   | [První kód v C, kompilace, datové typy, zpracování vstupu a výstupu (scanf, printf), kontrola validity vstupu, formátování výstupu, debugging](01_uvod_do_programovaciho_jazyka_c) |
-| 2   | [Reprezentace čísel v počítači (celočíselné, s plovoucí čárkou), problematika čísel se znaménkem (doplňkový/aditivní/přímý kód), bitwise](02_reprezentace_cisel_v_pocitaci)        |
-| 3   | [Pole a paměť, segmentace paměti, základní alokace paměti, průchody polem, segmentation fault, řetězce znaků (null character), kopírování řetězců](03_pole_a_pamet)                |
-| 4   | [Reprezentace datových struktur v paměti. Asymptotická složitost, rozdíly mezi omikron, omega, theta, ukázky algoritmů a jejich složitostí](04_slozitost_a_tridici_algoritmy)      |
-| 5   | [Sorting algoritmy - insertion, selection, bubble, quick sort](04_slozitost_a_tridici_algoritmy)                                                                                   |
-| 6   | Paměť - Stack vs Heap, referenční a hodnotové předávání parametrů (pointery), garbage collector, manuální správa paměti, efektivita programu z pohledu cache pamětí                |
-| 7   | Dynamické pole, asymptotická vs amortizovaná složitost                                                                                                                             |
-| 8   | [Spojový seznam - základní operace (vkládání, mazání, průchod seznamem), obousměrně zřetězené a kruhově zřetězené seznamy a jejich aplikace](05_spojovy_seznam)                    |
-| 9   | [Rekurze - koncová vs nekoncová rekurze, rozděl a panuj](06_rekurze)                                                                                                               |
-| 10  | [Stromové struktury](07_stromove_struktury)                                                                                                                                        |
-| 11  | [Vyhledávaci stromy - BVS (binární vyhledávací strom)](08_binarni_vyhledavaci_strom)                                                                                               |
-| 12  | [AVL stromy - definice, algoritmus na vyvažování](09_vyvazene_stromy)                                                                                                              |
-| 13  | [Grafy - zobecnění předchozích témat](10_uvod_do_teorie_grafu)                                                                                                                                                
-| 14  | [Zásobník, Fronta - využití, fifo, lifo](11_pruchody_grafem)                                                                                                                                             
-| 15  | [Průchody grafem - in/out/pre order průchod stromem, BFS, DFS](11_pruchody_grafem)                                                                                                                     
-| 16  | Datová struktura binární minimová halda, heapsort algoritmus                                                                                                                       |
-| 17  | Hledání nejkratší cesty v grafu - BFS, Dijkstrův algoritmus, Bellman-Ford algoritmus                                                                                               |
+## Forma výuky
+V rámci programu jsou vyučovány dva kurzy – [Praktický projekt](#sylabus-kurzu-praktický-projekt) a [Teoretická informatika](#sylabus-kurzu-teoretická-informatika), které jsou pro studenty povinné. Výuka se koná **prezenčně** každé úterý a to v schématu 2:1 (2 po sobě jdoucí týdny přednáška Teoretické informatiky, 1 týden přednáška Praktického projektu).
 
 ## Sylabus kurzu *Praktický projekt*
 ### Zaměření kurzu
@@ -47,11 +26,11 @@ Párování studenta s lektorem je vyhodnoceno na základě průniku zaměření
 10. Pravidelně kód praktického projektu verzovat dle lektorem doporučené verzovací strategie
 
 ### Neplnění povinností kurzu
-Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů) bude přistoupeno k vyřazení studenta z programu. A to zejména v následujích případech:
-- Student, bez předchozí omluvy, během školního pololetí 5x nezapsal aktivitu do on-line journalu (viz [Náležitosti každodenního zápisu do on-line journalu](#náležitosti-každodenního-zápisu-do-on-line-journalu))
-- Student, bez předchozí omluvy, během školního pololetí 2x neodprezentoval *status update* dle náležitostí (viz [Náležitosti "status update"](#náležitosti-status-update))
-- Student, bez předchozí omluvy, 3x neodeslal lektorovi pull-request ke code-review
-- Student, bez předchozí omluvy, 3x neposkytnul code-review přidruženému projektu
+Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů) bude přistoupeno k vyřazení studenta z programu DELTA TopGun. A to zejména v následujích případech:
+- Student, bez předchozí omluvy, během školního roku 5x nezapsal aktivitu do on-line journalu (viz [Náležitosti každodenního zápisu do on-line journalu](#náležitosti-každodenního-zápisu-do-on-line-journalu))
+- Student, bez předchozí omluvy, během školního roku 2x neodprezentoval *status update* dle náležitostí (viz [Náležitosti "status update"](#náležitosti-status-update))
+- Student, bez předchozí omluvy, 2x neodeslal lektorovi pull-request ke code-review
+- Student, bez předchozí omluvy, 2x neposkytnul code-review přidruženému projektu
 - Student, bez předchozí omluvy, 2x nereaguje na výzvu lektora ohledně nenaplnění cíle, který si student sám stanovil během *status update*
 
 
@@ -116,8 +95,82 @@ Během *status update* student nejprve **živě** odprezentuje dosavadní výsle
 | 7   | Tvorba REST API                                  |
 | 8   | Tvorba modulů a pluginů do existujících projektů |
 
+#### Devops
+
+| #   | Devops                                         |
+| --- | ---------------------------------------------- |
+| 1   | Containerizace, co to je a k čemu se dá využít |
+| 2   | Docker, docker-compose                         |
+| 3   | CI                                             |
+| 4   | Clusters, Docker swarm (monitoring, logging)   |
+| 5   | Cloud - AWS (alerts, budgets)                  |
+| 6   | Deployment webové aplikace                     |
+
+#### Hands-on metody kryptografie
+
+| #   | Hands-on metody kryptografie                              |
+| --- | --------------------------------------------------------- |
+| 1   | Historické kryprografické systémy                         |
+| 2   | Zřízení společného klíče                                  |
+| 3   | Hašovací funkce                                           |
+| 4   | Blokové šifrování a operační módy blokových šifer         |
+| 5   | Asymetrická kryptografie - kryptografie s veřejným klíčem |
+
+#### Hands-on metody strojového učení
+
+| #   | Hands-on metody strojového učení                                                                                                                                               |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Systémy strojového učení                                                                                                                                                       |
+| 2   | Úvod do jazyka Python - práce s realnými daty (předzpracování, vizualizace)                                                                                                    |
+| 3   | Vybrané metody strojového učení: Rozhodovací stromy, náhodné lesy                                                                                                              |
+| 4   | Evaluace modelů                                                                                                                                                                |
+| 5   | Vybrané metody strojového učení: Shlukování                                                                                                                                    |
+| 6   | Vybrané metody strojového učení: Lineární regrese, logistická regrese, metoda největšího spádu                                                                                 |
+| 7   | Vybrané metody strojového učení: Umělé neuronové sítě a jejich architektury                                                                                                    |
+| 8   | Recenze vědeckého článku                                                                                                                                                       |
+| 9   | End-to-end machine-learning projekt (analýza a předpoklady problému, získání dat, předzpracování dat a vizualizace, selekce modelu, trénování modelu, fine-tuning, deployment) |
+
+
 
 ### Harmonogram praktických workshopů
 | # | Datum        | Téma                            | Lektor         |
 |---|--------------|---------------------------------|----------------|
 | 1 | 18. 10. 2022 | Úvod do verzovacího systému git | Michal Havelka |
+
+
+## Sylabus kurzu *Teoretická* *informatika*
+
+### Zaměření kurzu
+Kurz *Teoretická informatiky* nabízí kompilaci vybraných oblastí teoretické informatiky. Důraz je kladen na vybudování intuice při řešení algoritmických problémů a uchopení základních principú počítačové vědy.
+
+### Osnova přednášek
+
+| #   | Téma                                                                                                                                                                               |
+| --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0   | [Úvod do programu Delta TopGun, úvod do kurzu Teoretická informatika, úvod do kurzu Praktický seminář](00_uvod)                                                                    |
+| 1   | [První kód v C, kompilace, datové typy, zpracování vstupu a výstupu (scanf, printf), kontrola validity vstupu, formátování výstupu, debugging](01_uvod_do_programovaciho_jazyka_c) |
+| 2   | [Reprezentace čísel v počítači (celočíselné, s plovoucí čárkou), problematika čísel se znaménkem (doplňkový/aditivní/přímý kód), bitwise](02_reprezentace_cisel_v_pocitaci)        |
+| 3   | [Pole a paměť, segmentace paměti, základní alokace paměti, průchody polem, segmentation fault, řetězce znaků (null character), kopírování řetězců](03_pole_a_pamet)                |
+| 4   | [Reprezentace datových struktur v paměti. Asymptotická složitost, rozdíly mezi omikron, omega, theta, ukázky algoritmů a jejich složitostí](04_slozitost_a_tridici_algoritmy)      |
+| 5   | [Sorting algoritmy - insertion, selection, bubble, quick sort](04_slozitost_a_tridici_algoritmy)                                                                                   |
+| 6   | Paměť - Stack vs Heap, referenční a hodnotové předávání parametrů (pointery), garbage collector, manuální správa paměti, efektivita programu z pohledu cache pamětí                |
+| 7   | Dynamické pole, asymptotická vs amortizovaná složitost                                                                                                                             |
+| 8   | [Spojový seznam - základní operace (vkládání, mazání, průchod seznamem), obousměrně zřetězené a kruhově zřetězené seznamy a jejich aplikace](05_spojovy_seznam)                    |
+| 9   | [Rekurze - koncová vs nekoncová rekurze, rozděl a panuj](06_rekurze)                                                                                                               |
+| 10  | [Stromové struktury](07_stromove_struktury)                                                                                                                                        |
+| 11  | [Vyhledávaci stromy - BVS (binární vyhledávací strom)](08_binarni_vyhledavaci_strom)                                                                                               |
+| 12  | [AVL stromy - definice, algoritmus na vyvažování](09_vyvazene_stromy)                                                                                                              |
+| 13  | [Grafy - zobecnění předchozích témat](10_uvod_do_teorie_grafu)                                                                                                                                                
+| 14  | [Zásobník, Fronta - využití, fifo, lifo](11_pruchody_grafem)                                                                                                                                             
+| 15  | [Průchody grafem - in/out/pre order průchod stromem, BFS, DFS](11_pruchody_grafem)                                                                                                                     
+| 16  | Datová struktura binární minimová halda, heapsort algoritmus                                                                                                                       |
+| 17  | Hledání nejkratší cesty v grafu - BFS, Dijkstrův algoritmus, Bellman-Ford algoritmus                                                                                               |
+
+### Povinnosti zapsaných studentů
+1. Prezenčně navštěvovat přednášky kurzu Teoretická informatika
+2. Odevzdávat domácí úlohy v řádném termínu na platformě DOMJudge
+
+### Neplnění povinností kurzu
+Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsanc3bdch-studentc5af-1) bude přistoupeno k vyřazení studenta z programu DELTA TopGun. A to zejména v následujích případech:
+- Student, bez předchozí omluvy, během školního roku 1x prezenčně nenavštívil přednášku kurzu Teoretická informatika
+- Student, bez předchozí omluvy, během školního roku 1x v řádném termínu neodevzdal domácí úlohu na platformě DOMJudge
