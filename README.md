@@ -65,7 +65,7 @@ Během *status update* student nejprve **živě** odprezentuje dosavadní výsle
 - *Jaký cíl plánuji splnit v následujících 3 týdnech? Jaká je jeho hlavní náplň a jak budu postupovat k jeho dosažení?*
   
 ### Realizace vlastního projektu
-Každému studentovi je **důrazně doporučena realizace vlastního projektu**. Student může přijít s libovolným projektovým záměrem z oblasti svého zájmu – je to ideální způso, jak v rámci kurzu pracovat na něčem, co studenta opravdu zajímá a baví. Za předpokladu splnění veškerých [náležitosti projektového záměru](#náležitosti-projektového-záměru) je studentovi realizace vlastního tématu vždy umožněna a je podpořena přidělením vhodného lektora. **Podpořena je rovněž realizace vlastního projektu v týmu**. A to za stejných podmínek, a za dodatečného předpokladu rozumného rozdělení zodpovědností v rámci týmu, které je posouzeno lektorem.
+Každému studentovi je **důrazně doporučena realizace vlastního projektu**. Student může přijít s libovolným projektovým záměrem z oblasti svého zájmu – je to ideální způsob, jak v rámci kurzu pracovat na něčem, co studenta opravdu zajímá a baví. Za předpokladu splnění veškerých [náležitosti projektového záměru](#náležitosti-projektového-záměru) je studentovi realizace vlastního tématu vždy umožněna a je podpořena přidělením vhodného lektora. **Podpořena je rovněž realizace vlastního projektu v týmu**. A to za stejných podmínek, a za dodatečného předpokladu rozumného rozdělení zodpovědností v rámci týmu, které je posouzeno lektorem.
 
 ### Realizace projektu pro rozvoj školního ekosystému
 Pro studenty, kteří chtějí pracovat na projektech, které podpoří rozvoj školního ekosystému jsou připravena předem definovaná reálná zadání. Pro studenty realizující projekt pro rozvoj školního ekosystému platí stejné podmínky zpracování projektu (viz [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů)), a to včetně zpracování a přednesení projektového záměru při Pitch Day dle náležitostí (viz [Náležitosti projektového záměru](#náležitosti-projektového-záměru)). **Podpořena je rovněž realizace vlastního projektu v týmu**. A to za stejných podmínek, a za dodatečného předpokladu rozumného rozdělení zodpovědností v rámci týmu, které je posouzeno lektorem. Zde si škola vymezuje právo na výběr studenta, či týmu studentů, kterým bude projekt přidělen.
@@ -188,9 +188,9 @@ Kurz *Teoretická informatiky* nabízí kompilaci vybraných oblastí teoretick�
 
 ### Povinnosti zapsaných studentů
 1. Prezenčně navštěvovat přednášky kurzu Teoretická informatika
-2. Odevzdávat domácí úlohy v řádném termínu na platformě DOMJudge
+2. Odevzdávat domácí úlohy v řádném termínu na platformě [DOMJudge](https://domjudge.zapotocnylubos.com/)
 
 ### Neplnění povinností kurzu
 Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsanc3bdch-studentc5af-1) bude přistoupeno k vyřazení studenta z programu DELTA TopGun. A to zejména v následujích případech:
 - Student, bez předchozí omluvy, během školního roku 1x prezenčně nenavštívil přednášku kurzu Teoretická informatika
-- Student, bez předchozí omluvy, během školního roku 1x v řádném termínu neodevzdal domácí úlohu na platformě DOMJudge
+- Student, bez předchozí omluvy, během školního roku 1x v řádném termínu neodevzdal domácí úlohu na platformě [DOMJudge](https://domjudge.zapotocnylubos.com/)
