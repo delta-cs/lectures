@@ -55,7 +55,7 @@ V každé rámcové analýze musí být obsaženy následující náležitosti p
 
 Z rámcové analýzy **musí být jinému vývojáří zřejmé** "*co má vyrábět*", "*jak to má vyrábět*" a "*do kdy to má stihnout*". Korektnost rámcové analýzy je vyhodnocena lektorem a bez validní ramcové analýzy nelze začít projekt realizovat.
 #### Náležitosti každodenního zápisu do on-line journalu
-Student každý pracovní den do on-line journalu zapíše, čemu se daný den v rámci svého praktického projektu věnoval. Je naprosto v pořádku, když se student v daném dnu praktickému projektu nevěnoval vůbec, tuto skutečnsot však rovněž musí do on-line journalu zapsat. Zápisy do on-line journalu poskytují lektorům nástroj, jakým dodatečně vyhodnotit aktivitu studentů. Zápisy do on-line journalu probíhají na platformě Discord, kam je na dedikovaný server každý student před začátku programu přizván.
+Student každý pracovní den do on-line journalu zapíše, čemu se daný den v rámci svého praktického projektu věnoval. Je naprosto v pořádku, když se student v daném dnu praktickému projektu nevěnoval vůbec, tuto skutečnsot však rovněž musí do on-line journalu zapsat. Zápisy do on-line journalu poskytují lektorům nástroj, jakým dodatečně vyhodnotit aktivitu studentů. Zápisy do on-line journalu probíhají na platformě Discord, kam je každý student před začátku programu přizván.
 #### Náležitosti "status update"
 Během *status update* student nejprve **živě** odprezentuje dosavadní výsledek svého softwarového projektu a ukáže jeho historii verzování. Následně stručně odpoví a vyhodnotí následující otázky:
 
