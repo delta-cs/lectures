@@ -73,7 +73,7 @@ Pro studenty, kteří chtějí pracovat na projektech, které podpoří rozvoj �
 Aktuálně nabízené projekty pro rozvoj školního ekosystému:
 - Informační systém pro výběr studentů na stáž Erasmus+ 
 ### Realizace modelového projektu
-Jako poslední možnost je studentům umožněno realizovat projekt v rámci jedné z modelových osnov. Pro studenty realizující projekt dle modelového zadání platí stejné podmínky zpracování projektu (viz [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů)), a to včetně zpracování a přednesení projektového záměru při Pitch Day dle náležitostí (viz [Náležitosti projektového záměru](#náležitosti-projektového-záměru)).
+V krajních případech je studentům umožněno realizovat projekt v rámci jedné z modelových osnov. Pro studenty realizující projekt dle modelového zadání platí stejné podmínky zpracování projektu (viz [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů)), a to včetně zpracování a přednesení projektového záměru při Pitch Day dle náležitostí (viz [Náležitosti projektového záměru](#náležitosti-projektového-záměru)).
 #### Osnovy pro modelová zadání projektů
 #### Fullstack webová aplikace
 
