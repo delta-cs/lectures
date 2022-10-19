@@ -153,9 +153,10 @@ V krajních případech je studentům umožněno realizovat projekt v rámci jed
 
 
 ### Harmonogram praktických workshopů
-| #   | Datum        | Téma                            | Lektor         |
-| --- | ------------ | ------------------------------- | -------------- |
-| 1   | 18. 10. 2022 | Úvod do verzovacího systému git | Michal Havelka |
+| #   | Datum        | Téma                                          | Lektor         |
+|-----|--------------|-----------------------------------------------| -------------- |
+| 1   | 18. 10. 2022 | Úvod do verzovacího systému git               | Michal Havelka |
+| 2   | 08. 11. 2022 | Úvod do verzovacího systému git - pokračování | Michal Havelka |
 
 
 ## Sylabus kurzu *Teoretická* *informatika*
