@@ -4,9 +4,12 @@ Talentový program [DELTA TopGun](https://www.delta-skola.cz/talentovy-program-d
 ![DELTA TopGun poster](/assets/logo.jpg)
 
 ## Forma výuky
-V rámci programu jsou vyučovány dva kurzy – [Praktický projekt](#sylabus-kurzu-praktický-projekt) a [Teoretická informatika](#sylabus-kurzu-teoretická-informatika), které jsou pro studenty povinné. Výuka se koná **prezenčně** každé úterý a to v schématu 2:1 (2 po sobě jdoucí týdny přednáška Teoretické informatiky, 1 týden přednáška Praktického projektu).
+V rámci programu jsou vyučovány dva kurzy – [Praktický projekt](#osnova-kurzu-praktický-projekt)) a [Teoretická informatika](#osnova-kurzu-teoretická-informatika), které jsou pro studenty povinné. Výuka se koná **prezenčně** každé úterý a to v schématu 2:1 (2 po sobě jdoucí týdny přednáška Teoretické informatiky, 1 týden přednáška Praktického projektu).
 
-## Sylabus kurzu *Praktický projekt*
+## Rozvrh výuky
+Rozvrh **prezenční výuky a přednášek** v rámci programu DELTA TopGun je dostupný [zde](https://calendar.google.com/calendar/embed?src=c_779afeb876628db383ca6a9e89a3ffaf3891f7b8b2f59ce4eab9709a37e9df03%40group.calendar.google.com&ctz=Europe%2FPrague).
+
+## Osnova kurzu *Praktický projekt*
 ### Zaměření kurzu
 Kurz *Praktický projekt* nabízí studentovi příležitost věnovat se realizaci softwarového projektu v konkrétní oblasti vlastního zájmu. Každý student má k dispozici lektora, pod jehož vedením svůj projekt zpracovává. Od každého studenta je očekáván návrh zadání individuálního projektu a jeho následné zpracování. Praktický kurz je rovněž jednou za 3 týdny proložen workshopem (prezenčně ve škole), který je věnován konkrétní problematice z oboru (viz [Harmonogram praktických workshopů](#harmonogram-praktických-workshopů)).
 
@@ -26,7 +29,7 @@ Párování studenta s lektorem je vyhodnoceno na základě průniku zaměření
 10. Pravidelně kód praktického projektu verzovat dle lektorem doporučené verzovací strategie
 
 ### Neplnění povinností kurzu
-Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů) bude přistoupeno k vyřazení studenta z programu DELTA TopGun. A to zejména v následujích případech:
+Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů) může být přistoupeno k vyřazení studenta z programu DELTA TopGun. A to zejména v následujích případech:
 - Student, bez předchozí omluvy, během školního roku 5x nezapsal aktivitu do on-line journalu (viz [Náležitosti každodenního zápisu do on-line journalu](#náležitosti-každodenního-zápisu-do-on-line-journalu))
 - Student, bez předchozí omluvy, během školního roku 2x neodprezentoval *status update* dle náležitostí (viz [Náležitosti "status update"](#náležitosti-status-update))
 - Student, bez předchozí omluvy, běhěm školního roku 2x neodeslal lektorovi pull-request ke code-review
@@ -71,7 +74,10 @@ Každému studentovi je **důrazně doporučena realizace vlastního projektu**.
 Pro studenty, kteří chtějí pracovat na projektech, které podpoří rozvoj školního ekosystému jsou připravena předem definovaná reálná zadání. Pro studenty realizující projekt pro rozvoj školního ekosystému platí stejné podmínky zpracování projektu (viz [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů)), a to včetně zpracování a přednesení projektového záměru při Pitch Day dle náležitostí (viz [Náležitosti projektového záměru](#náležitosti-projektového-záměru)). **Podpořena je rovněž realizace vlastního projektu v týmu**. A to za stejných podmínek, a za dodatečného předpokladu rozumného rozdělení zodpovědností v rámci týmu, které je posouzeno lektorem. Zde si škola vymezuje právo na výběr studenta, či týmu studentů, kterým bude projekt přidělen.
 
 Aktuálně nabízené projekty pro rozvoj školního ekosystému:
-- Informační systém pro výběr studentů na stáž Erasmus+ 
+- Motivační informační systém DELTA
+- Informační systém „Pardubický IT Draft“
+- Systém pro pořádání multioborových soutěží
+- Soutěž v programování pro žáky ZŠ "Pardubický Trigger"
 ### Realizace modelového projektu
 V krajních případech je studentům umožněno realizovat projekt v rámci jedné z modelových osnov. Pro studenty realizující projekt dle modelového zadání platí stejné podmínky zpracování projektu (viz [Povinnosti zapsaných studentů](#povinnosti-zapsaných-studentů)), a to včetně zpracování a přednesení projektového záměru při Pitch Day dle náležitostí (viz [Náležitosti projektového záměru](#náležitosti-projektového-záměru)).
 #### Osnovy pro modelová zadání projektů
@@ -159,7 +165,7 @@ V krajních případech je studentům umožněno realizovat projekt v rámci jed
 | 2   | 08. 11. 2022 | Úvod do verzovacího systému git - pokračování | Michal Havelka |
 
 
-## Sylabus kurzu *Teoretická* *informatika*
+## Osnova kurzu *Teoretická* *informatika*
 
 ### Zaměření kurzu
 Kurz *Teoretická informatiky* nabízí kompilaci vybraných oblastí teoretické informatiky. Důraz je kladen na vybudování intuice při řešení algoritmických problémů a uchopení základních principú počítačové vědy.
@@ -192,6 +198,6 @@ Kurz *Teoretická informatiky* nabízí kompilaci vybraných oblastí teoretick�
 2. Odevzdávat domácí úlohy v řádném termínu na platformě [DOMJudge](https://domjudge.zapotocnylubos.com/)
 
 ### Neplnění povinností kurzu
-Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsanc3bdch-studentc5af-1) bude přistoupeno k vyřazení studenta z programu DELTA TopGun. A to zejména v následujích případech:
+Při opakovaném neplnění [Povinnosti zapsaných studentů](#povinnosti-zapsanc3bdch-studentc5af-1) může být přistoupeno k vyřazení studenta z programu DELTA TopGun. A to zejména v následujích případech:
 - Student, bez předchozí omluvy, během školního roku 1x prezenčně nenavštívil přednášku kurzu Teoretická informatika
 - Student, bez předchozí omluvy, během školního roku 1x v řádném termínu neodevzdal domácí úlohu na platformě [DOMJudge](https://domjudge.zapotocnylubos.com/)
