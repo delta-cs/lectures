@@ -190,7 +190,7 @@ Kurz *Teoretická informatiky* nabízí kompilaci vybraných oblastí teoretick�
 | 13  | [Grafy - zobecnění předchozích témat](10_uvod_do_teorie_grafu)                                                                                                                     |
 | 14  | [Zásobník, Fronta - využití, fifo, lifo](11_pruchody_grafem)                                                                                                                       |
 | 15  | [Průchody grafem - in/out/pre order průchod stromem, BFS, DFS](11_pruchody_grafem)                                                                                                 |
-| 16  | Datová struktura binární minimová halda, heapsort algoritmus                                                                                                                       |
+| 16  | [Datová struktura binární minimová halda, heapsort algoritmus](12_binarni_halda)                                                                                                   |
 | 17  | Hledání nejkratší cesty v grafu - BFS, Dijkstrův algoritmus, Bellman-Ford algoritmus                                                                                               |
 
 ### Povinnosti zapsaných studentů
