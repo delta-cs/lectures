@@ -173,7 +173,7 @@ Kurz *Teoretická informatiky* nabízí kompilaci vybraných oblastí teoretick�
 ### Osnova přednášek
 
 | #   | Téma                                                                                                                                                                               |
-| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 0   | [Úvod do programu Delta TopGun, úvod do kurzu Teoretická informatika, úvod do kurzu Praktický seminář](00_uvod)                                                                    |
 | 1   | [První kód v C, kompilace, datové typy, zpracování vstupu a výstupu (scanf, printf), kontrola validity vstupu, formátování výstupu, debugging](01_uvod_do_programovaciho_jazyka_c) |
 | 2   | [Reprezentace čísel v počítači (celočíselné, s plovoucí čárkou), problematika čísel se znaménkem (doplňkový/aditivní/přímý kód), bitwise](02_reprezentace_cisel_v_pocitaci)        |
@@ -191,7 +191,7 @@ Kurz *Teoretická informatiky* nabízí kompilaci vybraných oblastí teoretick�
 | 14  | [Zásobník, Fronta - využití, fifo, lifo](11_pruchody_grafem)                                                                                                                       |
 | 15  | [Průchody grafem - in/out/pre order průchod stromem, BFS, DFS](11_pruchody_grafem)                                                                                                 |
 | 16  | [Datová struktura binární minimová halda, heapsort algoritmus](12_binarni_halda)                                                                                                   |
-| 17  | Hledání nejkratší cesty v grafu - BFS, Dijkstrův algoritmus, Bellman-Ford algoritmus                                                                                               |
+| 17  | [Hledání nejkratší cesty v grafu - BFS, Dijkstrův algoritmus, Bellman-Ford algoritmus](13_nejkratsi_cesta)                                                                         |
 
 ### Povinnosti zapsaných studentů
 1. Prezenčně navštěvovat přednášky kurzu Teoretická informatika
