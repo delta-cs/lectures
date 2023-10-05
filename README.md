@@ -4,7 +4,7 @@ Talentový program [DELTA TopGun](https://www.delta-skola.cz/talentovy-program-d
 ![DELTA TopGun poster](/assets/logo.jpg)
 
 ## Forma výuky
-V rámci programu jsou vyučovány dva kurzy – [Praktický projekt](#osnova-kurzu-praktický-projekt)) a [Teoretická informatika](#osnova-kurzu-teoretická-informatika), které jsou pro studenty povinné. Výuka se koná **prezenčně** každé úterý a to v schématu 2:1 (2 po sobě jdoucí týdny přednáška Teoretické informatiky, 1 týden přednáška Praktického projektu).
+V rámci programu jsou vyučovány dva kurzy – [Praktický projekt](#osnova-kurzu-praktický-projekt) a [Teoretická informatika](#osnova-kurzu-teoretická-informatika), které jsou pro studenty povinné. Výuka se koná **prezenčně** každé úterý a to v schématu 2:1 (2 po sobě jdoucí týdny přednáška Teoretické informatiky, 1 týden přednáška Praktického projektu).
 
 ## Rozvrh výuky
 Rozvrh **prezenční výuky a přednášek** v rámci programu DELTA TopGun je dostupný [zde](https://calendar.google.com/calendar/embed?src=c_779afeb876628db383ca6a9e89a3ffaf3891f7b8b2f59ce4eab9709a37e9df03%40group.calendar.google.com&ctz=Europe%2FPrague).
