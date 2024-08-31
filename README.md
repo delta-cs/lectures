@@ -223,25 +223,6 @@ a to včetně zpracování a přednesení projektového záměru při [Pitch Day
 
 <details>
   <summary>
-    Praktické programování v Java
-  </summary>
-
-| # | Praktické programování v Java                                                 |
-|---|-------------------------------------------------------------------------------|
-| 1 | Základní syntaxe                                                              |
-| 2 | Objektově orientovaná analýza a návrh - charakteristika UML, přehled diagramů |
-| 3 | Build a správa závislostí - Maven                                             |
-| 4 | Objektově orientované programování (polymorfismus, rozhraní)                  |
-| 5 | Datové struktury                                                              |
-| 6 | Automatizované unit testy, ladění aplikací (debugging)                        |
-| 7 | Práce s relační databází, mapování objektů do relačních databází              |
-| 8 | Návrhové vzory a principy                                                     |
-| 9 | Praktický projekt - REST API/CLI aplikace                                     |
-
-</details>
-
-<details>
-  <summary>
     Praktické programování v PHP
   </summary>
 
