@@ -150,7 +150,7 @@ Korektnost rámcové analýzy je vyhodnocena lektorem a bez validní ramcové an
 
 Zápisy do _on-line journalu_ probíhají na platformě **Discord**, kam je každý žák na začátku programu přizván.
 
-Žák má povinnost každý pracovní den zapsat, čemu se daný den v rámci svého praktického projektu věnoval.
+Žák má povinnost každý školní den zapsat, čemu se daný den v rámci svého praktického projektu věnoval.
 Je naprosto v pořádku, když se žák v daném dnu praktickému projektu nevěnoval, tuto skutečnsot však rovněž musí zapsat.
 
 Zápisy do on-line journalu poskytují lektorům nástroj, jakým dodatečně vyhodnotit aktivitu žáků.
@@ -313,7 +313,7 @@ a to včetně zpracování a přednesení projektového záměru při [Pitch Day
 1. Odevzdávat domácí úlohy v řádném termínu na platformě [DOMJudge](https://domjudge.zapotocnylubos.com)
 2. Odprezentovat svůj [projektový záměr](#náležitosti-projektu) na Pitch Day
 3. Absolvovat úvodní schůzku s přiděleným lektorem
-4. Každý pracovní den zapisovat svou aktivitu
+4. Každý školní den zapisovat svou aktivitu
    do [on-line journalu](#každodenní-zápis-do-on-line-journalu)
 5. Vypracovat [rámcovou analýzu](#náležitosti-projektu) softwarového projektu
 6. Vypracovat projektovou roadmapu
