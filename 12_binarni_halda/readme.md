@@ -1,0 +1,1 @@
+- [12_binarni_halda.pdf](12_binarni_halda.pdf)

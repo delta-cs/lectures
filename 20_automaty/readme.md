@@ -1,0 +1,1 @@
+- [20_automaty.pdf](20_automaty.pdf)
