@@ -1,0 +1,1 @@
+- [05_spojovy_seznam.pdf](05_spojovy_seznam.pdf)

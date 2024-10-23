@@ -1,0 +1,1 @@
+- [21_regularni_vyrazy.pdf](21_regularni_vyrazy.pdf)
