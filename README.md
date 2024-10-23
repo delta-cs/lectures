@@ -1,4 +1,4 @@
-# DELTA SŠIE - TopGun
+# Talentový program DELTA TopGun
 
 Talentový program [DELTA TopGun](https://www.delta-skola.cz/talentovy-program-delta-topgun)
 jsme založili pro žáky, kteří se chtějí věnovat programování a informatice do (velké) hloubky.
