@@ -55,7 +55,7 @@ a na principy řešení algoritmicky zajímavých problémů a úloh.
 Důraz je kladen na budování intuice při řešení algoritmických problémů a uchopení základních principú počítačové vědy.
 
 Po dokončení jednotlivých témat teoretické informatiky dostávají žáci programovací úkol
-na platformě [DOMJudge](https://domjudge.zapotocnylubos.com), do které dostanou přístup na začátku programu.
+na platformě [DOMJudge](https://domjudge.delta-topgun.cz), do které dostanou přístup na začátku programu.
 
 Tyto úlohy jsou zaměřeny na procvičení daného tématu a na získání praktických dovedností s programováním v jazyce C.
 
@@ -291,7 +291,7 @@ a to včetně zpracování a přednesení projektového záměru při [Pitch Day
 
 ## Povinnosti zapsaných žáků
 
-1. Odevzdávat domácí úlohy v řádném termínu na platformě [DOMJudge](https://domjudge.zapotocnylubos.com)
+1. Odevzdávat domácí úlohy v řádném termínu na platformě [DOMJudge](https://domjudge.delta-topgun.cz)
 2. Odprezentovat svůj [projektový záměr](#náležitosti-projektu) na Pitch Day
 3. Absolvovat úvodní schůzku s přiděleným lektorem
 4. Každý školní den zapisovat svou aktivitu
@@ -315,7 +315,7 @@ může být přistoupeno k vyřazení žáka z programu DELTA TopGun.
 A to zejména v následujích případech:
 
 - Žák, **bez předchozí omluvy**, během školního roku neodevzdal **2** domácí úlohy na
-  platformě [DOMJudge](https://domjudge.zapotocnylubos.com)
+  platformě [DOMJudge](https://domjudge.delta-topgun.cz)
 - Žák, **bez předchozí omluvy**, během školního roku **10x** nezapsal aktivitu
   do [on-line journalu](#každodenní-zápis-do-on-line-journalu)
 - Žák, **bez předchozí omluvy**, během školního roku **2x** neodprezentoval [status update](#status-update)
