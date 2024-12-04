@@ -423,6 +423,8 @@ Vytvořte si playbook, který na serveru nastaví cron job, který každou minut
 
 Vytvořte také playbook, který tento cron job odstraní.
 
+> **Bonus**: Umožněte nastavit interval, ve kterém se má cron job spouštět, pomocí proměnné v inventory souboru.
+
 <details>
 <summary>Řešení</summary>
 
@@ -475,6 +477,8 @@ Po prvním úspěšném spuštění serveru, upravte zdrojový soubor (např. up
 > **Poznámka**: Server bude muset být spuštěn pomocí nějakého hlavního procesu, který se bude starat o jeho spuštění a běh.
 > 
 >Můžete zvolit spouštění přes vlastní `systemd` službu, nebo použít proces manager (např. `pm2`).
+
+> **Bonus**: Umožněte nastavit port, na kterém server běží, pomocí proměnné v inventory souboru.
 
 <details>
 <summary>Řešení</summary>
