@@ -1,0 +1,416 @@
+# Ansible workshop
+
+
+## Úvod
+
+[Ansible](https://docs.ansible.com/ansible/latest/) je nástroj pro automatizaci konfigurace a správy serverů.
+Jeho hlavní výhodou je jednoduchost správy a rychlost provádění akcí na více serverech najednou.
+
+Ansible je **agentless**, což znamená, že na cílových serverech není potřeba žádný agent, stačí **SSH přístup**.
+
+Hlavními koncepty Ansible jsou:
+
+- **Playbook** - soubor s instrukcemi, co a jak má být provedeno
+- **Role** - znovupoužitelný soubor playbooků
+- **Inventory** - seznam serverů, na kterých se mají playbooky spustit
+- **Module** - "knihovna" funkcí, které Ansible používá k provádění akcí na serverech
+- **Task** - jednotlivé kroky v playbooku, které se mají provést
+
+## Příprava playgroundu
+
+Nastartuje si nový `ubuntu` server na přes Coder, nazvěte ho
+- `<username>-ansible-control`
+
+Dále si nastartujte 2 další `ubuntu` servery a nazvěte je 
+- `<username>-ansible-server-1`
+- `<username>-ansible-server-2`
+
+Jďete na `control` server a vygenerujte si SSH klíč, kterým se budete přihlašovat na ostatní servery
+
+```bash
+ssh-keygen -f ~/.ssh/ansible-workshop
+```
+
+Následně si tento klíč přidejte na ostatní servery
+
+```bash
+control $ cat ~/.ssh/ansible-workshop.pub
+```
+
+A na ostatních serverech tento veřejný klíč přidejte do `~/.ssh/authorized_keys` (**na konec souboru**, nemažte nic co tam již je)
+
+```bash
+server-1 $ vim ~/.ssh/authorized_keys
+server-2 $ vim ~/.ssh/authorized_keys
+```
+
+Zjistěte si IP adresy serverů
+
+```bash
+server-1 $ ip a
+server-2 $ ip a
+```
+
+Vyzkoušejte, že se můžete přihlásit na ostatní servery pomocí SSH klíče
+
+```bash
+control  $ ssh -i ~/.ssh/ansible-workshop <username>@<ip-of-server-1>
+server-1 $ hostname
+server-1 $ exit
+
+control  $ ssh -i ~/.ssh/ansible-workshop <username>@<ip-of-server-2>
+server-2 $ hostname
+server-2 $ exit
+```
+
+## Instalace Ansible
+
+Na `control` serveru nainstalujte Ansible
+
+```bash
+control $ sudo apt update
+control $ sudo apt install ansible
+```
+
+Ověřte, že Ansible je nainstalovaný
+
+```bash
+control $ ansible --version
+```
+
+Verze by měla být alespoň `2.7`
+
+Vyzkoušeje nejjednodušší příkaz, který zjistí, zdali jsou servery dostupné
+
+```bash
+control $ ansible all -m ping -i "<ip-of-server-1>," -u <username> --private-key ~/.ssh/ansible-workshop
+```
+
+> **Poznámka**: Všimněte si, že za IP adresou serveru je čárka, to je důležité.
+> Normálně se přepínač `-i` používá pro `inventory` soubor, ale v tomto případě předáváme IP adresu serveru přímo.
+> V tomto případě je potřeba za IP adresou přidat čárku, aby Ansible nehledal inventory soubor, ale použil IP adresu přímo.
+> 
+> Více serverů můžete přidat takto: `-i "<ip-of-server-1>,<ip-of-server-2>,"`
+
+Výsledek tohoto příkaazu by měl vypadat nějak takto
+
+```bash
+<ip> | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+Zkuste si, že připojení funguje i pro druhý server
+
+## Inventory
+
+Založte si pracovní adresář pro tento workshop
+
+```bash
+control $ mkdir ansible-workshop
+control $ cd ansible-workshop
+```
+
+Než začneme s celým Ansiblem, pojďme si vytvořit `inventory` soubor, který bude obsahovat IP adresy našich serverů.
+
+Tento soubor slouží také pro definici skupin serverů, což nám umožní provádět akce na více serverech najednou.
+
+Vytvořte si soubor `inventory` s následujícím obsahem
+
+```bash
+control $ vim inventory
+```
+
+```ini
+[all]
+<ip-of-server-1>
+<ip-of-server-2>
+```
+
+Nyní můžeme použít tento inventory soubor pro naše příkazy
+
+```bash
+control $ ansible all -m ping -i inventory -u <username> --private-key ~/.ssh/ansible-workshop
+```
+
+Výstup by měl být podobný jako předtím, ale tentokrát jsme použili inventory soubor a nemuseli jsme zadávat IP adresy ručně.
+Uvidíte také, že ansible provedl příkaz na obou serverech.
+
+## Config
+
+Jelikož jsme líní, nechceme pokaždé zadávat parametry pro připojení k serverům (`-i inventory -u <username> --private-key ~/.ssh/ansible-workshop`),
+takže si vytvoříme konfigurační soubor.
+
+Vytvořte si soubor `ansible.cfg` s následujícím obsahem
+
+```bash
+control $ vim ansible.cfg
+```
+
+```ini
+[defaults]
+inventory = inventory
+private_key_file = ~/.ssh/ansible-workshop
+remote_user = <username>
+```
+
+Tyto parametry se budou používat pro všechny příkazy, které spustíme pomocí Ansible (v tomto adresáři).
+
+Můžeme otestovat, zdali se nám konfigurace načte správně
+
+```bash
+control $ ansible all -m ping
+```
+
+## Playbook
+
+Nyní si vytvoříme první playbook, který nám nainstaluje `nginx` na obou serverech.
+
+Vytvořte si soubor `nginx-playbook.yml` s následujícím obsahem
+
+```bash
+control $ vim nginx-playbook.yml
+```
+
+```yaml
+---
+- name: Install Nginx
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+```
+
+Playbook je YAML soubor, který obsahuje seznam `plays`, kde každý `play` obsahuje několik `tasks`.
+
+Play je logické seskupení tasků, které se mají provést na daném serveru.
+Pro každý `play` se specifikuje seznam serverů či skupin serverů, na kterých se mají tasky provést.
+
+Také zde často uvidíte `become: true`, což znamená, že při spouštění tasků se má použít `sudo`.
+(nepřihlašujeme se jako root, proto je potřeba `sudo`)
+
+Každý `task` má několik atributů, nejdůležitější jsou:
+
+- `name` - název tasku, který se zobrazí v logu
+- modul, který se má použít (v tomto případě `apt`)
+- parametry modulu (v tomto případě `name` a `state`)
+
+Spusťte svůj první playbook
+
+```bash
+control $ ansible-playbook nginx-playbook.yml
+```
+
+Výsledek by měl zobzazit tento výstup
+
+```text
+PLAY [Install Nginx] *************************************************************************************************
+
+TASK [Gathering Facts] ***********************************************************************************************
+ok: [<ip-of-server-1>]
+ok: [<ip-of-server-2>]
+
+TASK [Install Nginx] *************************************************************************************************
+changed: [<ip-of-server-1>]
+changed: [<ip-of-server-2>]
+
+PLAY RECAP ***********************************************************************************************************
+<ip-of-server-1>               : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+<ip-of-server-2>               : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+Vidíte, že Ansible provedl task na obou serverech a nainstaloval `nginx`.
+
+Zkuste si příkaz spustit ještě jednou, uvidíte, že se nic nestane (neuvidíte `changed`), protože `nginx` je již nainstalovaný.
+
+Přes Coder si protunelujte port `80` z `server-1` a `server-2` a zkontrolujte, že `nginx` běží (zobrazí se defaultní stránka).
+
+### Další moduly
+
+Ansible má [mnoho modulů](https://docs.ansible.com/ansible/latest/collections/index_module.html), které můžete použít pro různé úkoly.
+
+Například modul `service` můžete použít pro start/stop/restart služeb.
+Nebo modul `copy` pro kopírování souborů z `control` serveru na cílové servery.
+
+Pojďme si vyzkoušet několik dalších modulů.
+
+#### Modul `copy`
+
+Kompetní dokumentace `copy` modulu je [zde](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html)
+
+Vytvoříme si vlastní HTML stránku a zkopírujeme ji pomocí modulu `copy` na oba servery.
+
+Ansible modul `copy` hledá soubory v adresáři `files` ve stejném adresáři jako playbook.
+
+Vytvořte si soubor `files/index.html` s následujícím obsahem
+
+```bash
+control $ mkdir files
+control $ vim files/index.html
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ansible Workshop</title>
+</head>
+<body>
+    <h1>Hello from Ansible!</h1>
+</body>
+</html>
+```
+
+Upravte playbook tak, aby zkopíroval tento soubor na oba servery
+
+```bash
+control $ vim nginx-playbook.yml
+```
+
+```yaml
+    - name: Copy index.html
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+```
+
+> **Poznámka**: `src` je cesta k souboru na `control` serveru, `dest` je cesta, kam se má soubor zkopírovat na cílový server.
+> `src` je lokace souboru pro zkopírování relativní k adresáři `files`.
+> 
+> V případě, že soubor v dané lokaci neexistuje, Ansible vyzkouší ještě [několik dalších lokací](https://docs.ansible.com/ansible/latest/playbook_guide/playbook_pathing.html#resolving-local-relative-paths) a pokud soubor nenajde, skončí s chybou.
+
+Spusťte znovu playbook
+
+```bash
+control $ ansible-playbook nginx-playbook.yml
+```
+
+Ve výpisu příkaazu uvidíte, že Ansible zkopíroval soubor na oba servery.
+
+```text
+...
+TASK [Copy index.html]
+changed: [<ip-of-server-1>]
+changed: [<ip-of-server-2>]
+...
+```
+
+Zkontrolujte (přes Coder), že se soubor zkopíroval a že nginx zobrazuje novou stránku.
+
+#### modul `template`
+
+Kompletní dokumentace `template` modulu je [zde](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html)
+
+Dalším užitečným modulem je `template`, který umožňuje použít Jinja2 šablonu pro generování souborů.
+
+Jedná se v postatě o stejný modul jako `copy`,
+ale Ansible místo jednoduchého kopírování souboru nejdříve zdrojový soubor zpracuje pomocí Jinja2 šablonovacího systému
+a teprve poté ho zkopíruje na cílový server.
+
+Rozdíl je, že modul `template` hledá šablony v adresáři `templates` ve stejném adresáři jako playbook.
+
+Vytvořte si soubor `templates/id.html.j2` s následujícím obsahem
+
+```bash
+control $ mkdir templates
+control $ vim templates/id.html.j2
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ansible Workshop</title>
+</head>
+<body>
+    <h1>Hello from Ansible!</h1>
+    <p>Server: {{ ansible_hostname }}</p>
+</body>
+</html>
+```
+
+Upravte playbook tak, aby zkopíroval tuto šablonu na oba servery
+
+```bash
+control $ vim nginx-playbook.yml
+```
+
+```yaml
+    - name: Copy templated id.html
+      template:
+        src: id.html.j2
+        dest: /var/www/html/id.html
+```
+
+Spusťte znovu playbook, zkontroluje, že nginx zobrazuje správnou stránku s hostname serveru.
+
+> **Poznámka**: `ansible_hostname` je proměnná, kterou Ansible automaticky nastaví na hostname serveru, na kterém se task provádí.
+> Více o proměnných, které Ansible nastavuje, najdete [zde](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html)
+> Vlastní proměnné můžete nastavit například v inventory souboru.
+> 
+> Syntaxe pro nastavení přoměnných je `<ip> moje_promenna=123` a následně v šabloně či playbooku můžete použít `{{ moje_promenna }}`
+
+#### modul `service` a závislosti tasků
+
+Kompletní dokumentace `service` modulu je [zde](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/service_module.html)
+
+Posledním modulem, který si v této sekci ukážeme je `service`, který umožňuje start/stop/restart služeb.
+
+Vytvoříme si konfigurační soubor pro nginx, který bude řídit, na jakém portu bude nginx poslouchat.
+
+V případě, že se tento soubor změní, bude potřeba restartovat nginx, aby se změny projevily.
+
+Vytvořte si soubor `files/nginx.conf` s následujícím obsahem
+
+```bash
+control $ vim files/nginx.conf
+```
+
+```nginx
+server {
+    listen 8080;
+
+    location / {
+        root /var/www/html;
+    }
+}
+```
+
+Upravte playbook tak, aby zkopíroval tento soubor na oba servery a restartoval nginx, pouze pokud se soubor změnil
+
+```bash
+control $ vim nginx-playbook.yml
+```
+
+```yaml
+    - name: Copy nginx.conf
+      copy:
+        src: nginx.conf
+        dest: /etc/nginx/sites-available/default
+      register: nginx_conf
+
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
+      when: nginx_conf.changed
+```
+
+> **Poznámka**: `/etc/nginx/sites-available/default` je cesta k defaultní konfiguraci nginx na Ubuntu.
+
+> **Poznámka**: `register` je atribut, který uloží výstup tasku do proměnné, kterou můžete použít v dalším tasku.
+> V tomto případě uložíme výstup kopírování souboru do proměnné `nginx_conf` a poté v dalším tasku pomocí `when` podmínky zkontrolujeme, zdali se soubor změnil.
+
+Spusťte znovu playbook, zkontrolujte, že nginx nově poslouchá na portu `8080` (a né na původním portu `80`).
+
+> **Poznámka**: Ansible na tyto "restartovací" procesy doporučuje používat tzv. `handlers`, které se spustí až na konci playbooku a pouze pokud byl task, který je volá, proveden.
+> Jedná se o takový druh "callbacku", který se spustí až na konci playbooku, pokud ho nějaký task "aktivuje".
+> 
+> Více o handlerech najdete [v dokumentaci](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_handlers.html)
