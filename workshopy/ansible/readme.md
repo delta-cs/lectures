@@ -414,3 +414,159 @@ Spusťte znovu playbook, zkontrolujte, že nginx nově poslouchá na portu `8080
 > Jedná se o takový druh "callbacku", který se spustí až na konci playbooku, pokud ho nějaký task "aktivuje".
 > 
 > Více o handlerech najdete [v dokumentaci](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_handlers.html)
+
+### Samostatná úloha 1
+
+Vytvořte si playbook, který na serveru nastaví cron job, který každou minutu zaloguje (připíše nový řádek) do souboru `/var/log/cron.log` s aktuálním datumem a časem.
+
+> **Nápověda**: Existuje k tomu užitečný modul.
+
+Vytvořte také playbook, který tento cron job odstraní.
+
+<details>
+<summary>Řešení</summary>
+
+Vytvořte si soubor `cron-playbook.yml` s následujícím obsahem
+
+```bash
+control $ vim cron-playbook.yml
+```
+
+```yaml
+---
+- name: Setup cron job
+  hosts: all
+  become: true
+  tasks:
+    - name: Setup cron job
+      cron:
+        name: "log_time"
+        minute: "*"
+        hour: "*"
+        job: "date >> /var/log/cron.log"
+```
+
+Playbook na odstranění cron jobu
+
+```bash
+control $ vim cron-remove-playbook.yml
+```
+
+```yaml
+---
+- name: Remove cron job
+  hosts: all
+  become: true
+  tasks:
+    - name: Remove cron job
+      cron:
+        name: "log_time"
+        state: absent
+```
+
+</details>
+
+### Samostatná úloha 2
+
+Vytvořte si velmi jednoduchý `nodejs` HTTP server, který bude poslouchat na portu `3000` a zobrazovat `Hello from Node.js!`.
+
+Po prvním úspěšném spuštění serveru, upravte zdrojový soubor (např. upravte hlášku, kterou server vypisuje) a zajistěte, že nové spuštění playbooku aktualizuje server.
+
+> **Poznámka**: Server bude muset být spuštěn pomocí nějakého hlavního procesu, který se bude starat o jeho spuštění a běh.
+> 
+>Můžete zvolit spouštění přes vlastní `systemd` službu, nebo použít proces manager (např. `pm2`).
+
+<details>
+<summary>Řešení</summary>
+
+Vytvořte si soubor `files/server.js` s následujícím obsahem
+
+```bash
+control $ vim files/server.js
+```
+
+```javascript
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello from Node.js!\n');
+});
+
+server.listen(3000, '0.0.0.0', () => {
+    console.log('Server running at http://0.0.0.0:3000/');
+});
+```
+
+Playbook pro instalaci `nodejs`, `pm2` a spuštění serveru
+
+```bash
+control $ vim nodejs-playbook.yml
+```
+
+```yaml
+---
+- name: Install Node.js
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Node.js
+      apt:
+        name: nodejs
+        state: present
+        
+    - name: Install npm
+      apt:
+        name: npm
+        state: present
+
+    # pm2 is installed globally using npm
+    - name: Install pm2
+      npm:
+        name: pm2
+        global: yes
+
+    - name: Copy server.js
+      copy:
+        src: server.js
+        dest: /srv/server.js
+      register: server_file
+      
+    - name: Determine, if server is running
+      command: pm2 pid my-nodejs-server
+      register: pm2_server_pid
+      ignore_errors: yes
+      changed_when: false
+    
+    - name: Stop server
+      command: pm2 stop my-nodejs-server
+      when: server_file.changed and pm2_server_pid.stdout is defined and pm2_server_pid.stdout | int > 0
+      register: pm2_stop
+      
+    - name: Start server
+      command: pm2 start /srv/server.js --name my-nodejs-server
+      when: pm2_stop.changed or server_file.changed or pm2_server_pid.stdout is not defined or pm2_server_pid.stdout | int == 0
+```
+
+Spusťte playbook a zkontrolujte, že server běží na portu `3000`.
+
+Po úspěšném spuštění serveru, upravte zdrojový soubor `server.js` a spusťte playbook znovu.
+
+Pro odstranění serveru můžete použít playbook
+
+```bash
+control $ vim nodejs-remove-playbook.yml
+```
+
+```yaml
+---
+- name: Stop server
+  hosts: all
+  become: true
+  tasks:
+    - name: Stop server
+      command: pm2 stop my-nodejs-server
+      ignore_errors: yes
+```
+
+</details>
