@@ -357,7 +357,7 @@ Spusťte znovu playbook, zkontroluje, že nginx zobrazuje správnou stránku s h
 > Více o proměnných, které Ansible nastavuje, najdete [zde](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html)
 > Vlastní proměnné můžete nastavit například v inventory souboru.
 > 
-> Syntaxe pro nastavení přoměnných je `<ip> moje_promenna=123` a následně v šabloně či playbooku můžete použít `{{ moje_promenna }}`
+> Syntaxe pro nastavení proměnných je `<ip> moje_promenna=123` a následně v šabloně či playbooku můžete použít `{{ moje_promenna }}`
 
 #### modul `service` a závislosti tasků
 
