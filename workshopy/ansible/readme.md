@@ -27,33 +27,33 @@ Dále si nastartujte 2 další `ubuntu` servery a nazvěte je
 
 Jďete na `control` server a vygenerujte si SSH klíč, kterým se budete přihlašovat na ostatní servery
 
-```bash
+```shell
 ssh-keygen -f ~/.ssh/ansible-workshop
 ```
 
 Následně si tento klíč přidejte na ostatní servery
 
-```bash
+```shell
 control $ cat ~/.ssh/ansible-workshop.pub
 ```
 
 A na ostatních serverech tento veřejný klíč přidejte do `~/.ssh/authorized_keys` (**na konec souboru**, nemažte nic co tam již je)
 
-```bash
+```shell
 server-1 $ vim ~/.ssh/authorized_keys
 server-2 $ vim ~/.ssh/authorized_keys
 ```
 
 Zjistěte si IP adresy serverů
 
-```bash
+```shell
 server-1 $ ip a
 server-2 $ ip a
 ```
 
 Vyzkoušejte, že se můžete přihlásit na ostatní servery pomocí SSH klíče
 
-```bash
+```shell
 control  $ ssh -i ~/.ssh/ansible-workshop <username>@<ip-of-server-1>
 server-1 $ hostname
 server-1 $ exit
@@ -67,14 +67,14 @@ server-2 $ exit
 
 Na `control` serveru nainstalujte Ansible
 
-```bash
+```shell
 control $ sudo apt update
 control $ sudo apt install ansible
 ```
 
 Ověřte, že Ansible je nainstalovaný
 
-```bash
+```shell
 control $ ansible --version
 ```
 
@@ -82,7 +82,7 @@ Verze by měla být alespoň `2.7`
 
 Vyzkoušeje nejjednodušší příkaz, který zjistí, zdali jsou servery dostupné
 
-```bash
+```shell
 control $ ansible all -m ping -i "<ip-of-server-1>," -u <username> --private-key ~/.ssh/ansible-workshop
 ```
 
@@ -94,7 +94,7 @@ control $ ansible all -m ping -i "<ip-of-server-1>," -u <username> --private-key
 
 Výsledek tohoto příkaazu by měl vypadat nějak takto
 
-```bash
+```shell
 <ip> | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
@@ -110,7 +110,7 @@ Zkuste si, že připojení funguje i pro druhý server
 
 Založte si pracovní adresář pro tento workshop
 
-```bash
+```shell
 control $ mkdir ansible-workshop
 control $ cd ansible-workshop
 ```
@@ -121,7 +121,7 @@ Tento soubor slouží také pro definici skupin serverů, což nám umožní pro
 
 Vytvořte si soubor `inventory` s následujícím obsahem
 
-```bash
+```shell
 control $ vim inventory
 ```
 
@@ -133,7 +133,7 @@ control $ vim inventory
 
 Nyní můžeme použít tento inventory soubor pro naše příkazy
 
-```bash
+```shell
 control $ ansible all -m ping -i inventory -u <username> --private-key ~/.ssh/ansible-workshop
 ```
 
@@ -147,7 +147,7 @@ takže si vytvoříme konfigurační soubor.
 
 Vytvořte si soubor `ansible.cfg` s následujícím obsahem
 
-```bash
+```shell
 control $ vim ansible.cfg
 ```
 
@@ -162,7 +162,7 @@ Tyto parametry se budou používat pro všechny příkazy, které spustíme pomo
 
 Můžeme otestovat, zdali se nám konfigurace načte správně
 
-```bash
+```shell
 control $ ansible all -m ping
 ```
 
@@ -172,7 +172,7 @@ Nyní si vytvoříme první playbook, který nám nainstaluje `nginx` na obou se
 
 Vytvořte si soubor `nginx-playbook.yml` s následujícím obsahem
 
-```bash
+```shell
 control $ vim nginx-playbook.yml
 ```
 
@@ -204,7 +204,7 @@ Každý `task` má několik atributů, nejdůležitější jsou:
 
 Spusťte svůj první playbook
 
-```bash
+```shell
 control $ ansible-playbook nginx-playbook.yml
 ```
 
@@ -251,7 +251,7 @@ Ansible modul `copy` hledá soubory v adresáři `files` ve stejném adresáři 
 
 Vytvořte si soubor `files/index.html` s následujícím obsahem
 
-```bash
+```shell
 control $ mkdir files
 control $ vim files/index.html
 ```
@@ -270,7 +270,7 @@ control $ vim files/index.html
 
 Upravte playbook tak, aby zkopíroval tento soubor na oba servery
 
-```bash
+```shell
 control $ vim nginx-playbook.yml
 ```
 
@@ -288,7 +288,7 @@ control $ vim nginx-playbook.yml
 
 Spusťte znovu playbook
 
-```bash
+```shell
 control $ ansible-playbook nginx-playbook.yml
 ```
 
@@ -318,7 +318,7 @@ Rozdíl je, že modul `template` hledá šablony v adresáři `templates` ve ste
 
 Vytvořte si soubor `templates/id.html.j2` s následujícím obsahem
 
-```bash
+```shell
 control $ mkdir templates
 control $ vim templates/id.html.j2
 ```
@@ -338,7 +338,7 @@ control $ vim templates/id.html.j2
 
 Upravte playbook tak, aby zkopíroval tuto šablonu na oba servery
 
-```bash
+```shell
 control $ vim nginx-playbook.yml
 ```
 
@@ -369,7 +369,7 @@ V případě, že se tento soubor změní, bude potřeba restartovat nginx, aby 
 
 Vytvořte si soubor `files/nginx.conf` s následujícím obsahem
 
-```bash
+```shell
 control $ vim files/nginx.conf
 ```
 
@@ -385,7 +385,7 @@ server {
 
 Upravte playbook tak, aby zkopíroval tento soubor na oba servery a restartoval nginx, pouze pokud se soubor změnil
 
-```bash
+```shell
 control $ vim nginx-playbook.yml
 ```
 
@@ -426,11 +426,13 @@ Vytvořte také playbook, který tento cron job odstraní.
 > **Bonus**: Umožněte nastavit interval, ve kterém se má cron job spouštět, pomocí proměnné v inventory souboru.
 
 <details>
-<summary>Řešení</summary>
+    <summary>
+        Řešení
+    </summary>
 
 Vytvořte si soubor `cron-playbook.yml` s následujícím obsahem
 
-```bash
+```shell
 control $ vim cron-playbook.yml
 ```
 
@@ -450,7 +452,7 @@ control $ vim cron-playbook.yml
 
 Playbook na odstranění cron jobu
 
-```bash
+```shell
 control $ vim cron-remove-playbook.yml
 ```
 
@@ -481,11 +483,13 @@ Po prvním úspěšném spuštění serveru, upravte zdrojový soubor (např. up
 > **Bonus**: Umožněte nastavit port, na kterém server běží, pomocí proměnné v inventory souboru.
 
 <details>
-<summary>Řešení</summary>
+    <summary>
+        Řešení
+    </summary>
 
 Vytvořte si soubor `files/server.js` s následujícím obsahem
 
-```bash
+```shell
 control $ vim files/server.js
 ```
 
@@ -504,7 +508,7 @@ server.listen(3000, '0.0.0.0', () => {
 
 Playbook pro instalaci `nodejs`, `pm2` a spuštění serveru
 
-```bash
+```shell
 control $ vim nodejs-playbook.yml
 ```
 
@@ -558,7 +562,7 @@ Po úspěšném spuštění serveru, upravte zdrojový soubor `server.js` a spus
 
 Pro odstranění serveru můžete použít playbook
 
-```bash
+```shell
 control $ vim nodejs-remove-playbook.yml
 ```
 
@@ -592,11 +596,13 @@ Webový interface noVNC serveru by měl být dostupný na portu `9000` a dostupn
 > **Bonus**: Umožněte nastavit heslo pro připojení k noVNC serveru, pomocí proměnné v inventory souboru.
 
 <details>
-<summary>Řešení</summary>
+    <summary>
+        Řešení
+    </summary>
 
 Nejdříve upravíme `inventory` soubor, aby obsahoval skupinu pro servery, na kterých chceme nainstalovat XFCE a noVNC
 
-```bash
+```shell
 control $ vim inventory
 ```
 
@@ -613,11 +619,11 @@ Budeme spouštět VNC server, který očekává inicializační skript `~/.vnc/x
 
 Vytvoříme si tedy tento skript
 
-```bash
+```shell
 control $ vim files/xstartup
 ```
 
-```bash
+```shell
 #!/bin/sh
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
@@ -628,7 +634,7 @@ startxfce4 &
 
 Jako další krok si vytvoříme šablonu pro systemd service pro TightVNC server
 
-```bash
+```shell
 control $ vim templates/tightvnc.service.j2
 ```
 
@@ -650,7 +656,7 @@ WantedBy=multi-user.target
 
 Dále si vytvoříme šablonu pro systemd service pro noVNC server
 
-```bash
+```shell
 control $ vim templates/novnc.service.j2
 ```
 
@@ -671,7 +677,7 @@ WantedBy=multi-user.target
 
 A konečně si vytvoříme playbook `xfce-playbook.yml` s následujícím obsahem
 
-```bash
+```shell
 control $ vim xfce-novnc-playbook.yml
 ```
 
