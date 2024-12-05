@@ -270,6 +270,11 @@ control $ vim files/index.html
 
 Upravte playbook tak, aby zkopíroval tento soubor na oba servery
 
+<details>
+    <summary>
+        Řešení
+    </summary>
+
 ```shell
 control $ vim nginx-playbook.yml
 ```
@@ -280,6 +285,8 @@ control $ vim nginx-playbook.yml
         src: index.html
         dest: /var/www/html/index.html
 ```
+
+</details>
 
 > **Poznámka**: `src` je cesta k souboru na `control` serveru, `dest` je cesta, kam se má soubor zkopírovat na cílový server.
 > `src` je lokace souboru pro zkopírování relativní k adresáři `files`.
@@ -338,6 +345,11 @@ control $ vim templates/id.html.j2
 
 Upravte playbook tak, aby zkopíroval tuto šablonu na oba servery
 
+<details>
+    <summary>
+        Řešení
+    </summary>
+
 ```shell
 control $ vim nginx-playbook.yml
 ```
@@ -348,6 +360,8 @@ control $ vim nginx-playbook.yml
         src: id.html.j2
         dest: /var/www/html/id.html
 ```
+
+</details>
 
 Spusťte znovu playbook, zkontroluje, že nginx zobrazuje správnou stránku s hostname serveru.
 
@@ -385,6 +399,11 @@ server {
 
 Upravte playbook tak, aby zkopíroval tento soubor na oba servery a restartoval nginx, pouze pokud se soubor změnil
 
+<details>
+    <summary>
+        Řešení
+    </summary>
+
 ```shell
 control $ vim nginx-playbook.yml
 ```
@@ -402,6 +421,8 @@ control $ vim nginx-playbook.yml
         state: restarted
       when: nginx_conf.changed
 ```
+
+</details>
 
 > **Poznámka**: `/etc/nginx/sites-available/default` je cesta k defaultní konfiguraci nginx na Ubuntu.
 
@@ -427,7 +448,7 @@ Vytvořte také playbook, který tento cron job odstraní.
 
 <details>
     <summary>
-        Řešení
+        Řešení (ale zkuste to fakt nejdříve sami)
     </summary>
 
 Vytvořte si soubor `cron-playbook.yml` s následujícím obsahem
@@ -484,7 +505,7 @@ Po prvním úspěšném spuštění serveru, upravte zdrojový soubor (např. up
 
 <details>
     <summary>
-        Řešení
+        Řešení (ale zkuste to fakt nejdříve sami)
     </summary>
 
 Vytvořte si soubor `files/server.js` s následujícím obsahem
@@ -597,7 +618,7 @@ Webový interface noVNC serveru by měl být dostupný na portu `9000` a dostupn
 
 <details>
     <summary>
-        Řešení
+        Řešení (ale zkuste to fakt nejdříve sami)
     </summary>
 
 Nejdříve upravíme `inventory` soubor, aby obsahoval skupinu pro servery, na kterých chceme nainstalovat XFCE a noVNC
