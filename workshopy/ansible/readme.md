@@ -574,3 +574,203 @@ control $ vim nodejs-remove-playbook.yml
 ```
 
 </details>
+
+### Samostatná úloha 3
+
+Pomocí Ansible playbooku nainstaluje a nakonfigurujte XFCE desktop environment na serveru `server-1`.
+
+Poté nainstaluje noVNC server a nakonfigurujte ho tak, aby se připojil k virtuálnímu monitoru, který bude zobrazovat XFCE desktop.
+
+Webový interface noVNC serveru by měl být dostupný na portu `9000` a dostupný přes Coder.
+
+> **Poznámka**: noVNC server je webový VNC klient, který umožňuje připojit se k VNC serveru přes webový prohlížeč.
+> 
+> Podle zvoleného VNC serveru a jeho nastavní, může být potřeba nastavit heslo pro připojení (heslo pro VNC server).
+
+> **Bonus**: Umožněte nastavit port, na kterém bude noVNC server běžet, pomocí proměnné v inventory souboru.
+
+> **Bonus**: Umožněte nastavit heslo pro připojení k noVNC serveru, pomocí proměnné v inventory souboru.
+
+<details>
+<summary>Řešení</summary>
+
+Nejdříve upravíme `inventory` soubor, aby obsahoval skupinu pro servery, na kterých chceme nainstalovat XFCE a noVNC
+
+```bash
+control $ vim inventory
+```
+
+```ini
+[all]
+<ip-of-server-1>
+<ip-of-server-2>
+
+[xfce_novnc]
+<ip-of-server-1> novnc_port=9000 novnc_password=123456
+```
+
+Budeme spouštět VNC server, který očekává inicializační skript `~/.vnc/xstartup`, který spustí XFCE desktop.
+
+Vytvoříme si tedy tento skript
+
+```bash
+control $ vim files/xstartup
+```
+
+```bash
+#!/bin/sh
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+
+xrdb $HOME/.Xresources
+startxfce4 &
+```
+
+Jako další krok si vytvoříme šablonu pro systemd service pro TightVNC server
+
+```bash
+control $ vim templates/tightvnc.service.j2
+```
+
+```ini
+[Unit]
+Description=TightVNC server
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/vncserver :1
+ExecStop=/usr/bin/vncserver -kill :1
+User={{ ansible_user }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Dále si vytvoříme šablonu pro systemd service pro noVNC server
+
+```bash
+control $ vim templates/novnc.service.j2
+```
+
+```ini
+[Unit]
+Description=noVNC server
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/websockify --web /usr/share/novnc/ {{ novnc_port }} localhost:5901
+User={{ ansible_user }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+A konečně si vytvoříme playbook `xfce-playbook.yml` s následujícím obsahem
+
+```bash
+control $ vim xfce-novnc-playbook.yml
+```
+
+```yaml
+---
+- name: Install XFCE accessible via noVNC
+  hosts: xfce_novnc
+  become: true
+  tasks:
+    - name: Install XFCE desktop
+      apt:
+        name: xfce4 dbus-x11
+        state: present
+    
+    - name: Install TightVNC server
+      apt:
+        name: tightvncserver
+        state: present
+     
+    - name: Install noVNC
+      apt:
+        name: novnc
+        state: present
+    
+    - name: Create .vnc directory in home directory
+      file:
+        path: /home/{{ ansible_user }}/.vnc
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 0700
+
+    - name: Generate VNC password
+      command:
+        cmd: vncpasswd /home/{{ ansible_user }}/.vnc/passwd
+        stdin: "{{ novnc_password }}\n{{ novnc_password }}\nn"
+    
+    - name: Set correct permissions for VNC password
+      file:
+        path: /home/{{ ansible_user }}/.vnc/passwd
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 0600
+    
+    - name: Copy xstartup file
+      copy:
+        src: xstartup
+        dest: /home/{{ ansible_user }}/.vnc/xstartup
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 0700
+      register: xstartup_file
+    
+    - name: Copy TightVNC service file
+      template:
+        src: tightvnc.service.j2
+        dest: /etc/systemd/system/tightvnc.service
+        owner: root
+        group: root
+        mode: 0644
+      register: tightvnc_service
+    
+    - name: Copy noVNC service file
+      template:
+        src: novnc.service.j2
+        dest: /etc/systemd/system/novnc.service
+        owner: root
+        group: root
+        mode: 0644
+      register: novnc_service
+
+    - name: Start TightVNC service
+      service:
+        name: tightvnc
+        state: started
+        enabled: yes
+    
+    - name: Start noVNC server
+      service:
+        name: novnc
+        state: started
+        enabled: yes
+    
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+      when: xstartup_file.changed or tightvnc_service.changed or novnc_service.changed
+    
+    - name: Restart TightVNC service
+      service:
+        name: tightvnc.service
+        state: restarted
+      when: xstartup_file.changed or tightvnc_service.changed
+    
+    - name: Restart noVNC service
+      service:
+        name: novnc.service
+        state: restarted
+      when: novnc_service.changed
+```
+
+</details>
