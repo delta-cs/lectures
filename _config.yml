@@ -2,3 +2,4 @@ name: DELTA - Střední škola informatiky a ekonomie, s.r.o.
 title: null
 
 markdown: GFM
+render_with_liquid: false
