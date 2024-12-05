@@ -448,7 +448,6 @@ control $ vim cron-playbook.yml
       cron:
         name: "log_time"
         minute: "*"
-        hour: "*"
         job: "date >> /var/log/cron.log"
 ```
 
