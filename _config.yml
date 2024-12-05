@@ -1,2 +1,4 @@
 name: DELTA - Střední škola informatiky a ekonomie, s.r.o.
 title: null
+kramdown:
+  parse_block_html: true
