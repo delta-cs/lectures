@@ -1,3 +1,5 @@
+<!-- {% raw %} -->
+
 # Ansible workshop
 
 
@@ -780,3 +782,5 @@ control $ vim xfce-novnc-playbook.yml
 ```
 
 </details>
+
+<!-- {% endraw %} -->
