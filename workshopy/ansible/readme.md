@@ -18,7 +18,7 @@ Hlavními koncepty Ansible jsou:
 
 ## Příprava playgroundu
 
-Nastartuje si nový `ubuntu` server na přes Coder, nazvěte ho
+Nastartuje si nový `ubuntu` server přes Coder, nazvěte ho
 - `<username>-ansible-control`
 
 Dále si nastartujte 2 další `ubuntu` servery a nazvěte je 
