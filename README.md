@@ -105,23 +105,23 @@ Každý žák pracuje na [vlastním projektu](#individuální-projekt), který s
 nebo může využít nabízená témata pro [rozvoj školního ekosystému](#projekt-pro-rozvoj-školního-ekosystému)
 a nebo [modelové projekty](#modelový-projekt).
 
-| Téma                               |
-|------------------------------------|
-| Práce s verzovacím systémem Git    |
-| Linux                              |
-| Networking                         |
-| Docker a kontejnerizace            |
-| Objektově orientované programování |
-| [Ansible](workshopy/ansible)       |
-| Testování softwaru                 |
-| Autorizace a autentizace           |
-| Microservices a další architektury |
-| Relační databáze                   |
-| NoSQL databáze                     |
-| AWS a cloud                        |
-| CI/CD                              |
-| Monitoring a logování              |
-| ...                                |
+| Téma                                  |
+|---------------------------------------|
+| Práce s verzovacím systémem Git       |
+| Linux                                 |
+| Networking                            |
+| Docker a kontejnerizace               |
+| Objektově orientované programování    |
+| [Ansible](workshopy/ansible)          |
+| Testování softwaru                    |
+| Autorizace a autentizace              |
+| Microservices a další architektury    |
+| [Relační databáze/SQL](workshopy/sql) |
+| NoSQL databáze                        |
+| AWS a cloud                           |
+| CI/CD                                 |
+| Monitoring a logování                 |
+| ...                                   |
 
 
 ## Individuální projekt
