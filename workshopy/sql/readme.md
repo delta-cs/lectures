@@ -286,7 +286,25 @@ Existují různé typy `JOIN`, nejčastější jsou:
 - `RIGHT JOIN` - vrátí všechny záznamy z pravé tabulky a záznamy z levé tabulky, které mají shodný identifikátor
 - `FULL JOIN` - vrátí všechny záznamy z obou tabulek
 
-Vytvořme si další tabulky. Vytvořte tabulku `users` a `ratings`.
+Také klasifikujeme následující vazby mezi tabulkami:
+
+- `1:1` - jeden k jednomu
+- `1:n` - jeden k mnoha
+- `n:m` - mnoho k mnoha
+
+Tyto vazby se modelují pomocí cizích klíčů.
+
+U vazby `1:1` jedna tabulka obsahuje primární klíč a druhá tabulka obsahuje cizí klíč, který je ale zároveň také primárním klíčem.
+Příklad je například tabulka `users` a `profiles`, kde každý uživatel má pouze jeden záznam v tabulce `profiles`, kde například ukládáme dodatkové informace o uživateli.
+
+U vazby `1:n` jedna tabulka obsahuje primární klíč a druhá tabulka obsahuje cizí klíč, který odkazuje na primární klíč.
+Rozdíl oproti `1:1` je, že druhá tabulka má svůj vlastní primární klíč a sloupeček s cizím klíčem nemusí být unikátní.
+Příklad je například tabulka `users` a `posts`, kde každý uživatel může mít více příspěvků, ale příspěvek je napojen pouze jedním uživatelem.
+
+Pro vazbu typu `n:m` se používá spojovací tabulka, která obsahuje dvojice cizích klíčů, které odkazují na primární klíče obou tabulek.
+Příklad je například tabulka `users` a `roles`, kde každý uživatel může mít více rolí a každá role může být přiřazena více uživatelům.
+
+Vytvořme si další tabulky `users` a `ratings`.
 
 ```sql
 CREATE TABLE users (
@@ -716,6 +734,8 @@ CREATE TABLE movie_prices (
     FOREIGN KEY (movie_id) REFERENCES movies(id)
 );
 ```
+
+</details>
 
 Vytvořte jednoduchou aplikaci, která se připojí na databázi a bude umožňovat uživatelům zakoupit film.
 
