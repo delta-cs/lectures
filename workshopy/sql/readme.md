@@ -575,7 +575,7 @@ Vytvořte pohled, který bude obsahovat všechny filmy a jejich průměrné hodn
 
 ```sql
 CREATE VIEW movies_ratings AS
-SELECT title, AVG(rating) FROM movies
+SELECT title, AVG(rating) AS avg_rating FROM movies
 JOIN ratings ON movies.id = ratings.movie_id
 GROUP BY title;
 ```
@@ -593,8 +593,8 @@ Například vypsat všechny filmy, které mají průměrné hodnocení vyšší 
 
 ```sql
 SELECT * FROM movies_ratings
-WHERE AVG(rating) > 8
-ORDER BY AVG(rating) DESC;
+WHERE avg_rating > 8
+ORDER BY avg_rating DESC;
 ```
 
 </details>
