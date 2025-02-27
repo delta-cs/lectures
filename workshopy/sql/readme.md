@@ -158,23 +158,6 @@ INSERT INTO movies (title, year) VALUES
     ('The Hobbit: An Unexpected Journey', 2012),
     ('The Hobbit: The Desolation of Smaug', 2013),
     ('The Hobbit: The Battle of the Five Armies', 2014),
-    ('The Lion King', 1994),
-    ('The Shawshank Redemption', 1994),
-    ('The Godfather', 1972),
-    ('The Dark Knight', 2008),
-    ('The Lord of the Rings: The Return of the King', 2003),
-    ('Pulp Fiction', 1994),
-    ('Forrest Gump', 1994),
-    ('Inception', 2010),
-    ('The Matrix', 1999),
-    ('The Silence of the Lambs', 1991),
-    ('The Green Mile', 1999),
-    ('The Lord of the Rings: The Fellowship of the Ring', 2001),
-    ('The Lord of the Rings: The Two Towers', 2002),
-    ('The Lord of the Rings: The Return of the King', 2003),
-    ('The Hobbit: An Unexpected Journey', 2012),
-    ('The Hobbit: The Desolation of Smaug', 2013),
-    ('The Hobbit: The Battle of the Five Armies', 2014),
     ('The Lion King', 1994);
 ```
 
