@@ -837,4 +837,483 @@ find ~ -type f -mtime -7
 
 </details>
 
+Jak najdete všechny soubory ve vašem domovském adresáři, které obsahují písmena `rc` **nebo** `conf`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+find ~ -type f -name '*rc*' -o -name '*conf*'
+```
+
+</details>
+
+### `wc`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man1/wc.1.html)
+
+`wc` je základní příkaz pro počítání znaků, slov a řádků v textu (word count)
+
+Vyzkoušejte si spočítat počet řádků, slov a znaků v souboru `/etc/passwd`
+
+```shell
+wc /etc/passwd
+```
+
+Jak zobrazíte pouze počet řádků v souboru `/etc/passwd`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+wc -l /etc/passwd
+```
+
+</details>
+
+Jak zobrazíte pouze počet slov v souboru `/etc/passwd`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+wc -w /etc/passwd
+```
+
+</details>
+
+Jak zobrazíte pouze počet znaků v souboru `/etc/passwd`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+wc -c /etc/passwd
+```
+
+</details>
+
+### `cut`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man1/cut.1.html)
+
+`cut` je základní příkaz pro výběr a výřezu částí textu (cut out)
+
+Vyzkoušejte si vypsat první sloupec souboru `/etc/passwd`
+
+```shell
+cut -d: -f1 /etc/passwd
+```
+
+`-d` určuje oddělovač, ve kterém je soubor zapsán, v tomto případě `:`
+
+`-f` určuje, který sloupec (po rozdělení oddělovačem) chceme vypsat (první sloupec má index `1`)
+
+Jak zobrazíte třetí sloupec souboru `/etc/passwd`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+cut -d: -f3 /etc/passwd
+```
+
+</details>
+
+Jak zobrazíte jméno uživatele a jeho domovský adresář ze souboru `/etc/passwd`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+cut -d: -f1,6 /etc/passwd
+```
+
+</details>
+
+### `sed`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man1/sed.1p.html)
+
+`sed` je základní příkaz pro editaci textu (stream editor)
+
+Vyzkoušejte si nahradit všechny dvojtečky ve souboru `/etc/passwd` za mezery
+
+```shell
+sed 's/:/ /g' /etc/passwd
+```
+
+`'s/:/ /g'` je regulární výraz pro nahrazení všech výskytů `:` za mezeru
+
+Formát je `s/<pattern>/<replacement>/<flags>` kde
+
+- `s` znázorňuje, že se jedná o substituci
+- `<pattern>` je regulární výraz, který chceme nahradit
+- `<replacement>` je řetězec, kterým chceme ho nahradit
+- `<flags>` jsou různé přepínače, například `g` pro globální nahrazení (klasické flagy pro regulární výrazy)
+
+Jak zamaskujete uživatelské jména ve souboru `/etc/passwd` za `<masked>`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+sed 's/^[^:]*:/<masked>:/g' /etc/passwd
+```
+
+</details>
+
+## Příkazy a expanze
+
+### Expanze
+
+[manuálová stránka](https://www.man7.org/linux/man-pages/man1/bash.1.html#EXPANSION)
+
+Shellové expanze je jeden z kroků při zpracovávní shellových příkazů a zaměřuje se na speciální znaky
+
+- `*` - shoda s libovolným počtem znaků
+- `?` - shoda s jedním znakem
+- `[]` - shoda s jedním znakem z množiny
+- `{}` - expanze složených závorek
+- `~` - domovský adresář
+- `~<username>` - domovský adresář uživatele
+- ...
+
+Vyzkoušejte si vypsat všechny skryté soubory ve vašem domovském adresáři
+
+```shell
+ls ~/.*
+```
+
+Shell tyto znaky expanduje před spuštěním samotného příkazu nahradí skutečnými soubory
+
+`ls` tedy nemusí umět pracovat s těmito znaky, ale shell mu je předá již expandoané
+
+Podívejte se například na to, jak jednoduchý `echo` příkaz pracuje s expanzí
+
+```shell
+echo ~/.*
+```
+
+Jak zobrazíte řetězce `hello1`, `hello2`, ... , `hello849`, `hello850`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+echo hello{1..850}
+```
+
+</details>
+
+Podobný styl expanze provádí i pro proměnné prostředí
+
+```shell
+echo $SHELL
+```
+
+Nastavte si do proměnné `MY_VAR` hodnotu `hello`
+
+```shell
+MY_VAR=hello
+```
+
+Jak zobrazíte řetezec `MY_VAR is set to hello`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+echo "MY_VAR is set to $MY_VAR"
+```
+
+</details>
+
+Shell **neexpanduje** proměnné v jednoduchých uvozovkách
+
+```shell
+echo 'This variable will not be expanded: $MY_VAR'
+```
+
+## Skripty
+
+Shellové příkazy mohou být skládány do skriptů, které mohou být spouštěny jako celek
+
+Vytvořte si skript `hello.sh`, který vypíše řetězec `Hello, world!`
+
+```shell
+#!/bin/bash
+
+echo 'Hello, world!'
+```
+
+Skripům je vhodné nastavit práva pro spuštění
+
+```shell
+chmod +x hello.sh
+```
+
+Následně můžete skript spustit
+
+```shell
+./hello.sh
+```
+
+Vytvořte si skript `greet.sh`, který vypíše řetězec `Hello, $1!`
+
+> `$1` je první argument, který je předán skriptu
+
+Skript budeme chtít volat s argumentem, například `world`
+
+```shell
+./greet.sh world
+```
+
+Jak vytvoříte skript `greet.sh`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+#!/bin/bash
+
+echo "Hello, $1!"
+```
+
+```shell
+chmod +x greet.sh
+```
+
+</details>
+
+### `for`
+
+`for` je základní příkaz pro iteraci přes seznam prvků
+
+Vytvořte si skript `hello.sh`, který vypíše řetězec `Hello, world!` 5x
+
+```shell
+#!/bin/bash
+
+for i in {1..5}
+do
+    echo "Hello, world!"
+done
+```
+
+Jak vytvoříte skript `greet.sh`, který vypíše řetězec předaný řetezec X-krát?
+
+Volání bude vypada takto
+
+```shell
+./greet.sh 10 "Hello, world!"
+```
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+#!/bin/bash
+
+for i in {1..$1}
+do
+    echo "$2"
+done
+```
+
+</details>
+
+### `if`
+
+`if` je základní příkaz pro podmíněné vykonání příkazů
+
+Vytvořte si skript `greet.sh`, který vypíše
+
+- `foo` pokud je první argument `bar`
+- `baz` pokud je první argument `qux`
+
+Volání bude vypadat takto
+
+```shell
+./greet.sh bar
+
+./greet.sh qux
+```
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+#!/bin/bash
+
+if [ "$1" == "bar" ]
+then
+    echo "foo"
+elif [ "$1" == "qux" ]
+then
+    echo "baz"
+fi
+```
+
+</details>
+
+### `case`
+
+`case` je základní příkaz pro podmíněné vykonání příkazů, který je vhodný pro porovnání s více hodnotami
+
+Jedná se o alternativu k více známému `switch` příkazu v jiných programovacích jazycích
+
+Vytvořte si skript `greet.sh`, který vypíše
+
+- `foo` pokud je první argument `bar`
+- `baz` pokud je první argument `qux`
+
+`default` vypíše `unknown`
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+#!/bin/bash
+
+case "$1" in
+    bar)
+        echo "foo"
+        ;;
+    qux)
+        echo "baz"
+        ;;
+    *)
+        echo "unknown"
+        ;;
+esac
+```
+
+</details>
+
+### subshell
+
+Ve skriptech je někdy potřeba spustit příkazy v novém shellu, který je oddělený od rodičovského shellu
+
+Toho lze docílit pomocí subshellu
+
+Vytvořte si skript `subshell.sh`, který si do proměnné `MY_VAR` uloží výstup příkazu `ls -la` a následně tento výstup vypíše
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+#!/bin/bash
+
+MY_VAR=$(ls -la)
+
+echo "$MY_VAR"
+```
+
+</details>
+
+---
+
+
+## Velké samostatné úkoly
+
+### Úkol 1
+
+Vytvořte skript, který podle prvního argumentu vypíše, zdali uživatel s tímto jménem existuje
+
+V případě, že uživatel existuje, vypíše `User exists`, jinak vypíše na standardní chybový výstup `User does not exist` a skončí se stavovým kódem `1`
+
+Použijte pouze příkazy, které jsme si doposud probrali
+
+```shell
+./user_exists.sh root
+```
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+#!/bin/bash
+
+if grep -q "^$1:" /etc/passwd
+then
+    echo "User exists"
+else
+    echo "User does not exist" >&2
+    exit 1
+fi
+```
+
+</details>
+
+Modifikujte skript tak, aby vypsal i uživatelské id, domovský adresář a shell ve formátu
+
+- `uid: <uid>`
+- `home: <home>`
+- `shell: <shell>`
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+#!/bin/bash
+
+if grep -q "^$1:" /etc/passwd
+then
+    UID=$(grep "^$1:" /etc/passwd | cut -d: -f3)
+    HOME=$(grep "^$1:" /etc/passwd | cut -d: -f6)
+    SHELL=$(grep "^$1:" /etc/passwd | cut -d: -f7)
+    
+    echo "uid: $UID"
+    echo "home: $HOME"
+    echo "shell: $SHELL"
+else
+    echo "User does not exist" >&2
+    exit 1
+fi
+```
+
+</details>
+
+### Úkol 2
+
+
+
+
+
+
+
+
 <!-- {% endraw %} -->
