@@ -694,6 +694,28 @@ tail -n +6 /etc/passwd
 
 </details>
 
+Tail má i jeden velmi užitečný přepínač `-f`, který sleduje změny v souboru v reálném čase
+
+Otevřete si 2 okna terminálu ve stejné složce, v jednom spusťte následující příkaz
+
+```shell
+tail -f my-output.txt
+```
+
+V druhém okně terminálu vytvořte soubor `my-output.txt` a zapište do něj nějaký text
+
+```shell
+echo "Hello World" > my-output.txt
+```
+
+Postupně sledujte první okno a u toho zapisujte další řádky
+
+```shell
+echo "Hello World" >> my-output.txt
+```
+
+Tento příkaz je velmi užitečný pro sledování nových záznamů v logovacích souborech
+
 ### `grep`
 
 [manuálová stránka](https://man7.org/linux/man-pages/man1/grep.1.html)
@@ -977,6 +999,202 @@ sed 's/^[^:]*:/<masked>:/g' /etc/passwd
 
 </details>
 
+### `tar`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man1/tar.1.html)
+
+`tar` je základní příkaz pro archivaci souborů a adresářů (tape archive)
+
+Vytvořte si archiv `workshop.tar` ze souborů ve vašem domovském adresáři
+
+```shell
+tar -cf workshop.tar ~
+```
+
+- `-c` vytvoření archivu
+- `-f` určení názvu archivu
+
+Jak zobrazíte obsah archivu `workshop.tar`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+tar -tf workshop.tar
+```
+
+- `-t` zobrazení obsahu archivu
+- `-f` určení názvu archivu
+
+</details>
+
+Jak rozbalíte archiv `workshop.tar` do adresáře `~/workshop`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+tar -xf workshop.tar -C ~
+```
+
+- `-x` rozbalení archivu
+- `-f` určení názvu archivu
+- `-C` určení cílového adresáře
+
+</details>
+
+Jak vyextrahujete pouze soubor `.bash_history` z archivu `workshop.tar`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+tar -xf workshop.tar -C / home/<username>/.bash_history
+```
+
+</details>
+
+Jak jste si možná všimli, `tar` balí i celé cesty k souborům, což může být nežádoucí
+
+Komplikuje nám to například rozbalování archivu, jelikož jsme museli specifikovat
+
+1. root adresář `/` jako cíl rozbalení
+2. kompletní cestu k souboru `.bash_history`
+
+Jak vytvoříte archiv `workshop2.tar`, ve kterém soubory nebudou obsahovat prefix `home/<username>`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+tar -cf workshop2.tar -C ~ .
+```
+
+- `-C` určení kořenového adresáře
+
+</details>
+
+Zobrazte si obsah archivu `workshop2.tar`
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+tar -tf workshop2.tar
+```
+
+Nyní můžeme jednoduše extrahovat soubor `.bash_history` do domovského adresáře
+
+```shell
+tar -xf workshop2.tar ./.bash_history
+```
+
+</details>
+
+> Odstranění prefixu je velmi užitečné, pokud chceme archivovat soubory z jednoho adresáře a následně je rozbalit do jiného adresáře
+
+> Prefix `./` lze dodatečně odstranit pomocí argumentu `--transform='s/^\.\///'`
+
+### `date`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man1/date.1.html)
+
+`date` je základní příkaz pro zobrazení aktuálního data a času
+
+Vyzkoušejte si zobrazit aktuální datum a čas
+
+```shell
+date
+```
+
+Jak zobrazíte pouze aktuální datum?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+date '+%Y-%m-%d'
+```
+
+</details>
+
+Jak zobrazíte pouze aktuální čas?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+date '+%H:%M:%S'
+```
+
+</details>
+
+Jak zobrazíte aktuální datum a čas ve formátu `YYYY-MM-DD HH:MM:SS`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+date '+%Y-%m-%d %H:%M:%S'
+```
+
+</details>
+
+Jak zobrazíte aktuální datum a čas ve formátu `YYYY-MM-DD_HH-MM-SS`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+date '+%Y-%m-%d_%H-%M-%S'
+```
+
+</details>
+
+Jak zobrazíte datum, které bylo před 5 dny?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+date -d '5 days ago' '+%Y-%m-%d'
+```
+
+</details>
+
+Jak zobrazíte datum, které bude za 5 dnů?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+date -d '5 days' '+%Y-%m-%d'
+```
+
+</details>
+
 ## Příkazy a expanze
 
 ### Expanze
@@ -1242,8 +1460,7 @@ echo "$MY_VAR"
 
 ---
 
-
-## Velké samostatné úkoly
+## Samostatné úkoly na skripty
 
 ### Úkol 1
 
@@ -1309,7 +1526,243 @@ fi
 
 ### Úkol 2
 
+Vytvořte zálohou skript, který zazálohuje vaši složku `~/.ssh` do adresáře `~/backup`
 
+Zálhování bude provedeno pomocí `tar` archivu a bude provádět rotaci záloh
+
+- při každém spuštění skriptu se vytvoří nový archiv ve formátu `backup-<timestamp>.tar`
+- při každém spuštění skriptu se smažou nejstarší zálohy, pokud jich je více než 5
+
+Použijte pouze příkazy, které jsme si doposud probrali
+
+```shell
+./backup.sh
+```
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+#!/bin/bash
+
+BACKUP_DIR=~/backup
+SSH_DIR=~/.ssh
+
+# vytvoření adresáře pro zálohy
+mkdir -p $BACKUP_DIR
+
+# vytvoření nové zálohy
+tar -cf $BACKUP_DIR/backup-$(date +%s).tar -C $SSH_DIR .
+
+# smazání nejstarších záloh
+OLD=$(ls -t $BACKUP_DIR | tail -n +6)
+rm -f $BACKUP_DIR/$OLD
+```
+
+</details>
+
+---
+
+## Řetězení příkazů
+
+V shellu můžete řetězit příkazy pomocí `;`, `&&` a `||`
+
+- `;` - odděluje příkazy a spustí je postupně
+- `&&` - odděluje příkazy a spustí je postupně, pokud předchozí příkaz vrátí stavový kód `0`
+- `||` - odděluje příkazy a spustí je postupně, pokud předchozí příkaz vrátí stavový kód `1`
+
+Vyzkoušejte si řetězení příkazů
+
+```shell
+echo "Hello, world!" ; echo "Goodbye, world!"
+```
+
+```shell
+echo "Hello, world!" && echo "Goodbye, world!"
+```
+
+```shell
+echo "Hello, world!" || echo "Goodbye, world!"
+```
+
+Jaký bude výstup následujícího příkazu?
+
+```shell
+echo "Hello, world!" && false || echo "Goodbye, world!"
+```
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+`false` vrací stavový kód `1`, tedy se spustí i poslední příkaz
+
+```text
+Hello, world!
+Goodbye, world!
+```
+
+</details>
+
+Jaký bude výstup následujícího příkazu?
+
+```shell
+exit 1 && echo "Hello, world!"
+```
+
+A jaký bude výstup následujícího příkazu?
+
+```shell
+exit 1 || echo "Hello, world!"
+```
+
+### pipelining
+
+Pipelining je základní technika pro přesměrování výstupu jednoho příkazu na vstup druhého
+
+Vyzkoušejte si pipelining
+
+```shell
+ls ~ | grep 'log'
+```
+
+Jaký bude výstup následujícího příkazu?
+
+```shell
+ls ~ | grep 'log' | wc -l
+```
+
+Zkuste zkombinovat `find` a `grep` tak, aby vypsaly všechny soubory ve vašem domovském adresáři, které obsahují slovo `log`
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+find ~ | grep 'log'
+```
+
+</details>
+
+Modifikujte předchozí příkaz tak, aby místo `/home/<username>` vypisoval pouze `~`
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+find ~ | grep 'log' | sed "s|/home/.*/|~/|"
+```
+
+</details>
+
+## Přesměrování
+
+Výstup příkazů lze přesměrovat do souborů, pípes a jiných procesů
+
+- `>` - přesměrování výstupu do souboru (přepíše obsah, overwrite)
+- `>>` - přesměrování výstupu do souboru (přidá na konec, append)
+- `<` - přesměrování vstupu ze souboru (stdin)
+
+Vyzkoušejte si přesměrování výstupu
+
+```shell
+echo "Hello, world!" > hello.txt
+```
+
+Jaký bude obsah souboru `hello.txt`?
+
+Uložte si výstup příkazu `ls -la` do souboru `ls.txt`
+
+```shell
+ls -la > ls.txt
+```
+
+Velká část programů podporuje čtění vstupu ze standardního vstupu, již jsme viděli například `grep`
+
+### `xargs`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man1/xargs.1.html)
+
+Dalším zajímavým a velmi užitečným programem je `xargs`, který umožňuje zpracovávat vstupní řádky a spouštět s nimi příkazy
+
+Vyzkoušejte si například modifikaci výstupu příkazu `ls` pomocí `xargs`
+
+```shell
+ls | xargs -I {} echo "File: {}"
+```
+
+- `-I` určuje, že se má nahradit `{}` řádkem vstupu
+
+Pokud tedy na vstupu dostáváme seznam souborů, můžeme s nimi spouštět různé příkazy a ukladát je například do specální složky
+
+Jak zkopírujete všechny soubory ve vašem domovském adresáři do složky `~/backup`, ale se jménem ve formátu `<filename>.bak`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+ls ~ | xargs -I {} cp {} ~/backup/{}.bak
+```
+
+</details>
+
+### `tee`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man1/tee.1.html)
+
+`tee` je základní program, který zapisuje vstup na standardní výstup a zároveň do souboru
+
+Jedná se o tzv. T-příkaz, který zapisuje vstup na dvě místa 
+
+- "dolů", do souboru
+- "dopředu", na svůj standardní výstup
+
+Využívá se například při logování
+
+Vyzkoušejte si zápis výstupu příkazu `ls` do souboru `ls.txt` a zároveň na standardní výstup
+
+```shell
+ls -la | tee lsla.txt
+```
+
+Lze nahlédnout, že `tee` vypisuje výstup na standardní našeho terminálu, ale zároveň zapisal výstup příkazu `ls` do souboru `lsla.txt`
+
+Programy mohou zapisovat do tzn. file-descriptorů, které jsou číslovány
+
+- `0` - standardní vstup (stdin, readonly)
+- `1` - standardní výstup (stdout)
+- `2` - standardní chybový výstup (stderr)
+- ...
+
+Pokud některý program zapisuje to `stderr`, lze tento výstup přesměrovat do `stdout` pomocí `2>&1`
+
+Ale zajímavější je často odfiltrovat klasický `stdout` výstup a ponechat pouze `stderr`
+
+```shell
+<program> >/dev/null
+```
+
+Tímto jsme shellu řekli, že má filedescriptor `1` (defaultní) (stdout) přesměrovat do `/dev/null`, což je speciální soubor, který všechno co se do něj zapíše, okamžitě zahodí
+
+Stejným postupem můžeme odfiltrovat chybový výstup
+
+```shell
+<program> 2>/dev/null
+```
+
+Tímto jsme shellu řekli, že má filedescriptor `2` (stderr) přesměrovat do `/dev/null`, což je speciální soubor, který všechno co se do něj zapíše, okamžitě zahodí
+
+Filtrovat stderr je někdy vhodné, pokud například spouštíme `find` na celém systémovém disku a jelikož do některých adresářů nemáme přístup, chybový výstup může být velmi dlouhý
+
+## `sudo`, `su` a uživatelská oprávnění
 
 
 
