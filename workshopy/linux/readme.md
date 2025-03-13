@@ -1764,9 +1764,284 @@ Filtrovat stderr je někdy vhodné, pokud například spouštíme `find` na cel�
 
 ## `sudo`, `su` a uživatelská oprávnění
 
+Základní uživatelská oprávnění v Linuxu jsou založena na třech oprávněních
 
+- `r` - read (čtení)
+- `w` - write (zápis)
+- `x` - execute (spuštění)
 
+Linux poté umožňuje nastavovat tyto práva na soubory a adresáře pro tři skupiny uživatelů
 
+- vlastník souboru
+- vlastnící skupina uživatelů
+- ostatní uživatelé
 
+Vyzkoušejte si zobrazit uživatelská oprávnění souboru `/etc/passwd`
+
+```shell
+ls -la /etc/passwd
+```
+
+Výsupt by měl vypadat nějak takto
+
+```text
+-rw-r--r-- 1 root root
+```
+
+První znak určuje typ souboru
+
+- `-` - běžný soubor
+- `d` - adresář
+- `l` - symbolický odkaz
+- ...
+
+Vlastník souboru je `root` a hlavní skupina u tohoto souboru je stejnojmenná skupina `root`
+
+Následující tři skupiny po třech znacích určují práva pro vlastníka, skupinu a ostatní uživatele
+
+V tomto případě tedy přečteme, že
+
+- vlastník souboru má práva na čtení a zápis
+- uživatelé ve skupině `root` mají práva na čtení
+- ostatní uživatelé mají práva na čtení
+
+Práva lze jednoduš zakódovat pomocí binární soustavy do tří bitů
+
+- první bit určuje, zdali můžeme číst
+- druhý bit určuje, zdali můžeme zapisovat
+- třetí bit určuje, zdali můžeme spouštět
+
+Exisutje tedy 8 kombinací těchto tří bitů, které lze zakódovat do čísel 0 - 7
+
+Často se setkáte s tím, že se práva učují například jako 775, kde po přepisu do binárního tvaru dostaneme
+
+- 7 - 111 - rwx (vlastník může číst, zapisovat a spouštět)
+- 7 - 111 - rwx (skupina může číst, zapisovat a spouštět)
+- 5 - 101 - r-x (ostatní mohou číst a spouštět)
+
+Vytvořte si soubor permissions.txt
+
+```shell
+touch permissions.txt
+```
+
+Základní práva jsou nastavena na většine linuxu následovně 
+
+```text
+-rw-r--r--
+```
+
+> základní nastavení práv pro nové soubory řídí `umask`, který odebírá práva od 666.
+> 
+> Na většině systémů je `umask` nastaven na 022, což znamená, že se odeberou práva 2 (write) pro skupinu a ostatní uživatele
+> 
+> [manuálová stránka](https://man7.org/linux/man-pages/man1/umask.1p.html)
+
+### `chmod`
+
+Na změnu práv k souborům a adresářům slouží příkaz `chmod`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man1/chmod.1p.html)
+
+Vyzkoušejte si změnit práva souboru `permissions.txt` na plná prává, tzn čtení, zápis i spouštění pro všechny uživatele
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+chmod 777 permissions.txt
+```
+
+nebo více čitelná alternativa
+
+```shell
+chmod u+rwx,g+rwx,o+rwx permissions.txt
+```
+
+</details>
+
+Jak změníte práva souboru `permissions.txt` na čtení a zápis jenom pro vlastníka souboru?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+chmod 600 permissions.txt
+```
+
+nebo více čitelná alternativa
+
+```shell
+chmod u+rw,g-rwx,o-rwx permissions.txt
+```
+
+</details>
+
+### `sudo`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man8/sudo.8.html)
+
+`sudo` je základní příkaz pro spuštění příkazů s oprávněními jiného uživatele, primárně s oprávněními superuživatele (root)
+
+Pomocí normálního uživatele například nemůžete měnit soubory ve složce `/etc`, vyzkou3ejte si
+
+```shell
+touch /etc/cant-create-file
+```
+
+```text
+touch: cannot touch '/etc/cant-create-file': Permission denied
+```
+
+Nicméně pokud použijeme prozatím magický příkaz `sudo` před naším příkazem, vlastně tím systému říkáme
+
+- jako root spusti následující příkaz
+
+```shell
+sudo touch /etc/can-create-file
+```
+
+Pokud se podíváme na práva k souboru, zjistíme, že soubor doopravdy existuje a vlastní ho root
+
+```shell
+ls -la /etc/can-create-file
+```
+
+```text
+-rw-r--r-- 1 root root 0 Mar 13 11:38 /etc/can-create-file
+```
+
+To, že nás uživatel může používat `sudo` a spouštět takto příkazy jako root
+je definované v souboru `/etc/sudoers`
+
+```shell
+sudo cat /etc/sudoers
+```
+
+```text
+...
+
+# Allow members of group sudo to execute any command
+%sudo   ALL=(ALL:ALL) ALL
+
+...
+```
+
+Tento řádek konfiguruje `sudo` příkaz, aby povolil uživatelům ve skupině `sudo`
+
+Formát je následující
+
+```text
+<user/group> <host>=(<runas>) <command>
+```
+
+- na jakémkoliv hostu (stroji)
+- za jakéhokoliv uživatele
+- jakýkoliv příkaz
+
+Pokud chceme přidat uživatele do skupiny `sudo`, můžeme použít příkaz `usermod`
+
+```shell
+sudo usermod -aG sudo <username>
+```
+
+Takto nastavené `sudo` avšak uživatele nejdříve požádá o heslo,
+na Coder instancích je přímo pro vašeho uživatele nastavené speciální pravidlo v souboru `/etc/sudoers.d/90-cloud-init-users`
+
+```shell
+sudo cat /etc/sudoers.d/90-cloud-init-users
+```
+
+```text
+<username> ALL=(ALL) NOPASSWD:ALL
+```
+
+Toto pravidlo říká, že uživatel `<username>` může používat `sudo` **bez hesla**
+
+### `su`
+
+[manuálová stránka](https://man7.org/linux/man-pages/man1/su.1.html)
+
+`su` je základní příkaz pro změnu uživatele (switch user)
+
+Umožňuje nám přepnout se dočasně na jiného uživatele, pokud máme dostatečná oprávnění a provádět příkazy jako tento uživatel
+
+Nejdříve si musíme nějakého uživatele vytvořit a nastavit mu heslo
+
+```shell
+sudo useradd demo
+sudo passwd demo
+```
+
+Následně se můžeme přepnout na tohoto uživatele
+
+```shell
+su demo
+```
+
+Po takto jednoduchém přepnutí se nám zobrazí nový shell, který běží jako uživatel `demo`, ale zůstáváme stále v původním adresáři
+
+```shell
+pwd
+```
+
+```text
+/home/<username>
+```
+
+Jelikož jsme jiný uživatel, nemáme práva na soubory ve složce `/home/<username>`
+
+```shell
+ls -la
+```
+
+```text
+ls: cannot open directory '.': Permission denied
+```
+
+Tento uživatel nemá ani práva na používání `sudo`
+
+```shell
+sudo ls -la
+```
+
+```text
+demo is not in the sudoers file.
+```
+
+Pokud chceme zase přepnout zpět na původního uživatele, můžeme použít příkaz `exit`
+
+```shell
+exit
+```
+
+Pomocí `visudo` nebo pomocí editace souborů v `/etc/sudoers.d/` můžeme nastavit,
+kteří uživatelé mohou používat `sudo` a jaké mají mít práva
+
+Jak přidáte práva uživateli `demo` k používání `sudo`, ale pouze na příka `ls`?
+
+<details>
+    <summary>
+        Řešení
+    </summary>
+
+```shell
+echo "demo ALL=(ALL) NOPASSWD:/bin/ls" | sudo tee /etc/sudoers.d/demo
+```
+
+</details>
+
+Zkuste se znovu přepnout na uživatele `demo` a zkusit spustit příkaz `ls` pomocí `sudo`
+
+```shell
+su demo
+sudo ls
+```
+
+Tentokát by se vám již mělo podařit spustit příkaz `ls` pomocí `sudo` a vypsat soubory v domovském adresáři jiného uživatele.
 
 <!-- {% endraw %} -->
