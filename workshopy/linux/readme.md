@@ -1355,7 +1355,7 @@ Volání bude vypada takto
 ```shell
 #!/bin/bash
 
-for i in {1..$1}
+for i in $(seq 1 $1)
 do
     echo "$2"
 done
