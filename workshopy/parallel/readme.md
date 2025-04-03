@@ -120,7 +120,9 @@ Podmínkové proměnné (condition variables) jsou synchronizační primitiva,
 která nám umožňují synchronizovat vlákna na základě určité podmínky.
 
 Podmínkové proměnné se používají ve spojení s mutexy (vzájemným vyloučením),
-abychom zajistili, že vlákno čeká na určitou podmínku,
+abychom zajistili, že vlákno čeká na určitou podmínku
+
+Ukázku použití podmínkových proměnných najdete v souboru [conditional_variable.c](code/05_conditional_variable/conditional_variable.c)
 
 ## OpenMP
 
