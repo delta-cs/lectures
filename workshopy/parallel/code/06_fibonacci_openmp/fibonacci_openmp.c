@@ -27,15 +27,13 @@ int main() {
     clock_gettime(CLOCK_MONOTONIC, &start);
 
     #pragma omp parallel for num_threads(NUM_THREADS)
-    for (int i = 0; i < ITERATIONS; ++i) {
-        ull result = fib(FIBONACCI_INPUT);
-        // Note: Printing from multiple threads can interleave lines (stdout not thread-safe).
-        printf("%d: %llu\n", i, result);
+    for (int i = 0; i < ITERATIONS; i++) {
+        printf("%d: %llu\n", i, fib(FIBONACCI_INPUT));
     }
 
     clock_gettime(CLOCK_MONOTONIC, &end);
-    double elapsed = time_diff_sec(start, end);
 
+    double elapsed = time_diff_sec(start, end);
     printf("Elapsed time: %f\n", elapsed);
 
     return 0;

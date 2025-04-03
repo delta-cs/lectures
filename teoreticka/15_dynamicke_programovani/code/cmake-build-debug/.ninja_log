@@ -1,0 +1,17 @@
+# ninja log v6
+1	158	1732193173680069813	CMakeFiles/fib_recursive.dir/fibonacci/fib_recursive.c.o	c621042cf91128a0
+158	263	1732193173836890686	fib_recursive	f7e41b6f99d97d49
+1	146	1732195630744750157	CMakeFiles/fib_memoization.dir/fibonacci/fib_memoization.c.o	a81b15fa8aa92195
+147	241	1732195630890694243	fib_memoization	f289019b2034a20f
+2	53	1732197031941420994	CMakeFiles/knapsack_recursive.dir/knapsack/knapsack_recursive.c.o	66d57f5466190f18
+53	89	1732197031992147562	knapsack_recursive	d1cd23f83b3b5062
+1	44	1732197163584907971	CMakeFiles/knapsack_recursive.dir/knapsack/knapsack_recursive.c.o	66d57f5466190f18
+44	80	1732197163627629432	knapsack_recursive	d1cd23f83b3b5062
+1	39	1732197226528591905	CMakeFiles/knapsack_recursive.dir/knapsack/knapsack_recursive.c.o	66d57f5466190f18
+39	72	1732197226566307351	knapsack_recursive	d1cd23f83b3b5062
+2	46	1732197994988740424	CMakeFiles/fib_memoization.dir/fibonacci/fib_memoization.c.o	a81b15fa8aa92195
+46	82	1732197995032461366	fib_memoization	f289019b2034a20f
+1	35	1732198011888900621	CMakeFiles/knapsack_memoization.dir/knapsack/knapsack_memoization.c.o	d597ace79a818fd4
+35	66	1732198011922697440	knapsack_memoization	eff2286266007f0a
+2	46	1732198023776229419	CMakeFiles/knapsack_bottom_up.dir/knapsack/knapsack_bottom_up.c.o	ce6a5d8e98b24910
+46	80	1732198023820190463	knapsack_bottom_up	17f3c922fe5f1d73

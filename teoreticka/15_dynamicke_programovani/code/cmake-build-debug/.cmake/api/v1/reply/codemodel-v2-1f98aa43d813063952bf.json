@@ -1,0 +1,123 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "code",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "fib_bottom_up::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fib_bottom_up-Debug-31cc9a1e5c21529a020e.json",
+					"name" : "fib_bottom_up",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "fib_memoization::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fib_memoization-Debug-d433836f9a71f09d0e62.json",
+					"name" : "fib_memoization",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "fib_recursive::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fib_recursive-Debug-6063f74980167f7f0c7e.json",
+					"name" : "fib_recursive",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "knapsack_bottom_up::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-knapsack_bottom_up-Debug-c3db02024ea0d3aff43f.json",
+					"name" : "knapsack_bottom_up",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "knapsack_bottom_up_items_print::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-knapsack_bottom_up_items_print-Debug-aecbbbd7af0b193fb6f9.json",
+					"name" : "knapsack_bottom_up_items_print",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "knapsack_memoization::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-knapsack_memoization-Debug-880e039d0a0389dc8eaf.json",
+					"name" : "knapsack_memoization",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "knapsack_memoization_items_print::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-knapsack_memoization_items_print-Debug-d07402da694ffa6fde03.json",
+					"name" : "knapsack_memoization_items_print",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "knapsack_recursive::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-knapsack_recursive-Debug-95150328162c47fe77b5.json",
+					"name" : "knapsack_recursive",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug",
+		"source" : "/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

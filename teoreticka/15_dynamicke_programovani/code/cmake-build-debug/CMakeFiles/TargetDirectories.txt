@@ -1,0 +1,10 @@
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/fib_recursive.dir
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/fib_memoization.dir
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/fib_bottom_up.dir
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/knapsack_recursive.dir
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/knapsack_memoization.dir
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/knapsack_bottom_up.dir
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/knapsack_memoization_items_print.dir
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/knapsack_bottom_up_items_print.dir
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/zapotocnylubos/syncthing/Dokumenty/delta-cs/lectures/tereticka/15_dynamicke_programovani/code/cmake-build-debug/CMakeFiles/rebuild_cache.dir

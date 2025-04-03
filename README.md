@@ -5,47 +5,47 @@ jsme založili pro žáky, kteří se chtějí věnovat programování a informa
 
 Je nutné míti základní znalosti programování a být ochoten se učit novým věcem.
 
-![DELTA TopGun poster](/assets/logo.jpg)
+![DELTA TopGun poster](/assets/poster.jpg)
 
-- [Forma výuky](#forma-výuky)
-- [Rozvrh výuky](#rozvrh-výuky)
-- [Teoretická informatika](#teoretická-informatika)
-    - [Zaměření](#zaměření)
-    - [Přednášky](#přednášky)
-- [Praktický seminář](#praktický-seminář)
-    - [Zaměření](#zaměření-1)
-- [Individuální projekt](#individuální-projekt)
-    - [Párování žák × lektor](#párování-žák--lektor)
-    - [Náležitosti projektu](#náležitosti-projektu)
-    - [Každodenní zápis do on-line journalu](#každodenní-zápis-do-on-line-journalu)
+- [Forma výuky](#forma-vyuky)
+- [Rozvrh výuky](#rozvrh-vyuky)
+- [Teoretická informatika](#teoreticka-informatika)
+    - [Zaměření](#teoreticka-informatika-zamereni)
+    - [Přednášky](#teoreticka-informatika-prednasky)
+- [Praktický seminář](#prakticky-seminar)
+    - [Zaměření](#prakticky-seminar-zamereni)
+- [Individuální projekt](#individualni-projekt)
+    - [Párování žák × lektor](#parovani-zak-lektor)
+    - [Náležitosti projektu](#nalezitosti-projektu)
+    - [Každodenní zápis do on-line journalu](#kazdodenni-zapis-do-on-line-journalu)
     - [Status update](#status-update)
-    - [Vlastní projekt](#vlastní-projekt)
-    - [Projekt pro rozvoj školního ekosystému](#projekt-pro-rozvoj-školního-ekosystému)
-    - [Modelový projekt](#modelový-projekt)
-- [Povinnosti zapsaných žáků](#povinnosti-zapsaných-žáků)
-- [Neplnění povinností](#neplnění-povinností)
+    - [Vlastní projekt](#vlastni-projekt)
+    - [Projekt pro rozvoj školního ekosystému](#projekt-pro-rozvoj-skolniho-ekosystemu)
+    - [Modelový projekt](#modelovy-projekt)
+- [Povinnosti zapsaných žáků](#povinnosti-zapsanych-zaku)
+- [Neplnění povinností](#neplneni-povinnosti)
 
-## Forma výuky
+## <a name="forma-vyuky"></a> Forma výuky
 
 V rámci programu jsou vyučovány dva kurzy, které jsou pro žáky povinné
 
-- [Teoretická informatika](#teoretická-informatika)
-- [Praktický seminář](#praktický-seminář)
+- [Teoretická informatika](#teoreticka-informatika)
+- [Praktický seminář](#prakticky-seminar)
 
-a žáci také musí pracovat na [individuálním projektu](#individuální-projekt).
+a žáci také musí pracovat na [individuálním projektu](#individualni-projekt).
 
 Výuka se koná **prezenčně** v režimu **2:1**.
 Dva po sobě jdoucí týdny jsou přednášky či cvičení z teoretické informatiky
 následované jednou hodinou praktického semináře.
 
-## Rozvrh výuky
+## <a name="rozvrh-vyuky"></a> Rozvrh výuky
 
 Rozvrh **prezenční výuky** a **přednášek** je dostupný
 [v kalendáři](https://calendar.google.com/calendar/embed?src=c_779afeb876628db383ca6a9e89a3ffaf3891f7b8b2f59ce4eab9709a37e9df03%40group.calendar.google.com&ctz=Europe%2FPrague).
 
-## Teoretická informatika
+## <a name="teoreticka-informatika"></a> Teoretická informatika
 
-### Zaměření
+### <a name="teoreticka-informatika-zamereni"></a> Zaměření
 
 Kurz teoretické informatiky obsahuje některé vybrané oblasti teoretické informatiky a snaží se žákům přiblížit
 základní principy a algoritmy, které jsou v informatice důležité a využívané.
@@ -57,12 +57,14 @@ Důraz je kladen na budování intuice při řešení algoritmických problémů
 Po dokončení jednotlivých témat teoretické informatiky dostávají žáci programovací úkol
 na platformě [DOMJudge](https://domjudge.delta-topgun.cz), do které dostanou přístup na začátku programu.
 
+[Dockerfile](misc/Dockerfile) můžete použít pro lokální vývoj v jazyce C s potřebnými nástroji a knihovnami.
+
 Tyto úlohy jsou zaměřeny na procvičení daného tématu a na získání praktických dovedností s programováním v jazyce C.
 
 Systém automaticky kontroluje správnost řešení
 a v případě neúspěšného řešení může žák kontaktovat přednášejícího a konzultovat své řešení.
 
-### Přednášky
+### <a name="teoreticka-informatika-prednasky"></a> Přednášky
 
 | #  | Téma                                                                                                                                                            |
 |----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -91,19 +93,19 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 | 22 | [Práce s velkými daty, Jupyter notebooky a základy strojového účení](teoreticka/22_prace_s_daty)                                                                |
 | 23 | [Automatické testování softwaru](teoreticka/23_testovani)                                                                                                       |
 
-## Praktický seminář
+## <a name="prakticky-seminar"></a> Praktický seminář
 
-### Zaměření
+### <a name="prakticky-seminar-zamereni"></a> Zaměření
 
 Kurz praktického semináře je zaměřen na praktické využití znalostí programování a informatiky,
-které si žáci osvojují v rámci vedených hodin ve škole a následně také na [vlastním projektu](#individuální-projekt).
+které si žáci osvojují v rámci vedených hodin ve škole a následně také na [vlastním projektu](#individualni-projekt).
 
 Hodiny ve škole jsou věnovány workshopům k aktuálním tématům a technologiím z oblasti vývoje softwaru
 a praktickému využití těchto znalostí v rámci připravených úkolů a nebo vlastního projektu.
 
-Každý žák pracuje na [vlastním projektu](#individuální-projekt), který si může sám zvolit,
-nebo může využít nabízená témata pro [rozvoj školního ekosystému](#projekt-pro-rozvoj-školního-ekosystému)
-a nebo [modelové projekty](#modelový-projekt).
+Každý žák pracuje na [vlastním projektu](#individualni-projekt), který si může sám zvolit,
+nebo může využít nabízená témata pro [rozvoj školního ekosystému](#projekt-pro-rozvoj-skolniho-ekosystemu)
+a nebo [modelové projekty](#modelovy-projekt).
 
 | Téma                                         |
 |----------------------------------------------|
@@ -125,22 +127,22 @@ a nebo [modelové projekty](#modelový-projekt).
 | ...                                          |
 
 
-## Individuální projekt
+## <a name="individualni-projekt"></a> Individuální projekt
 
-### Párování žák × lektor
+### <a name="parovani-zak-lektor"></a> Párování žák × lektor
 
 Párování žáka s lektorem je vyhodnoceno na základě průniku zaměření žákova projektu a oblasti odbornosti lektora.
 Párování proběhne na tzv. _Pitch Day_, kdy žáci prezentují své projektové záměry a lektoři poskytují zpětnou vazbu.
 
 Datum konání Pitch Day je v každém ročníku různé a bude komunikováno s dostatečným předstihem.
 
-### Náležitosti projektu
+### <a name="nalezitosti-projektu"></a> Náležitosti projektu
 
 Žák si **volí** jednu z těchto kategorií pro svůj individuální projekt:
 
-- [Vlastní projekt](#vlastní-projekt)
-- [Projekt pro rozvoj školního ekosystému](#projekt-pro-rozvoj-školního-ekosystému)
-- [Modelový projekt](#modelový-projekt)
+- [Vlastní projekt](#vlastni-projekt)
+- [Projekt pro rozvoj školního ekosystému](#projekt-pro-rozvoj-skolniho-ekosystemu)
+- [Modelový projekt](#modelovy-projekt)
 
 Dale je nutné vytvořit **projektový záměr**, který bude obashovat:
 
@@ -166,7 +168,7 @@ Z rámcové analýzy **musí** být **jinému vývojáří** zřejmé:
 
 Korektnost rámcové analýzy je vyhodnocena lektorem a bez validní ramcové analýzy nelze začít projekt realizovat.
 
-### Každodenní zápis do on-line journalu
+### <a name="kazdodenni-zapis-do-on-line-journalu"></a> Každodenní zápis do on-line journalu
 
 Zápisy do _on-line journalu_ probíhají na platformě **Discord**, kam je každý žák na začátku programu přizván.
 
@@ -187,24 +189,24 @@ Prezentace by měla obsahovat následující body:
 - _Cíl jsem splnil. Co se mi povedlo a budu v tom nadále pokračovat?_
 - _Jaký cíl plánuji splnit v následujícím období? Jaká je jeho hlavní náplň a jak budu postupovat k jeho dosažení?_
 
-### Vlastní projekt
+### <a name="vlastni-projekt"></a> Vlastní projekt
 
 Každý žák by měl zvážit realizaci vlastního projektu.
 Je to ideální způsob, jak v rámci kurzu pracovat na něčem, co žáka opravdu zajímá a baví.
-Za předpokladu splnění veškerých [náležitostí projektu](#náležitosti-projektu) je žákovi realizace vlastního tématu
+Za předpokladu splnění veškerých [náležitostí projektu](#nalezitosti-projektu) je žákovi realizace vlastního tématu
 umožněna a je podpořena přidělením vhodného lektora.
 
 Podpořena je rovněž realizace vlastního projektu v týmu.
 Projekt pohléhá stejným podmínkám jako individuální projekt,
 ale je nutné zajistit a udržet rozumné rozdělení zodpovědností a práce v týmu.
 
-### Projekt pro rozvoj školního ekosystému
+### <a name="projekt-pro-rozvoj-skolniho-ekosystemu"></a> Projekt pro rozvoj školního ekosystému
 
 Žáci mohou pracovat na projektech, které podpoří rozvoj školního ekosystému.
 Tyto projekty mají předem definované zadání a cíl, který je nutné splnit.
 
 Pro žáky realizující tento typ projektu platí stejné podmínky a povinnosti jako pro vlastní projekt,
-a to včetně zpracování a přednesení projektového záměru při [Pitch Day](#párování-žák--lektor) dle náležitostí.
+a to včetně zpracování a přednesení projektového záměru při [Pitch Day](#parovani-zak-lektor) dle náležitostí.
 
 Podpořena je rovněž realizace projektu v týmu.
 Projekt pohléhá stejným podmínkám jako individuální projekt,
@@ -217,12 +219,12 @@ ale je nutné zajistit a udržet rozumné rozdělení zodpovědností a práce v
 - Informační systém „Pardubický IT Draft“
 - Systém pro pořádání multioborových soutěží
 
-### Modelový projekt
+### <a name="modelovy-projekt"></a> Modelový projekt
 
 Žákům je také umožněno pracovat na projektu v rámci jedné z modelových osnov.
 
 Pro žáky realizující tento typ projektu platí stejné podmínky a povinnosti jako pro vlastní projekt,
-a to včetně zpracování a přednesení projektového záměru při [Pitch Day](#párování-žák--lektor) dle náležitostí.
+a to včetně zpracování a přednesení projektového záměru při [Pitch Day](#parovani-zak-lektor) dle náležitostí.
 
 <details>
   <summary>
@@ -309,14 +311,14 @@ a to včetně zpracování a přednesení projektového záměru při [Pitch Day
 
 </details>
 
-## Povinnosti zapsaných žáků
+## <a name="povinnosti-zapsanych-zaku"></a> Povinnosti zapsaných žáků
 
 1. Odevzdávat domácí úlohy v řádném termínu na platformě [DOMJudge](https://domjudge.delta-topgun.cz)
-2. Odprezentovat svůj [projektový záměr](#náležitosti-projektu) na Pitch Day
+2. Odprezentovat svůj [projektový záměr](#nalezitosti-projektu) na Pitch Day
 3. Absolvovat úvodní schůzku s přiděleným lektorem
 4. Každý školní den zapisovat svou aktivitu
-   do [on-line journalu](#každodenní-zápis-do-on-line-journalu)
-5. Vypracovat [rámcovou analýzu](#náležitosti-projektu) softwarového projektu
+   do [on-line journalu](#kazdodenni-zapis-do-on-line-journalu)
+5. Vypracovat [rámcovou analýzu](#nalezitosti-projektu) softwarového projektu
 6. Vypracovat projektovou roadmapu
 7. Průběžně, minimálně však jednou za dva týdny, s lektorem konzultovat:
     - Aktuální stav projektu
@@ -327,9 +329,9 @@ a to včetně zpracování a přednesení projektového záměru při [Pitch Day
 9. Pravidelně lektorovi odesílat **pull request**y ke code-review
 10. Pravidelně kód projektu verzovat dle lektorem doporučené verzovací strategie
 
-## Neplnění povinností
+## <a name="neplneni-povinnosti"></a> Neplnění povinností
 
-Při opakovaném neplnění [povinností zapsaných žáků](#povinnosti-zapsaných-žáků)
+Při opakovaném neplnění [povinností zapsaných žáků](#povinnosti-zapsanych-zaku)
 může být přistoupeno k vyřazení žáka z programu DELTA TopGun.
 
 A to zejména v následujích případech:
@@ -337,7 +339,7 @@ A to zejména v následujích případech:
 - Žák, **bez předchozí omluvy**, během školního roku neodevzdal **2** domácí úlohy na
   platformě [DOMJudge](https://domjudge.delta-topgun.cz)
 - Žák, **bez předchozí omluvy**, během školního roku **10x** nezapsal aktivitu
-  do [on-line journalu](#každodenní-zápis-do-on-line-journalu)
+  do [on-line journalu](#kazdodenni-zapis-do-on-line-journalu)
 - Žák, **bez předchozí omluvy**, během školního roku **2x** neodprezentoval [status update](#status-update)
 - Žák, **bez předchozí omluvy**, během školního roku **2x** nereaguje na výzvu lektora ohledně nenaplnění cíle,
   který si žák sám stanovil během [status update](#status-update)
