@@ -10,12 +10,16 @@ které nám umožňují efektivně využívat více jader procesoru pro zrychlen
 
 ## Obsah
 
-1. [Úvod do paralelního programování](#úvod-do-paralelního-programování)
+1. [Úvod do paralelního programování](#uvod-do-paralelního-programování)
 2. [POSIX](#posix)
-3. [OpenMP](#openmp)
-4. [MPI](#mpi)
+3. [Mutexy](#mutexy)
+4. [Uváznutí (Deadlock)](#uvaznuti-deadlock)
+5. [Condition variables](#condition-variables)
+6. [OpenMP](#openmp)
+7. [Samostatný úkol](#samostatny-ukol)
+8. [MPI](#mpi)
 
-## Úvod do paralelního programování
+## <a name="uvod-do-paralelního-programování"></a> Úvod do paralelního programování
 
 Paralelní programování je technika, která nám umožňuje rozdělit úlohu na menší části,
 které mohou být vykonávány současně na více procesorech nebo jádrech.
@@ -102,7 +106,7 @@ Správným použitím mutexů můžeme zajistit,
 
 Opravený kód najdete v souboru [counter_fixed.c](code/02_counter/counter_fixed.c)
 
-## Uváznutí (Deadlock)
+## <a name="uvaznuti-deadlock"></a> Uváznutí (Deadlock)
 
 Uváznutí (deadlock) je situace, kdy dvě nebo více vláken čekají na vzájemné uvolnění mutexů,
 a tím pádem se nikdy neprobudí.
@@ -143,7 +147,7 @@ gcc -fopenmp -o code code.c
 
 Ukázku použití OpenMP najdete v souboru [fibonacci_openmp.c](code/06_fibonacci_openmp/fibonacci_openmp.c)
 
-## Samostatný úkol
+## <a name="samostatny-ukol"></a> Samostatný úkol
 
 Napište program, který paralelizuje výpočet násobení dvou matic pomocí POSIX vláken.
 
