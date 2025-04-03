@@ -1,5 +1,7 @@
 name: DELTA - Střední škola informatiky a ekonomie, s.r.o.
 title: null
+locale: cs_CZ
+logo: /mics/logo.png
 
 markdown: GFM
 include: [".well-known"]
