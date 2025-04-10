@@ -122,6 +122,7 @@ a nebo [modelové projekty](#modelovy-projekt).
 | NoSQL databáze                               |
 | AWS a cloud                                  |
 | CI/CD                                        |
+| ["Serverování" a hosting](workshopy/server)  |
 | Monitoring a logování                        |
 | [Paralelní programování](workshopy/parallel) |
 | ...                                          |
