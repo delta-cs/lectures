@@ -236,8 +236,6 @@ Reverse proxy může být použit pro:
 
 > Nakreslete diagram deploymentu s reverse proxy.
 
-> Jaký je problém s prací s realnou IP adresou klienta?
-
 > Jaké znáte reverzní proxy?
 
 <details>
