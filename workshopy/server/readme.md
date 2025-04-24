@@ -54,6 +54,19 @@ který umožňuje vzdálenou správu a monitorování serverů.
 
 > Ukázat IPMI web interface
 
+> Ukázat frontend validaci licence
+
+<details>
+<summary>Odpověď</summary>
+
+```js
+initVMRadio();
+UI.ShowVM();
+$jq("#vmModal").modal("show");
+```
+
+</details>
+
 > Jaký z ethernet portů je určen pro připojení k KVM?
 
 ![supermicro-mbd-h12ssl-i-b-layout](img/supermicro-mbd-h12ssl-i-b-layout.png)
