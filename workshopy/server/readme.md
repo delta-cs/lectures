@@ -186,6 +186,18 @@ který zahrnuje následující kroky:
 2. **2** různé typy médií (např. disk a páska)
 3. **1** kopie mimo lokalitu (např. cloud nebo jiná geograficky oddělená lokalita)
 
+Typy úložišť pro zálohování dat:
+
+- **HDD Disky** - rychlé a snadno dostupné, ale náchylné k selhání 
+  - životnost 3-5 let
+- **SSD Disky** - rychlé a odolné, ale dražší než HDD
+  - životnost 5-10 let
+- **LTO Pásky** - pomalé a obtížně dostupné, ale levné s vysokou kapacitou
+  - životnost 15-30 let
+- **Cloud** - snadno dostupné a škálovatelné, ale závislé na internetovém připojení
+  - životnost závisí na poskytovateli cloudu
+  - zálohy je doporučené šifrovat
+
 # Monitoring
 
 Ukážeme si monitoring serveru pomocí nástrojů:
@@ -194,6 +206,7 @@ Ukážeme si monitoring serveru pomocí nástrojů:
 - **InfluxDB** - databáze pro ukládání časových řad
 - **Grafana** - vizualizace dat z InfluxDB
 - **Graylog** - log management a analýza logů
+- **Uptime Kuma** - monitorování dostupnosti serverů a služeb
 
 # Reverse proxy
 
@@ -225,6 +238,91 @@ Některé z nejznámějších reverzních proxy jsou:
 - **Caddy** - open-source webový server a reverzní proxy
 - **Apache** - open-source webový server a reverzní proxy
 - ...
+
+</details>
+
+## Certifikát
+
+> Co je to certifikát?
+
+<details>
+<summary>Odpověď</summary>
+
+Certifikát je digitální dokument, který potvrzuje identitu serveru
+a pomocí něj můžeme šifrovat data mezi klientem a serverem.
+
+Certifikát obsahuje veřejný klíč serveru a další informace o serveru,
+jako je název domény, jméno certifikační autority (CA) a platnost certifikátu.
+
+</details>
+
+> Jak funguje certifikační autorita (CA)?
+
+<details>
+<summary>Odpověď</summary>
+
+Certifikační autorita (CA) je důvěryhodná třetí strana,
+která vydává digitální certifikáty a potvrzuje identitu serveru.
+
+CA podepisuje certifikát svým soukromým klíčem,
+čímž potvrzuje jeho platnost a důvěryhodnost.
+
+</details>
+
+> Co znamená, když "věřím certifikační autoritě"?
+
+<details>
+<summary>Odpověď</summary>
+
+Certifikát je podepsán certifikační autoritou (CA),
+která je důvěryhodná třetí strana.
+
+Důvěřihodnost CA je zajištěna tím,
+že je zahrnuta v seznamu důvěryhodných certifikačních autorit
+v operačním systému nebo prohlížeči.
+
+</details>
+
+> Co je to Certificate Chain?
+
+<details>
+<summary>Odpověď</summary>
+
+Certificate Chain je řetězec certifikátů,
+který začíná kořenovým certifikátem (Root CA)
+a končí certifikátem serveru.
+
+Každý certifikát v řetězci je podepsán předchozím certifikátem,
+čímž potvrzuje jeho platnost a důvěryhodnost.
+
+Kořenový certifikát je podepsán sám sebou
+a je důvěryhodný certifikát,
+který je zahrnut v seznamu důvěryhodných certifikačních autorit
+v operačním systému nebo prohlížeči.
+
+</details>
+
+Nejpoužívanější standard pro certifikáty je X.509,
+který definuje strukturu certifikátu a způsob jeho podepisování.
+
+PKI (Public Key Infrastructure) je systém pro správu digitálních certifikátů a klíčů,
+který zahrnuje certifikační autority, registrace certifikátů a správu klíčů.
+
+> Jak zajistím invalidaci certifikátu?
+>
+> například zjistíme, že nám byl certifikát odcizen
+
+<details>
+<summary>Odpověď</summary>
+
+Certifikát nelze zneplatnit v tradičním smyslu (jako například session cookie),
+ale certifikát lze zneplatnit pomocí CRL (Certificate Revocation List).
+
+CRL je seznam certifikátů, které byly zneplatněny certifikační autoritou (CA)
+a již nejsou platné.
+
+Klient (např. prohlížeč) kontroluje certifikát serveru
+a porovnává ho se seznamem zneplatněných certifikátů (CRL).
 
 </details>
 
@@ -265,8 +363,12 @@ pro automatizaci procesu vydávání a obnovování certifikátů.
 
 Podporuje dva způsoby ověření domény:
 
-- **DNS-01** - ověření pomocí DNS záznamu
 - **HTTP-01** - ověření pomocí HTTP požadavku
+- **DNS-01** - ověření pomocí DNS záznamu
+
+> Od června 2025 Let's Encrypt přestává posílat emaily o vypršení certifikátu.
+> 
+> [zdroj](https://letsencrypt.org/2025/01/22/ending-expiration-emails/)
 
 ### HTTP-01
 
@@ -298,5 +400,45 @@ a také se zvyšuje výkon serverů, protože šifrování a dešifrování je n
 
 Servery poté vystavují například pouze HTTP port **80** nebo **3000** a reverzní proxy tyto porty
 vystavuje pod specifickými doménovými nazvy na internet pod portem **443**.
+
+## Real IP problem
+
+Pokud používáme reverzní proxy, klienti se připojují k reverzní proxy
+a ne přímo k webovému či aplikačnímu serveru.
+
+Když reverzní proxy předá požadavek na server,
+náš server vidí pouze IP adresu reverzní proxy.
+
+> Jak to vyřešit?
+
+<details>
+<summary>Odpověď</summary>
+
+Reverzní proxy přidává do hlavičky požadavku speciální hlavičku `X-Forwarded-For`,
+která obsahuje seznam IP adres klientů.
+
+Jedná se o čárkou oddělený seznam IP adres,
+kde první IP adresa je IP adresa klienta a další IP adresy jsou IP adresy proxy serverů,
+přes které požadavek prošel.
+
+Některé reverzní proxy nastavují také hlavičku `X-Real-IP`,
+která obsahuje pouze IP adresu klienta.
+
+</details>
+
+> Lze to stejně řešit pro Minecraft servery?
+
+<details>
+<summary>Odpověď</summary>
+
+Ne, Minecraft server funguje pouze na TCP protokolu
+a nemá tedy možnost přidávat HTTP hlavičky.
+
+HTTP je na úrovni aplikačního protokolu,
+ale TCP je na úrovni transportního protokolu.
+
+</details>
+
+> Jak pracuje Minecraft s SRV doménovými záznamy?
 
 <!-- {% endraw %} -->
