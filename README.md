@@ -1,5 +1,9 @@
 # Talentový program DELTA TopGun
 
+> **Registrce pro ročník 2025 je otevřena!**
+>
+> Více informací o registraci naleznete na [této stránce](registrace).
+
 Talentový program [DELTA TopGun](https://www.delta-skola.cz/talentovy-program-delta-topgun)
 jsme založili pro žáky, kteří se chtějí věnovat programování a informatice do (velké) hloubky.
 
