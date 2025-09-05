@@ -2,6 +2,8 @@
 
 Registrace do programu DELTA TopGun je otevřena **do konce září**.
 
+> Registrace je určená pro žáky **prvního ročníku**.
+
 Pro úspěšné přihlášení do programu je nutné splnit následující **podmínky**:
 
 - Odevzdat algoritmickou úlohu
