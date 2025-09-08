@@ -21,7 +21,6 @@ Je nutné míti základní znalosti programování a být ochoten se učit nový
 - [Individuální projekt](#individualni-projekt)
     - [Párování žák × lektor](#parovani-zak-lektor)
     - [Náležitosti projektu](#nalezitosti-projektu)
-    - [Každodenní zápis do on-line journalu](#kazdodenni-zapis-do-on-line-journalu)
     - [Status update](#status-update)
     - [Vlastní projekt](#vlastni-projekt)
     - [Projekt pro rozvoj školního ekosystému](#projekt-pro-rozvoj-skolniho-ekosystemu)
@@ -173,15 +172,6 @@ Z rámcové analýzy **musí** být **jinému vývojáří** zřejmé:
 
 Korektnost rámcové analýzy je vyhodnocena lektorem a bez validní ramcové analýzy nelze začít projekt realizovat.
 
-### <a name="kazdodenni-zapis-do-on-line-journalu"></a> Každodenní zápis do on-line journalu
-
-Zápisy do _on-line journalu_ probíhají na platformě **Discord**, kam je každý žák na začátku programu přizván.
-
-Žák má povinnost každý školní den zapsat, čemu se daný den v rámci svého praktického projektu věnoval.
-Je naprosto v pořádku, když se žák v daném dnu praktickému projektu nevěnoval, tuto skutečnsot však rovněž musí zapsat.
-
-Zápisy do on-line journalu poskytují lektorům nástroj, jakým dodatečně vyhodnotit aktivitu žáků.
-
 ### Status update
 
 Během **status update** žák odprezentuje aktuální stav svého softwarového projektu.
@@ -321,18 +311,16 @@ a to včetně zpracování a přednesení projektového záměru při [Pitch Day
 1. Odevzdávat domácí úlohy v řádném termínu na platformě [DOMJudge](https://domjudge.delta-topgun.cz)
 2. Odprezentovat svůj [projektový záměr](#nalezitosti-projektu) na Pitch Day
 3. Absolvovat úvodní schůzku s přiděleným lektorem
-4. Každý školní den zapisovat svou aktivitu
-   do [on-line journalu](#kazdodenni-zapis-do-on-line-journalu)
-5. Vypracovat [rámcovou analýzu](#nalezitosti-projektu) softwarového projektu
-6. Vypracovat projektovou roadmapu
-7. Průběžně, minimálně však jednou za dva týdny, s lektorem konzultovat:
+4. Vypracovat [rámcovou analýzu](#nalezitosti-projektu) softwarového projektu
+5. Vypracovat projektovou roadmapu
+6. Průběžně, minimálně však jednou za dva týdny, s lektorem konzultovat:
     - Aktuální stav projektu
     - Řešené problémy
     - Plán dalšího postupu
-8. [Prezentovat svůj status update](#status-update) ve škole na hodině praktického
+7. [Prezentovat svůj status update](#status-update) ve škole na hodině praktického
    semináře (přibližně **3x** za pololetí)
-9. Pravidelně lektorovi odesílat **pull request**y ke code-review
-10. Pravidelně kód projektu verzovat dle lektorem doporučené verzovací strategie
+8. Pravidelně lektorovi odesílat **pull request**y ke code-review
+9. Pravidelně kód projektu verzovat dle lektorem doporučené verzovací strategie
 
 ## <a name="neplneni-povinnosti"></a> Neplnění povinností
 
@@ -343,8 +331,6 @@ A to zejména v následujích případech:
 
 - Žák, **bez předchozí omluvy**, během školního roku neodevzdal **2** domácí úlohy na
   platformě [DOMJudge](https://domjudge.delta-topgun.cz)
-- Žák, **bez předchozí omluvy**, během školního roku **10x** nezapsal aktivitu
-  do [on-line journalu](#kazdodenni-zapis-do-on-line-journalu)
 - Žák, **bez předchozí omluvy**, během školního roku **2x** neodprezentoval [status update](#status-update)
 - Žák, **bez předchozí omluvy**, během školního roku **2x** nereaguje na výzvu lektora ohledně nenaplnění cíle,
   který si žák sám stanovil během [status update](#status-update)
