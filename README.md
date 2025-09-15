@@ -353,3 +353,7 @@ A to zejména v následujích případech:
 > When you have to explain it, it’s bad.
 >
 > -- <cite>Cory House</cite>
+
+---
+
+Veškeré dokumenty jsou distrubované pod licencí [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](LICENSE.txt).
