@@ -16,7 +16,7 @@ Obě úlohy jsou zadávány na platformě [Pardubický Hacker](https://pardubick
 Po přihlášení budete mít přístup k zadání úloh a pomocí zeleného tlačítka **Submit** můžete odevzdat svá řešení.
 
 - Algoritmická úloha je automaticky hodnocená.
-- Programovací úloha je hodnocena osobně a na tuto platofrmu pouze odevzáváte svůj kód ve formě zdrojového souboru a nebo ZIP archivu.
+- Programovací úloha je hodnocena osobně a na tuto platformu pouze odevzáváte svůj kód ve formě zdrojového souboru a nebo ZIP archivu.
   - Výsledek hodnocení se dozvíte přes učitele po skončení časového limitu registrace.
 
 Případné **dotazy** můžete zaslat na email <lubos.zapotocny@delta-skola.cz>.
