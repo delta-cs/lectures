@@ -1,5 +1,10 @@
 # Registrace do programu DELTA TopGun
 
+- [Pravidla](#pravidla)
+- [Časté dotazy](#caste-dotazy)
+
+## Pravidla
+
 Registrace do programu DELTA TopGun je otevřena **do konce září**.
 
 > Registrace je určená pro žáky **prvního ročníku**.
@@ -25,17 +30,17 @@ Případné **dotazy** můžete zaslat na email <lubos.zapotocny@delta-skola.cz>
 
 ## <a name="caste-dotazy"></a> Časté dotazy
 
-### Počet pokusů na odevzdání úlohy
+### <a name="pocet-pokusu"></a> Počet pokusů na odevzdání úlohy
 
 Počet pokusů na odevzdání úlohy je **neomezený**.
 
-### Systém označuje řešení jako chybné, ale nezobrazuje proč
+### <a name="chybne-reseni"></a> Systém označuje řešení jako chybné, ale nezobrazuje proč
 
 Úlohy obsahují také **skryté** testy a pokud na nich program nepracuje správně, tak je odevzdání označeno jako chybné.
 
 V těchto testech jsou různé vstupní data testující mezní případy, velké vstupy a podobně.
 
-### Kde vezmu vstupní data a jak mám generovat výstup
+### <a name="vstupni-data"></a> Kde vezmu vstupní data a jak mám generovat výstup
 
 Vstupní data jsou předávány spuštěném programu pomocí takzvaného **standardního vstupu** (`stdin`).
 
