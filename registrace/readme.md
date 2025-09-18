@@ -3,7 +3,7 @@
 - [Pravidla](#pravidla)
 - [Časté dotazy](#caste-dotazy)
 
-## Pravidla
+## <a name="pravidla"></a> Pravidla
 
 Registrace do programu DELTA TopGun je otevřena **do konce září**.
 
