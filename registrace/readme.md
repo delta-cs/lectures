@@ -23,7 +23,7 @@ Případné **dotazy** můžete zaslat na email <lubos.zapotocny@delta-skola.cz>
 
 ---
 
-## Časté dotazy
+## <a name="caste-dotazy"></a> Časté dotazy
 
 ### Počet pokusů na odevzdání úlohy
 
