@@ -1,0 +1,125 @@
+/* Dark Mode Styles */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #24292f;
+  --link-color: #0969da;
+  --link-hover-color: #0550ae;
+  --border-color: #d0d7de;
+  --code-bg: #f6f8fa;
+  --header-bg: #f6f8fa;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --logo-filter: none;
+}
+
+[data-theme="dark"] {
+  --bg-color: #0d1117;
+  --text-color: #c9d1d9;
+  --link-color: #58a6ff;
+  --link-hover-color: #79c0ff;
+  --border-color: #30363d;
+  --code-bg: #161b22;
+  --header-bg: #161b22;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --logo-filter: brightness(0.9);
+}
+
+/* Apply theme colors */
+body {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  color: var(--link-color) !important;
+}
+
+a:hover {
+  color: var(--link-hover-color) !important;
+}
+
+code,
+pre {
+  background-color: var(--code-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+hr {
+  border-color: var(--border-color) !important;
+}
+
+table tr,
+.markdown-body table tr {
+  background-color: var(--bg-color) !important;
+  border-top-color: var(--border-color) !important;
+}
+
+table tr:nth-child(2n),
+.markdown-body table tr:nth-child(2n) {
+  background-color: var(--header-bg) !important;
+}
+
+table th,
+.markdown-body table th {
+  background-color: var(--header-bg) !important;
+  color: var(--text-color) !important;
+}
+
+table td,
+.markdown-body table td {
+  color: var(--text-color) !important;
+}
+
+blockquote {
+  color: var(--text-color) !important;
+  border-left-color: var(--border-color) !important;
+}
+
+.page-header {
+  background-color: var(--header-bg) !important;
+  color: var(--text-color) !important;
+}
+
+.site-footer {
+  border-top-color: var(--border-color) !important;
+}
+
+img[src*="logo"] {
+  filter: var(--logo-filter);
+  transition: filter 0.3s ease;
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: var(--code-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.dark-mode-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Smooth transitions for all themed elements */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
