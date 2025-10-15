@@ -39,7 +39,8 @@ a:hover {
 }
 
 code,
-pre {
+pre,
+div.highlight {
   background-color: var(--code-bg) !important;
   border-color: var(--border-color) !important;
 }
