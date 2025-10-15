@@ -79,6 +79,10 @@ div.highlight {
   color: #d2a8ff !important; /* Functions - purple */
 }
 
+[data-theme="dark"] .highlight .nv {
+  color: #79c0ff !important; /* Variables - light blue */
+}
+
 [data-theme="dark"] .highlight .na {
   color: #79c0ff !important; /* Attributes - light blue */
 }
