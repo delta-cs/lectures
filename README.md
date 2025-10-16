@@ -69,6 +69,8 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 
 ### <a name="teoreticka-informatika-prednasky"></a> Přednášky
 
+- [Úvod do programovacího jazyka C](./teoreticka/01-uvod-do-programovaciho-jazyka-c.pdf)
+
 Přednášy z teoretické informatiky před ročníkem 2025 naleznete [zde](teoreticka/pre_2025).
 
 ## <a name="prakticky-seminar"></a> Praktický seminář
