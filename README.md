@@ -71,12 +71,11 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 
 První ročník
 
-- [Úvod do programovacího jazyka C](./teoreticka/01-uvod-do-programovaciho-jazyka-c.pdf)
+- [[P](/teoreticka/01-uvod-do-programovaciho-jazyka-c-interaktivni.pdf)] [Úvod do programovacího jazyka C](./teoreticka/01-uvod-do-programovaciho-jazyka-c.pdf)
 
 Druhý ročník
 
-- [Úvod do teorie grafů](./teoreticka/10-grafy.pdf)
-
+- [[P](/teoreticka/10-grafy-interaktivni.pdf)] [Úvod do teorie grafů](./teoreticka/10-grafy.pdf)
 
 Přednášy z teoretické informatiky před ročníkem 2025 naleznete [zde](teoreticka/pre_2025).
 
