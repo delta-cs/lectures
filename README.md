@@ -72,10 +72,16 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 První ročník
 
 - [[P](/teoreticka/01-uvod-do-programovaciho-jazyka-c-interaktivni.pdf)] [Úvod do programovacího jazyka C](./teoreticka/01-uvod-do-programovaciho-jazyka-c.pdf)
+- [[P](/teoreticka/02-struktury-interaktivni.pdf)] [Struktury](./teoreticka/02-struktury.pdf)
+- [[P](/teoreticka/03-inicializace-pameti-interaktivni.pdf)] [Inicializace paměti](./teoreticka/03-inicializace-pameti.pdf)
+- [[P](/teoreticka/04-ukazatele-interaktivni.pdf)] [Ukazatele](./teoreticka/04-ukazatele.pdf)
+- [[P](/teoreticka/05-segmentace-pameti-interaktivni.pdf)] [Segmentace paměti](./teoreticka/05-segmentace-pameti.pdf)
+- [[P](/teoreticka/06-dynamicka-pamet-interaktivni.pdf)] [Dynamická paměť](./teoreticka/06-dynamicka-pamet.pdf)
+- [[P](/teoreticka/07-retezce-interaktivni.pdf)] [Řetězce](./teoreticka/07-retezce.pdf)
 
 Druhý ročník
 
-- [[P](/teoreticka/10-grafy-interaktivni.pdf)] [Úvod do teorie grafů](./teoreticka/10-grafy.pdf)
+- [[P](/teoreticka/40-grafy-interaktivni.pdf)] [Úvod do teorie grafů](./teoreticka/40-grafy.pdf)
 
 Přednášy z teoretické informatiky před ročníkem 2025 naleznete [zde](teoreticka/pre_2025).
 
