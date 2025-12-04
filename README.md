@@ -17,7 +17,8 @@ Je nutné míti základní znalosti programování a být ochoten se učit nový
 - [Rozvrh výuky](#rozvrh-vyuky)
 - [Teoretická informatika](#teoreticka-informatika)
     - [Zaměření](#teoreticka-informatika-zamereni)
-    - [Přednášky](#teoreticka-informatika-prednasky)
+    - [Přednášky pro první ročník](#teoreticka-informatika-prednasky-prvni-rocnik)
+    - [Přednášky pro druhý ročník](#teoreticka-informatika-prednasky-druhy-rocnik)
 - [Praktický seminář](#prakticky-seminar)
     - [Zaměření](#prakticky-seminar-zamereni)
 - [Individuální projekt](#individualni-projekt)
@@ -69,10 +70,7 @@ Tyto úlohy jsou zaměřeny na procvičení daného tématu a na získání prak
 Systém automaticky kontroluje správnost řešení
 a v případě neúspěšného řešení může žák kontaktovat přednášejícího a konzultovat své řešení.
 
-### <a name="teoreticka-informatika-prednasky"></a> Přednášky
-
-
-#### <a name="teoreticka-informatika-prednasky-prvni-rocnik"></a> První ročník
+### <a name="teoreticka-informatika-prednasky-prvni-rocnik"></a> Přednášky pro první ročník
 
 - [[P](/teoreticka/01-uvod-do-programovaciho-jazyka-c-interaktivni.pdf)] [Úvod do programovacího jazyka C](./teoreticka/01-uvod-do-programovaciho-jazyka-c.pdf)
 - [[P](/teoreticka/02-struktury-interaktivni.pdf)] [Struktury](./teoreticka/02-struktury.pdf)
@@ -82,7 +80,7 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 - [[P](/teoreticka/06-dynamicka-pamet-interaktivni.pdf)] [Dynamická paměť](./teoreticka/06-dynamicka-pamet.pdf)
 - [[P](/teoreticka/07-retezce-interaktivni.pdf)] [Řetězce](./teoreticka/07-retezce.pdf)
 
-#### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Druhý ročník
+### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Přednášky pro druhý ročník
 
 - [[P](/teoreticka/40-grafy-interaktivni.pdf)] [Úvod do teorie grafů](./teoreticka/40-grafy.pdf)
 
