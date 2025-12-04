@@ -71,7 +71,8 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 
 ### <a name="teoreticka-informatika-prednasky"></a> Přednášky
 
-První ročník
+
+#### <a name="teoreticka-informatika-prednasky-prvni-rocnik"></a> První ročník
 
 - [[P](/teoreticka/01-uvod-do-programovaciho-jazyka-c-interaktivni.pdf)] [Úvod do programovacího jazyka C](./teoreticka/01-uvod-do-programovaciho-jazyka-c.pdf)
 - [[P](/teoreticka/02-struktury-interaktivni.pdf)] [Struktury](./teoreticka/02-struktury.pdf)
@@ -81,7 +82,7 @@ První ročník
 - [[P](/teoreticka/06-dynamicka-pamet-interaktivni.pdf)] [Dynamická paměť](./teoreticka/06-dynamicka-pamet.pdf)
 - [[P](/teoreticka/07-retezce-interaktivni.pdf)] [Řetězce](./teoreticka/07-retezce.pdf)
 
-Druhý ročník
+#### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Druhý ročník
 
 - [[P](/teoreticka/40-grafy-interaktivni.pdf)] [Úvod do teorie grafů](./teoreticka/40-grafy.pdf)
 
