@@ -79,6 +79,8 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 - [[P](/teoreticka/05-segmentace-pameti-interaktivni.pdf)] [Segmentace paměti](./teoreticka/05-segmentace-pameti.pdf)
 - [[P](/teoreticka/06-dynamicka-pamet-interaktivni.pdf)] [Dynamická paměť](./teoreticka/06-dynamicka-pamet.pdf)
 - [[P](/teoreticka/07-retezce-interaktivni.pdf)] [Řetězce](./teoreticka/07-retezce.pdf)
+- [[P](/teoreticka/08-segmentation-fault-interaktivni.pdf)] [Segmentation fault](./teoreticka/08-segmentation-fault.pdf)
+- [[P](/teoreticka/09-binarni-vyhledavani-interaktivni.pdf)] [Binární vyhledávání](./teoreticka/09-binarni-vyhledavani.pdf)
 
 ### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Přednášky pro druhý ročník
 
