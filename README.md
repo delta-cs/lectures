@@ -107,7 +107,7 @@ a nebo [modelové projekty](#modelovy-projekt).
 | Práce s verzovacím systémem Git              |
 | [Linux](workshopy/linux)                     |
 | Networking                                   |
-| Docker a kontejnerizace                      |
+| [Docker a kontejnerizace](workshopy/docker)                      |
 | Objektově orientované programování           |
 | [Ansible](workshopy/ansible)                 |
 | Testování softwaru                           |
