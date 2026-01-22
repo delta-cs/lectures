@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labyrinth Visualization</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #eee;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #background {
+            z-index: 1;
+        }
+
+        #animation {
+            z-index: 2;
+            background-color: transparent;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+            z-index: 9;
+        }
+
+        .overlay.hidden {
+            display: none;
+        }
+
+        .overlay label, .overlay textarea, .overlay input, .overlay button {
+            margin: 5px 0;
+        }
+
+        #overlayToggle {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background: #333;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="background"></canvas>
+<canvas id="animation"></canvas>
+
+<div id="overlayToggle" onclick="toggleOverlay()">+</div>
+
+<div class="overlay hidden" id="overlay">
+    <label for="grid">Grid:</label>
+    <textarea id="grid" rows="6"></textarea>
+    <button onclick="updateGrid()">Load Grid</button>
+
+    <label for="paths">Path(s):</label>
+    <textarea id="paths" rows="4"></textarea>
+    <button onclick="updatePaths()">Load Path(s)</button>
+
+    <label for="interval">Animation Interval (ms):</label>
+    <input type="number" id="interval" min="1" value="250" onchange="updateInterval()">
+    <label>
+        <input type="checkbox" id="parallelPaths" checked onclick="updateParallelPaths()">
+        Parallel Paths
+    </label>
+    <label>
+        <input type="checkbox" id="showTeleports" checked onclick="updateShowTeleports()">
+        Show Teleports
+    </label>
+    <button id="animatePlayPause" onclick="animatePlayPause()">Play</button>
+    <button onclick="stepForward()">Step Forward</button>
+    <button onclick="stepBackward()">Step Backward</button>
+    <button onclick="resetAnimation()">Reset Animation</button>
+    <label for="keyframe">Animation Frame:</label>
+    <input type="number" id="keyframe" value="0" min="0" onchange="updateKeyframe()">
+
+    <button onclick="saveState()">Save State</button>
+    <button onclick="importState()">Import State</button>
+    <button onclick="exportState()">Export State</button>
+    <button onclick="clearState()">Clear State</button>
+</div>
+
+<script>
+    // -----------------
+    // MAIN DOM ELEMENTS
+    // -----------------
+
+    let backgroundCanvas;
+    let backgroundCanvasCtx;
+
+    let animationCanvas;
+    let animationCanvasCtx;
+
+    let overlay;
+
+    // --------------
+    // OVERLAY INPUTS
+    // --------------
+
+    let gridInput;
+    let pathsInput;
+    let intervalInput;
+    let parallelPathsInput;
+    let showTeleportsInput;
+    let keyframeInput;
+    let animatePlayPauseButton;
+
+    // ----------------
+    // STATE MANAGEMENT
+    // ----------------
+
+    let state = {
+        // input data
+        grid: [],
+        paths: [],
+        teleports: {},  // { "T1": [[row1, col1], [row2, col2], ...], "T2": [...], ... }
+        parallelPaths: false,
+        showTeleports: true,
+        hoveredTeleport: null,  // Currently hovered teleport ID (e.g. "T1")
+        // view
+        overlay: false,
+        scale: 1,
+        offsetX: 0,
+        offsetY: 0,
+        // animation
+        keyframe: 0,
+        // render
+        interval: 250,
+        cellSize: 20
+    };
+
+    function loadState() {
+        const savedState = localStorage.getItem('state');
+        if (savedState) {
+            console.log('Loading state from localStorage');
+            state = JSON.parse(savedState);
+        }
+    }
+
+    function saveState() {
+        console.log('Saving state to localStorage');
+        localStorage.setItem('state', JSON.stringify(state));
+    }
+
+    function importState() {
+        console.log('Importing state from file');
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                state = JSON.parse(event.target.result);
+                updateOverlay();
+                render();
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    }
+
+    function exportState() {
+        console.log('Exporting state to file');
+        const data = JSON.stringify(state, null, 2);
+        const blob = new Blob([data], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'state.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function clearState() {
+        if (confirm('Are you sure you want to clear the state?')) {
+            console.log('Clearing state');
+            state = {
+                grid: [],
+                paths: [],
+                teleports: {},
+                parallelPaths: false,
+                showTeleports: true,
+                hoveredTeleport: null,
+                overlay: false,
+                scale: 1,
+                offsetX: 0,
+                offsetY: 0,
+                keyframe: 0,
+                interval: 250,
+                cellSize: 20
+            };
+            updateOverlay();
+            render();
+        }
+    }
+
+    // ------------------
+    // OVERLAY MANAGEMENT
+    // ------------------
+
+    function openOverlay() {
+        state.overlay = true;
+        overlay.classList.remove('hidden');
+    }
+
+    function closeOverlay() {
+        state.overlay = false;
+        overlay.classList.add('hidden');
+    }
+
+    function toggleOverlay() {
+        state.overlay ? closeOverlay() : openOverlay();
+    }
+
+    function updateOverlay() {
+        console.log('Updating overlay');
+        if (state.overlay) {
+            openOverlay();
+        } else {
+            closeOverlay();
+        }
+        gridInput.value = state.grid.map(
+            row => row.join(' ')
+        ).join('\n');
+        pathsInput.value = state.paths.map(
+            path => path.map(
+                point => point.join(' ')
+            ).join(' ')
+        ).join('\n');
+        intervalInput.value = state.interval;
+        parallelPathsInput.checked = state.parallelPaths;
+        showTeleportsInput.checked = state.showTeleports;
+        keyframeInput.value = state.keyframe;
+        updateMaxKeyframe();
+    }
+
+    // --------------
+    // GRID FUNCTIONS
+    // --------------
+
+    function updateGrid() {
+        console.log('Loading grid');
+        state.grid = gridInput.value
+            .trim()
+            .split('\n')
+            .map(
+                line => line.trim().split(/\s+/)
+            );
+        
+        // Parse teleports from grid
+        state.teleports = {};
+        for (let row = 0; row < state.grid.length; row++) {
+            for (let col = 0; col < state.grid[row].length; col++) {
+                const cell = state.grid[row][col];
+                if (cell.startsWith('T')) {
+                    if (!state.teleports[cell]) {
+                        state.teleports[cell] = [];
+                    }
+                    state.teleports[cell].push([row, col]);
+                }
+            }
+        }
+        
+        console.log('Found teleports:', state.teleports);
+        saveState()
+        renderBackground();
+    }
+
+    // ---------------
+    // PATHS FUNCTIONS
+    // ---------------
+
+    function updatePaths() {
+        console.log('Loading paths');
+        state.paths = pathsInput.value
+            .trim()
+            .split('\n')
+            .map(
+                line => line.trim().split(/\s+/)
+            )
+            .map(
+                // array of strings, to array of number
+                points => points.map(Number)
+            )
+            .map(
+                points => points.reduce(
+                    (acc, val, idx, arr) => {
+                        if (idx % 2 === 0) {
+                            acc.push([val, arr[idx + 1]]);
+                        }
+                        return acc;
+                    },
+                    []
+                )
+            );
+        saveState();
+        updateMaxKeyframe();
+        renderAnimation();
+    }
+
+    // -------------------
+    // ANIMATION FUNCTIONS
+    // -------------------
+
+    let intervalId = null;
+    let maxKeyframe = null;
+
+    function getMaxKeyframe() {
+        if (maxKeyframe !== null) {
+            return maxKeyframe;
+        }
+
+        if (!state.parallelPaths) {
+            // sum of all path lengths -> rendering sequentially
+            return state.paths.reduce((acc, path) => acc + path.length, 0);
+        }
+
+        return Math.max(...state.paths.map(path => path.length));
+    }
+
+    function updateMaxKeyframe() {
+        keyframeInput.max = getMaxKeyframe();
+    }
+
+    function stopAnimation() {
+        console.log('Stopping animation');
+        if (!intervalId) {
+            console.warn('Animation already stopped');
+            return;
+        }
+        clearInterval(intervalId);
+        intervalId = null;
+        animatePlayPauseButton.innerText = 'Play';
+    }
+
+    function startAnimation() {
+        console.log('Starting animation');
+        if (intervalId) {
+            console.warn('Animation already running');
+            return;
+        }
+
+        intervalId = setInterval(() => {
+            state.keyframe = Math.min(state.keyframe + 1, getMaxKeyframe());
+            keyframeInput.value = state.keyframe;
+
+            renderAnimation();
+
+            if (state.keyframe === getMaxKeyframe()) {
+                stopAnimation();
+            }
+        }, state.interval);
+
+        animatePlayPauseButton.innerText = 'Pause';
+    }
+
+    function animatePlayPause() {
+        console.log('Toggling animation');
+        if (intervalId) {
+            stopAnimation();
+        } else {
+            startAnimation();
+        }
+    }
+
+    function updateInterval() {
+        console.log('Loading interval');
+        state.interval = parseInt(intervalInput.value, 10) || 250;
+        saveState();
+    }
+
+    function updateParallelPaths() {
+        console.log('Loading parallel paths');
+        state.parallelPaths = parallelPathsInput.checked;
+        updateMaxKeyframe();
+        saveState();
+    }
+
+    function updateShowTeleports() {
+        console.log('Loading show teleports');
+        state.showTeleports = showTeleportsInput.checked;
+        saveState();
+        renderBackground();
+    }
+
+    function updateKeyframe() {
+        console.log('Loading keyframe');
+        state.keyframe = parseInt(keyframeInput.value, 10) || 0;
+        saveState();
+        renderAnimation();
+    }
+
+    function stepForward() {
+        state.keyframe = Math.min(state.keyframe + 1, getMaxKeyframe());
+        keyframeInput.value = state.keyframe;
+        saveState();
+        renderAnimation();
+    }
+
+    function stepBackward() {
+        state.keyframe = Math.max(state.keyframe - 1, 0);
+        keyframeInput.value = state.keyframe;
+        saveState();
+        renderAnimation();
+    }
+
+    function resetAnimation() {
+        state.keyframe = 0;
+        keyframeInput.value = state.keyframe;
+        stopAnimation()
+        saveState();
+        renderAnimation();
+    }
+
+    // ------------------
+    // DRAGGING & ZOOMING
+    // ------------------
+
+    let isDragging = false;
+    let startDragOffset = {x: 0, y: 0};
+
+    function initDraggingEvents() {
+        console.log('Initializing dragging events');
+        [backgroundCanvas, animationCanvas].forEach(canvas => {
+            canvas.addEventListener('mousedown', (event) => {
+                isDragging = true;
+                startDragOffset.x = event.clientX - state.offsetX;
+                startDragOffset.y = event.clientY - state.offsetY;
+            });
+        });
+
+        [backgroundCanvas, animationCanvas].forEach(canvas => {
+            canvas.addEventListener('mousemove', (event) => {
+                if (isDragging) {
+                    console.log('Dragging window');
+                    state.offsetX = event.clientX - startDragOffset.x;
+                    state.offsetY = event.clientY - startDragOffset.y;
+
+                    render();
+                }
+            });
+        });
+
+        [backgroundCanvas, animationCanvas].forEach(canvas => {
+            canvas.addEventListener('mouseup', () => {
+                isDragging = false;
+                saveState();
+            });
+        });
+
+        [backgroundCanvas, animationCanvas].forEach(canvas => {
+            canvas.addEventListener('mouseleave', () => {
+                isDragging = false;
+                saveState();
+            });
+        });
+    }
+
+    function initZoomingEvents() {
+        [backgroundCanvas, animationCanvas].forEach(canvas => {
+            canvas.addEventListener('wheel', (event) => {
+                console.log('Zooming canvas');
+                const zoomIntensity = 0.1;
+                const mouseX = (event.offsetX - state.offsetX) / state.scale;
+                const mouseY = (event.offsetY - state.offsetY) / state.scale;
+                const zoom = event.deltaY < 0 ? 1 + zoomIntensity : 1 - zoomIntensity;
+
+                state.scale *= zoom;
+
+                state.offsetX -= mouseX * (zoom - 1) * state.scale;
+                state.offsetY -= mouseY * (zoom - 1) * state.scale;
+
+                event.preventDefault();
+
+                saveState();
+                render();
+            });
+        });
+    }
+
+    function initResizeEvent() {
+        window.addEventListener('resize', () => {
+            console.log('Resizing window');
+            backgroundCanvas.width = window.innerWidth;
+            backgroundCanvas.height = window.innerHeight;
+
+            animationCanvas.width = window.innerWidth;
+            animationCanvas.height = window.innerHeight;
+
+            render();
+        });
+    }
+
+    function initHoverEvents() {
+        [backgroundCanvas, animationCanvas].forEach(canvas => {
+            canvas.addEventListener('mousemove', (event) => {
+                if (!state.grid.length) return;
+                
+                // Convert mouse position to grid coordinates
+                const mouseX = (event.offsetX - state.offsetX) / state.scale;
+                const mouseY = (event.offsetY - state.offsetY) / state.scale;
+                
+                const col = Math.floor(mouseX / state.cellSize);
+                const row = Math.floor(mouseY / state.cellSize);
+                
+                // Check if we're within grid bounds
+                if (row >= 0 && row < state.grid.length && 
+                    col >= 0 && col < state.grid[0].length) {
+                    const cell = state.grid[row][col];
+                    
+                    // Check if it's a teleport
+                    if (cell.startsWith('T')) {
+                        if (state.hoveredTeleport !== cell) {
+                            state.hoveredTeleport = cell;
+                            renderBackground();
+                        }
+                    } else {
+                        if (state.hoveredTeleport !== null) {
+                            state.hoveredTeleport = null;
+                            renderBackground();
+                        }
+                    }
+                } else {
+                    if (state.hoveredTeleport !== null) {
+                        state.hoveredTeleport = null;
+                        renderBackground();
+                    }
+                }
+            });
+            
+            canvas.addEventListener('mouseleave', () => {
+                if (state.hoveredTeleport !== null) {
+                    state.hoveredTeleport = null;
+                    renderBackground();
+                }
+            });
+        });
+    }
+
+    // ---------------
+    // COLOR FUNCTIONS
+    // ---------------
+
+    const baseColors = [
+        {h: 0, s: 70, l: 50},
+        {h: 120, s: 70, l: 50},
+        {h: 240, s: 70, l: 50},
+        {h: 300, s: 70, l: 50},
+        {h: 60, s: 70, l: 50}
+    ];
+
+    function getColorWithVariation(baseColor, step) {
+        const lightnessVariation = Math.max(Math.min(baseColor.l + step * 0.5 - 1, 80), 30);
+        return `hsl(${baseColor.h}, ${baseColor.s}%, ${lightnessVariation}%)`;
+    }
+
+    // ----------------
+    // RENDER FUNCTIONS
+    // ----------------
+
+    function renderBackground() {
+        if (!state.grid.length) {
+            console.warn('No grid data to render');
+            return;
+        }
+
+        console.log('Rendering background');
+        backgroundCanvasCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+        backgroundCanvasCtx.save();
+        backgroundCanvasCtx.translate(state.offsetX, state.offsetY);
+        backgroundCanvasCtx.scale(state.scale, state.scale);
+
+        const startCol = Math.max(Math.floor(-state.offsetX / (state.cellSize * state.scale)), 0);
+        const endCol = Math.min(Math.ceil((backgroundCanvas.width - state.offsetX) / (state.cellSize * state.scale)), state.grid[0].length);
+        const startRow = Math.max(Math.floor(-state.offsetY / (state.cellSize * state.scale)), 0);
+        const endRow = Math.min(Math.ceil((backgroundCanvas.height - state.offsetY) / (state.cellSize * state.scale)), state.grid.length);
+
+        // Render grid cells
+        for (let row = startRow; row < endRow; row++) {
+            for (let col = startCol; col < endCol; col++) {
+                const cell = state.grid[row][col];
+                let fillColor = 'white';
+                let strokeColor = 'black';
+                let strokeWidth = 1;
+                
+                if (cell === '#') {
+                    fillColor = 'black';
+                } else if (cell === 'f') {
+                    fillColor = '#596da1';
+                } else if (cell.startsWith('T')) {
+                    // Check if this teleport is hovered
+                    if (state.hoveredTeleport === cell) {
+                        fillColor = '#66b3ff'; // Lighter blue for hovered teleports
+                        strokeColor = '#0066ff'; // Blue border
+                        strokeWidth = 3;
+                    } else {
+                        fillColor = '#3399ff'; // Blue for teleports
+                        strokeColor = '#0066ff'; // Blue border
+                        strokeWidth = 2;
+                    }
+                }
+                
+                backgroundCanvasCtx.fillStyle = fillColor;
+                backgroundCanvasCtx.fillRect(col * state.cellSize, row * state.cellSize, state.cellSize, state.cellSize);
+                backgroundCanvasCtx.strokeStyle = strokeColor;
+                backgroundCanvasCtx.lineWidth = strokeWidth;
+                backgroundCanvasCtx.strokeRect(col * state.cellSize, row * state.cellSize, state.cellSize, state.cellSize);
+                
+                // Draw teleport label
+                if (cell.startsWith('T') && state.showTeleports) {
+                    backgroundCanvasCtx.fillStyle = '#003366'; // Dark blue text for better visibility
+                    backgroundCanvasCtx.font = `bold ${state.cellSize * 0.5}px Arial`;
+                    backgroundCanvasCtx.textAlign = 'center';
+                    backgroundCanvasCtx.textBaseline = 'middle';
+                    backgroundCanvasCtx.fillText(cell, (col + 0.5) * state.cellSize, (row + 0.5) * state.cellSize);
+                }
+            }
+        }
+        
+        // Reset line width
+        backgroundCanvasCtx.lineWidth = 1;
+
+        // Draw teleport connections
+        if (state.showTeleports) {
+            for (const [teleportName, positions] of Object.entries(state.teleports)) {
+                if (positions.length < 2) continue;
+                
+                // Draw lines connecting all positions of the same teleport
+                backgroundCanvasCtx.strokeStyle = 'rgba(0, 102, 255, 0.6)'; // Semi-transparent blue
+                backgroundCanvasCtx.lineWidth = 2 / state.scale;
+                backgroundCanvasCtx.setLineDash([5 / state.scale, 5 / state.scale]);
+                
+                for (let i = 0; i < positions.length; i++) {
+                    for (let j = i + 1; j < positions.length; j++) {
+                        const [row1, col1] = positions[i];
+                        const [row2, col2] = positions[j];
+                        
+                        backgroundCanvasCtx.beginPath();
+                        backgroundCanvasCtx.moveTo((col1 + 0.5) * state.cellSize, (row1 + 0.5) * state.cellSize);
+                        backgroundCanvasCtx.lineTo((col2 + 0.5) * state.cellSize, (row2 + 0.5) * state.cellSize);
+                        backgroundCanvasCtx.stroke();
+                    }
+                }
+                
+                backgroundCanvasCtx.setLineDash([]);
+                backgroundCanvasCtx.lineWidth = 1;
+            }
+        }
+
+        backgroundCanvasCtx.restore();
+    }
+
+    function renderAnimation() {
+        if (!state.paths.length) {
+            console.warn('No path data to render');
+            return;
+        }
+
+        console.log('Rendering animation');
+        animationCanvasCtx.clearRect(0, 0, animationCanvas.width, animationCanvas.height);
+        animationCanvasCtx.save();
+        animationCanvasCtx.translate(state.offsetX, state.offsetY);
+        animationCanvasCtx.scale(state.scale, state.scale);
+
+        // parallelPaths means that all paths are drawn at the same time
+        // not parallel means that each path is drawn one after the other
+        // when parallel, the max keyframe is the max length of all paths
+        // when serial, the max keyframe is the sum of all path lengths
+
+        if (state.parallelPaths) {
+            state.paths.forEach((path, pathIdx) => {
+                const baseColor = baseColors[pathIdx % baseColors.length];
+
+                path.slice(0, state.keyframe).forEach(([row, col], idx) => {
+                    animationCanvasCtx.fillStyle = getColorWithVariation(baseColor, idx);
+                    animationCanvasCtx.fillRect(col * state.cellSize, row * state.cellSize, state.cellSize, state.cellSize);
+                    
+                    // Check if this cell is a teleport - if so, use blue border
+                    const cell = state.grid[row] && state.grid[row][col];
+                    if (cell && cell.startsWith('T')) {
+                        animationCanvasCtx.strokeStyle = '#0066ff';
+                        animationCanvasCtx.lineWidth = 2;
+                    } else {
+                        animationCanvasCtx.strokeStyle = 'black';
+                        animationCanvasCtx.lineWidth = 1;
+                    }
+                    animationCanvasCtx.strokeRect(col * state.cellSize, row * state.cellSize, state.cellSize, state.cellSize);
+                });
+            });
+        } else {
+            let drawn = 0;
+
+            for (let pathIdx = 0; pathIdx < state.paths.length; pathIdx++) {
+                if (drawn >= state.keyframe) {
+                    break;
+                }
+
+                const path = state.paths[pathIdx];
+                const baseColor = baseColors[pathIdx % baseColors.length];
+
+                for (let i = 0; i < path.length; i++) {
+                    if (drawn >= state.keyframe) {
+                        break;
+                    }
+
+                    const [row, col] = path[i];
+                    animationCanvasCtx.fillStyle = getColorWithVariation(baseColor, i);
+                    animationCanvasCtx.fillRect(col * state.cellSize, row * state.cellSize, state.cellSize, state.cellSize);
+                    
+                    // Check if this cell is a teleport - if so, use blue border
+                    const cell = state.grid[row] && state.grid[row][col];
+                    if (cell && cell.startsWith('T')) {
+                        animationCanvasCtx.strokeStyle = '#0066ff';
+                        animationCanvasCtx.lineWidth = 2;
+                    } else {
+                        animationCanvasCtx.strokeStyle = 'black';
+                        animationCanvasCtx.lineWidth = 1;
+                    }
+                    animationCanvasCtx.strokeRect(col * state.cellSize, row * state.cellSize, state.cellSize, state.cellSize);
+
+                    drawn++;
+                }
+            }
+        }
+        
+        // Reset line width
+        animationCanvasCtx.lineWidth = 1;
+
+        animationCanvasCtx.restore();
+    }
+
+    function render() {
+        renderBackground();
+        renderAnimation();
+    }
+
+    // --------------
+    // INITIALIZATION
+    // --------------
+
+    window.onload = () => {
+        // Init inputs
+        overlay = document.getElementById('overlay');
+        gridInput = document.getElementById('grid');
+        pathsInput = document.getElementById('paths');
+        intervalInput = document.getElementById('interval');
+        parallelPathsInput = document.getElementById('parallelPaths');
+        showTeleportsInput = document.getElementById('showTeleports');
+        keyframeInput = document.getElementById('keyframe');
+        animatePlayPauseButton = document.getElementById('animatePlayPause');
+
+        // Init canvases
+        backgroundCanvas = document.getElementById('background');
+        backgroundCanvasCtx = backgroundCanvas.getContext('2d');
+        backgroundCanvas.width = window.innerWidth;
+        backgroundCanvas.height = window.innerHeight;
+
+        animationCanvas = document.getElementById('animation');
+        animationCanvasCtx = animationCanvas.getContext('2d');
+        animationCanvas.width = window.innerWidth;
+        animationCanvas.height = window.innerHeight;
+
+        // Init events
+        initDraggingEvents();
+        initZoomingEvents();
+        initResizeEvent();
+        initHoverEvents();
+
+        // Initial state
+        loadState();
+        updateOverlay();
+
+        // Initial render
+        render();
+    };
+
+    // Save state on page unload
+    window.addEventListener('beforeunload', saveState);
+</script>
+
+</body>
+</html>
