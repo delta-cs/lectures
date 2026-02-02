@@ -81,6 +81,7 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 - [[P](/teoreticka/07-retezce-interaktivni.pdf)] [Řetězce](./teoreticka/07-retezce.pdf)
 - [[P](/teoreticka/08-segmentation-fault-interaktivni.pdf)] [Segmentation fault](./teoreticka/08-segmentation-fault.pdf)
 - [[P](/teoreticka/09-binarni-vyhledavani-interaktivni.pdf)] [Binární vyhledávání](./teoreticka/09-binarni-vyhledavani.pdf)
+- [[P](/teoreticka/10-slozitost.pdf)][[C](/teoreticka/10-slozitost/code)] [Složitost](./teoreticka/10-slozitost.pdf)
 
 ### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Přednášky pro druhý ročník
 
