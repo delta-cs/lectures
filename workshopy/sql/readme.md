@@ -637,6 +637,7 @@ START TRANSACTION;
 
 COMMIT;
 ```
+> Note: V případě že používáte PostgreSQL, je lepší použít BEGIN místo START TRANSACTION.
 
 Pokud chce provést `rollback`, můžete použít
 
