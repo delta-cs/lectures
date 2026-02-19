@@ -731,4 +731,69 @@ Aplikace by měla provést následující operace
 5. V případě chyby vytisknout chybovou hlášku
 6. Všechny operace by měly být součástí jedné transakce
 
+## Bonus: Filmová databáze pro pokročilé
+
+> Tato úloha je určena pro pokročilé účastníky, kteří chtějí vyzkoušet návrh databáze a složitější dotazy na vlastní kůži.
+>
+> Cílem je navrhnout strukturu tabulek **samostatně** a následně nad nimi napsat požadované dotazy.
+
+### Zadání
+
+Vaše filmová databáze se rozrůstá. Zákazníci chtějí sledovat nejen filmy, ale i **seriály**.
+Každý seriál má několik **sérií** (seasons) a každá série obsahuje **epizody**.
+
+Zároveň se platforma rozšiřuje do zahraničí a potřebuje podporovat **více jazyků**.
+Názvy a popisy filmů, seriálů i epizod musí existovat ve více jazykových mutacích.
+Pokud překlad v preferovaném jazyce uživatele neexistuje, systém musí umět zobrazit anglický název jako fallback.
+
+Databáze také potřebuje evidovat **tvůrce** — herce, režiséry, scenáristy a další role.
+Tvůrci mohou pracovat jak na filmech, tak na jednotlivých epizodách seriálů.
+U herců chceme navíc evidovat jméno postavy, kterou v daném díle hrají.
+
+V neposlední řadě chceme uchovávat informace o **datech premiér** v různých zemích,
+protože filmy i seriály mají v různých zemích různá data uvedení.
+
+Uživatelé mohou hodnotit nejen filmy (to už máme), ale nově i **jednotlivé epizody** seriálů.
+
+### Co je potřeba
+
+1. Navrhněte strukturu nových tabulek, které pokryjí výše popsané požadavky
+2. Vytvořte tabulky v databázi a naplňte je testovacími daty
+3. Napište následující dotazy:
+
+### Dotazy
+
+1. Vypište všechny seriály a počet jejich epizod.
+
+2. Pro každý film vypište jeho český název. Pokud český překlad neexistuje, zobrazte anglický název.
+
+3. Najděte herce, kteří hráli zároveň ve filmu i v nějakém seriálu.
+
+4. Který herec hrál v nejvíce různých seriálech?
+
+5. Vypište seriály, jejichž průměrné hodnocení epizod je vyšší než celkové průměrné hodnocení všech filmů.
+
+6. Pro každý seriál vypište jeho nejlépe hodnocenou epizodu společně s jejím českým názvem (s fallbackem na angličtinu).
+
+7. Najděte lidi, kteří režírovali film i epizodu seriálu. Pro každého z nich porovnejte průměrné hodnocení jejich filmů a průměrné hodnocení epizod, které režírovali.
+
+### Nadstavba: Vztahy mezi díly
+
+Filmy a seriály na sebe často navazují.
+Temný rytíř je sequel Batmana začíná, Better Call Saul je spin-off Breaking Bad (seriál ze seriálu),
+Fargo existuje jako film i jako seriál (remake/adaptace).
+
+Systém potřebuje modelovat **vztahy mezi libovolnými dvěma díly**, přičemž dílo může být film nebo seriál.
+Typ vztahu (sequel, prequel, remake, spin-off) musí být součástí modelu.
+
+Zásadní designový problém: jak odkázat na entitu, která může být buď film, nebo seriál?
+
+### Dotazy na vztahy
+
+1. Vypište všechny sequely a k nim jejich původní dílo (s českým názvem, fallback na angličtinu).
+
+2. Najděte díla, která mají více než jeden typ vztahu k jiným dílům (např. film má sequel i remake).
+
+3. Najděte herce, kteří hráli v původním díle i v jeho remaku nebo spin-offu.
+
 <!-- {% endraw %} -->
