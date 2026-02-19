@@ -51,7 +51,7 @@ vim compose.yml
 ```yaml
 services:
   database:
-    image: mysql:9.2.0
+    image: mysql:9.6.0
     ports:
       - '3306:3306'
     environment:
@@ -63,7 +63,7 @@ services:
       - database:/var/lib/mysql
   
   adminer:
-    image: adminer:4.17.1
+    image: adminer:5.4.2
     ports:
       - 8080:8080
     environment:
@@ -72,7 +72,7 @@ services:
       - database
   
   phpmyadmin:
-    image: phpmyadmin:5.2.2
+    image: phpmyadmin:5.2.3
     ports:
       - 8081:80
     environment:
