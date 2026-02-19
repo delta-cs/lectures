@@ -10,6 +10,21 @@
 <!-- Dark Mode JavaScript -->
 <script src="{{ '/assets/js/dark-mode.js' | relative_url }}"></script>
 
+<!-- MathJax -->
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
+</script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YNKGCCQ17L"></script>
 <script>
