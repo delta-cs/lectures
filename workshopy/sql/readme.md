@@ -146,7 +146,7 @@ INSERT INTO movies (title, year) VALUES
     ('The Shawshank Redemption', 1994),
     ('The Godfather', 1972),
     ('The Dark Knight', 2008),
-    ('The Lord of the Rings: The Return of the King', 2003),
+    ('Ready Player One', 2018),
     ('Pulp Fiction', 1994),
     ('Forrest Gump', 1994),
     ('Inception', 2010),
