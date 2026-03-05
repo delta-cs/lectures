@@ -30,6 +30,7 @@ Je nutné míti základní znalosti programování a být ochoten se učit nový
     - [Modelový projekt](#modelovy-projekt)
 - [Povinnosti zapsaných žáků](#povinnosti-zapsanych-zaku)
 - [Neplnění povinností](#neplneni-povinnosti)
+- [Užitečné aplikace](#uzitecne-aplikace)
 
 ## <a name="forma-vyuky"></a> Forma výuky
 
@@ -330,6 +331,14 @@ A to zejména v následujích případech:
 - Žák, **bez předchozí omluvy**, během školního roku **2x** nereaguje na výzvu lektora ohledně nenaplnění cíle,
   který si žák sám stanovil během [status update](#status-update)
 - Žák, **bez předchozí omluvy**, chyběl na **2** hodinách teoretické informatiky nebo praktického semináře
+
+## <a name="uzitecne-aplikace"></a> Užitečné aplikace
+
+Ve složce [`apps`](apps) se nachází užitečné webové aplikace, které mohou pomoci při studiu a řešení úloh.
+
+| Aplikace | Popis |
+|----------|-------|
+| [Labyrinth](apps/labyrinth) | Vizualizace bludišť a animace cest — slouží k ladění a ověřování algoritmů prohledávání grafů (BFS, DFS apod.) |
 
 ---
 
