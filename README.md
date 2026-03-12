@@ -84,6 +84,7 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 - [[P](/teoreticka/09-binarni-vyhledavani-interaktivni.pdf)] [Binární vyhledávání](./teoreticka/09-binarni-vyhledavani.pdf)
 - [[P](/teoreticka/10-slozitost-interaktivni.pdf)][[C](/teoreticka/10-slozitost/code)] [Složitost](./teoreticka/10-slozitost.pdf)
 - [[P](/teoreticka/11-tridici-algoritmy-interaktivni.pdf)] [Třídicí algoritmy](./teoreticka/11-tridici-algoritmy.pdf)
+- [[P](/teoreticka/12-amortizovana-slozitost-interaktivni.pdf)][[C](/teoreticka/12-amortizovana-slozitost/code)] [Amortizovaná složitost](./teoreticka/12-amortizovana-slozitost.pdf)
 
 ### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Přednášky pro druhý ročník
 
