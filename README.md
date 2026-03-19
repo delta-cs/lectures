@@ -11,7 +11,7 @@ jsme založili pro žáky, kteří se chtějí věnovat programování a informa
 
 Je nutné míti základní znalosti programování a být ochoten se učit novým věcem.
 
-![DELTA TopGun poster](/misc/poster.jpg)
+![DELTA TopGun poster](/misc/poster.webp)
 
 - [Forma výuky](#forma-vyuky)
 - [Rozvrh výuky](#rozvrh-vyuky)
