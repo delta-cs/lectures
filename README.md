@@ -345,6 +345,7 @@ Ve složce [`apps`](apps) se nachází užitečné webové aplikace, které moho
 | Aplikace | Popis |
 |----------|-------|
 | [Labyrinth](apps/labyrinth) | Vizualizace bludišť a animace cest — slouží k ladění a ověřování algoritmů prohledávání grafů (BFS, DFS apod.) |
+| [Hash](apps/hash) | Výpočet hashů dvou řetězců a hledání nejdelšího společného podřetězce |
 
 ---
 

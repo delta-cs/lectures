@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Collision Finder</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #eee;
+            font-family: monospace;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-family: monospace;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-family: monospace;
+            font-size: 1em;
+            cursor: pointer;
+            background: #333;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        .result {
+            margin-top: 10px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 3px;
+            display: none;
+        }
+
+        .result.visible {
+            display: block;
+        }
+
+        .hash-display {
+            font-size: 1.3em;
+            letter-spacing: 2px;
+            margin: 5px 0;
+        }
+
+        .overlap {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 3px;
+        }
+
+        .overlap.none {
+            background: #fbe9e7;
+        }
+
+        .highlight {
+            background: #ffeb3b;
+            font-weight: bold;
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Hash Collision Finder</h1>
+
+    <label for="input1">Input 1:</label>
+    <input type="text" id="input1" placeholder="e.g. Hello World">
+
+    <label for="input2">Input 2:</label>
+    <input type="text" id="input2" placeholder="e.g. kcooitbulc">
+
+    <button onclick="compute()">Compute</button>
+
+    <div class="result" id="result">
+        <div>
+            <label>Hash 1:</label>
+            <div class="hash-display" id="hash1"></div>
+        </div>
+        <div>
+            <label>Hash 2:</label>
+            <div class="hash-display" id="hash2"></div>
+        </div>
+        <div class="overlap" id="overlap"></div>
+    </div>
+</div>
+
+<script>
+    function hash(input) {
+        const result = Array.from("0123456789abcdef").map(c => c.charCodeAt(0));
+
+        for (let i = 0; i < input.length - 1; i++) {
+            const a = input.charCodeAt(i);
+            const b = input.charCodeAt(i + 1);
+            const sum = a + b;
+            const tmp = sum % 128;
+            const pos = sum % 16;
+
+            result[pos] = (result[pos] + tmp) % 128;
+
+            // cyclic shift right by pos positions
+            const shifted = [];
+            for (let j = 0; j < 16; j++) {
+                shifted[j] = result[(j - pos + 16) % 16];
+            }
+            for (let j = 0; j < 16; j++) {
+                result[j] = shifted[j];
+            }
+        }
+
+        // convert to lowercase letters
+        for (let i = 0; i < 16; i++) {
+            result[i] = 97 + (result[i] % 26);
+        }
+
+        return String.fromCharCode(...result);
+    }
+
+    function longestCommonSubstring(s1, s2) {
+        let best = "";
+
+        for (let len = s1.length; len >= 1; len--) {
+            for (let i = 0; i <= s1.length - len; i++) {
+                const sub = s1.substring(i, i + len);
+                if (s2.includes(sub)) {
+                    return sub;
+                }
+            }
+        }
+
+        return best;
+    }
+
+    function highlightSubstring(text, sub) {
+        if (!sub) return text;
+        const idx = text.indexOf(sub);
+        if (idx === -1) return text;
+        return text.substring(0, idx)
+            + '<span class="highlight">' + sub + '</span>'
+            + text.substring(idx + sub.length);
+    }
+
+    function compute() {
+        const el1 = document.getElementById("input1");
+        const el2 = document.getElementById("input2");
+
+        el1.placeholder = "";
+        el2.placeholder = "";
+
+        const input1 = el1.value;
+        const input2 = el2.value;
+
+        const h1 = hash(input1);
+        const h2 = hash(input2);
+
+        const common = longestCommonSubstring(h1, h2);
+
+        document.getElementById("hash1").innerHTML = highlightSubstring(h1, common);
+        document.getElementById("hash2").innerHTML = highlightSubstring(h2, common);
+
+        const overlapDiv = document.getElementById("overlap");
+        if (common.length > 0) {
+            overlapDiv.className = "overlap";
+            overlapDiv.innerHTML = "Overlap: <strong>" + common + "</strong> (length " + common.length + ")";
+        } else {
+            overlapDiv.className = "overlap none";
+            overlapDiv.textContent = "No overlap found.";
+        }
+
+        document.getElementById("result").classList.add("visible");
+    }
+</script>
+
+</body>
+</html>
