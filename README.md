@@ -94,6 +94,7 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 
 - [[P](/teoreticka/40-grafy-interaktivni.pdf)] [Úvod do teorie grafů](./teoreticka/40-grafy.pdf)
 - [[P](/teoreticka/48-tsp-dp-interaktivni.pdf)] [TSP pomocí dynamického programování](./teoreticka/48-tsp-dp.pdf)
+- [[P](/teoreticka/49-hashovani-interaktivni.pdf)] [Hašování](./teoreticka/49-hashovani.pdf)
 
 Přednášy z teoretické informatiky před ročníkem 2025 naleznete [zde](teoreticka/pre_2025).
 
