@@ -74,6 +74,10 @@ Tyto úlohy jsou zaměřeny na procvičení daného tématu a na získání prak
 Systém automaticky kontroluje správnost řešení
 a v případě neúspěšného řešení může žák kontaktovat přednášejícího a konzultovat své řešení.
 
+> **Přednášky jsou v roce 2026 průběžně aktualizovány.**
+> 
+> Starší kompletní přednášky naleznete [zde](teoreticka/pre_2025).
+
 ### <a name="teoreticka-informatika-prednasky-prvni-rocnik"></a> Přednášky pro první ročník
 
 - [[P](/teoreticka/01-uvod-do-programovaciho-jazyka-c-interaktivni.pdf)] [Úvod do programovacího jazyka C](./teoreticka/01-uvod-do-programovaciho-jazyka-c.pdf)
@@ -95,8 +99,6 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 - [[P](/teoreticka/40-grafy-interaktivni.pdf)] [Úvod do teorie grafů](./teoreticka/40-grafy.pdf)
 - [[P](/teoreticka/48-tsp-dp-interaktivni.pdf)] [TSP pomocí dynamického programování](./teoreticka/48-tsp-dp.pdf)
 - [[P](/teoreticka/49-hashovani-interaktivni.pdf)] [Hashování](./teoreticka/49-hashovani.pdf)
-
-Přednášy z teoretické informatiky před ročníkem 2025 naleznete [zde](teoreticka/pre_2025).
 
 ## <a name="prakticky-seminar"></a> Praktický seminář
 
