@@ -94,6 +94,7 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 - [[P](/teoreticka/12-amortizovana-slozitost-interaktivni.pdf)][[C](/teoreticka/12-amortizovana-slozitost/code)] [Amortizovaná složitost](./teoreticka/12-amortizovana-slozitost.pdf)
 - [[P](/teoreticka/13-spojove-seznamy-interaktivni.pdf)] [Spojové seznamy](./teoreticka/13-spojove-seznamy.pdf)
 - [[P](/teoreticka/14-rekurze-interaktivni.pdf)] [Rekurze](./teoreticka/14-rekurze.pdf)
+- [[P](/teoreticka/15-rekurzivni-tridici-algoritmy-interaktivni.pdf)] [Rekurzivní třídicí algoritmy](./teoreticka/15-rekurzivni-tridici-algoritmy.pdf)
 
 ### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Přednášky pro druhý ročník
 
