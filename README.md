@@ -134,6 +134,7 @@ a nebo [modelové projekty](#modelovy-projekt).
 | ["Serverování" a hosting](workshopy/server)  |
 | Monitoring a logování                        |
 | [Paralelní programování](workshopy/parallel) |
+| [Práce s daty](workshopy/prace-s-daty)       |
 | ...                                          |
 
 
