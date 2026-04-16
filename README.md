@@ -13,7 +13,7 @@ Je nutné míti základní znalosti programování a být ochoten se učit nový
 
 <picture>
   <source srcset="/misc/poster.webp" type="image/webp">
-  <img src="/misc/poster.jpg" alt="DELTA TopGun poster" width="1821" height="2575" style="max-width: 100%; height: auto">
+  <img src="/misc/poster.jpg" alt="DELTA TopGun poster" style="max-width: 100%; height: auto">
 </picture>
 
 - [Forma výuky](#forma-vyuky)
