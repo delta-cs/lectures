@@ -53,7 +53,7 @@ PyTorch není součástí image — nainstalujte ho přímo v notebooku
 | # | Notebook | Obsah |
 |---|----------|-------|
 | 1 | [Základy notebooku](notebooks/zaklady_notebooku.ipynb) | Úvod do Jupyteru a Pythonu — typy buněk, proměnné, datové typy, cykly, funkce, importy, vizualizace, Markdown, klávesové zkratky |
-| 2 | [Titanic](notebooks/titanic.ipynb) | EDA, předzpracování dat, klasifikační modely (Decision Tree, Random Forest, Neural Network, AdaBoost) |
+| 2 | [Titanic](notebooks/titanic.ipynb) | Průzkumová analýza dat (EDA), předzpracování dat, klasifikační modely (Decision Tree, Random Forest, Neural Network, AdaBoost) |
 | 3 | [Řídké matice](notebooks/ridke_matice.ipynb) | Husté vs. řídké matice, formáty COO/CSR/CSC, porovnání paměťové náročnosti |
 
 ## Samostatné úlohy
