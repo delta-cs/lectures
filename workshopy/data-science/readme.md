@@ -14,15 +14,31 @@ V závěru se podíváme na efektivní ukládání dat pomocí řídkých matic.
 
 Nastartujte si nový `docker` workspace přes Coder.
 
-Vytvořte si nový adresář pro tento workshop a zkopírujte si do něj data a notebooky z repozitáře
+Vytvořte si nový adresář pro tento workshop a stáhněte si do něj data, obrázky a notebooky přímo z repozitáře
 
 ```shell
-mkdir ~/prace-s-daty-workshop
-cd ~/prace-s-daty-workshop
-cp -r /cesta/k/repozitari/lectures/workshopy/prace-s-daty/data .
-cp -r /cesta/k/repozitari/lectures/workshopy/prace-s-daty/notebooks .
-cp -r /cesta/k/repozitari/lectures/workshopy/prace-s-daty/img .
+mkdir -p ~/data-science-workshop/{data,img,notebooks}
+cd ~/data-science-workshop
+
+BASE=https://raw.githubusercontent.com/delta-cs/lectures/master/workshopy/data-science
+
+curl -o data/train.csv $BASE/data/train.csv
+curl -o data/test.csv  $BASE/data/test.csv
+
+curl -o img/classification-model-types.jpg $BASE/img/classification-model-types.jpg
+curl -o img/dense.png                      $BASE/img/dense.png
+curl -o img/train-test-split.jpg           $BASE/img/train-test-split.jpg
+
+curl -o notebooks/zaklady_notebooku.ipynb $BASE/notebooks/zaklady_notebooku.ipynb
+curl -o notebooks/titanic.ipynb           $BASE/notebooks/titanic.ipynb
+curl -o notebooks/ridke_matice.ipynb      $BASE/notebooks/ridke_matice.ipynb
 ```
+
+Alternativně si můžete jednotlivé soubory stáhnout ručně:
+
+- Data: [train.csv](https://raw.githubusercontent.com/delta-cs/lectures/master/workshopy/data-science/data/train.csv), [test.csv](https://raw.githubusercontent.com/delta-cs/lectures/master/workshopy/data-science/data/test.csv)
+- Notebooky: [zaklady_notebooku.ipynb](https://raw.githubusercontent.com/delta-cs/lectures/master/workshopy/data-science/notebooks/zaklady_notebooku.ipynb), [titanic.ipynb](https://raw.githubusercontent.com/delta-cs/lectures/master/workshopy/data-science/notebooks/titanic.ipynb), [ridke_matice.ipynb](https://raw.githubusercontent.com/delta-cs/lectures/master/workshopy/data-science/notebooks/ridke_matice.ipynb)
+- Obrázky: [classification-model-types.jpg](https://raw.githubusercontent.com/delta-cs/lectures/master/workshopy/data-science/img/classification-model-types.jpg), [dense.png](https://raw.githubusercontent.com/delta-cs/lectures/master/workshopy/data-science/img/dense.png), [train-test-split.jpg](https://raw.githubusercontent.com/delta-cs/lectures/master/workshopy/data-science/img/train-test-split.jpg)
 
 > **Poznámka**: Data pocházejí ze soutěže [Kaggle Titanic](https://www.kaggle.com/c/titanic/data)
 > a lze je stáhnout i přímo z Kaggle.
