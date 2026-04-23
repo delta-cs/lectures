@@ -72,7 +72,7 @@ PyTorch není součástí image — nainstalujte ho přímo v notebooku
 | 2 | [Titanic](notebooks/titanic.ipynb) | Průzkumová analýza dat (EDA), předzpracování dat, klasifikační modely (Decision Tree, Random Forest, Neural Network, AdaBoost) |
 | 3 | [Řídké matice](notebooks/ridke_matice.ipynb) | Husté vs. řídké matice, formáty COO/CSR/CSC, porovnání paměťové náročnosti |
 
-## Samostatné úlohy
+## Samostatné úlohy na Titanic
 
 Úlohy jsou určeny k samostatné práci studentů. Řešení jsou ve skládacích blocích níže.
 
@@ -301,7 +301,9 @@ plt.show()
 
 </details>
 
-### Samostatná úloha 6
+## Samostatné úlohy na řídké matice
+
+### Samostatná úloha 1
 
 Vytvořte jednotkovou matici 1 000 × 1 000 (`np.eye(1000)`).
 
@@ -333,7 +335,7 @@ na každém řádku i sloupci. COO je méně efektivní, protože ukládá oba i
 
 </details>
 
-### Samostatná úloha 7
+### Samostatná úloha 2
 
 Experimentujte s různými stupni řídkosti matice 5 000 × 5 000.
 
@@ -382,6 +384,68 @@ CSR je efektivnější než hustá matice přibližně od 75–80 % řídkosti.
 
 </details>
 
+## Samostatné úlohy na vesmírný Titanic
+
+Píše se rok 2912. Kosmická loď **Spaceship Titanic** se cestou k nově objeveným
+exoplanetám srazila s anomálií prostoročasu a **téměř polovina pasažérů byla
+transportována do paralelní dimenze**. Vaším úkolem je pomocí strojového učení
+předpovědět, kteří pasažéři byli transportováni (sloupec `Transported`).
+
+Dataset pochází ze soutěže [Kaggle — Spaceship Titanic](https://www.kaggle.com/competitions/spaceship-titanic).
+Stáhněte si `train.csv` a `test.csv` z [data page](https://www.kaggle.com/competitions/spaceship-titanic/data)
+(vyžaduje registraci na Kaggle).
+
+### Popis sloupců
+
+| Sloupec | Popis |
+|---------|-------|
+| **PassengerId** | Unikátní ID ve formátu `gggg_pp`, kde `gggg` je ID skupiny a `pp` číslo v rámci skupiny |
+| **HomePlanet** | Domovská planeta pasažéra (Earth, Europa, Mars) |
+| **CryoSleep** | Pasažér byl ve kryospánku (True / False) — spící nemohou opustit kajutu |
+| **Cabin** | Kajuta ve formátu `deck/num/side`, kde `side` je `P` (port) nebo `S` (starboard) |
+| **Destination** | Cílová planeta (TRAPPIST-1e, PSO J318.5-22, 55 Cancri e) |
+| **Age** | Věk pasažéra |
+| **VIP** | VIP status (True / False) |
+| **RoomService, FoodCourt, ShoppingMall, Spa, VRDeck** | Utrata za palubní služby |
+| **Name** | Jméno pasažéra |
+| **Transported** | **Cílová proměnná** — pasažér byl transportován do jiné dimenze (True / False) |
+
+### Úkol
+
+Natrénujte vlastní klasifikační model, vygenerujte predikce pro `test.csv`
+a nahrajte submission na Kaggle — [Spaceship Titanic submit](https://www.kaggle.com/competitions/spaceship-titanic/submit).
+
+**Cíl: dosáhněte co nejvyššího skóre** na [leaderboardu](https://www.kaggle.com/competitions/spaceship-titanic/leaderboard).
+
+Je jen na vás, jaké techniky použijete — feature engineering, předzpracování,
+výběr modelu, ladění hyperparametrů, ensembling. Inspirujte se Titanic notebookem
+z workshopu.
+
+## Samostatné úlohy na ceny domů (Housing)
+
+Vaším úkolem je předpovědět **prodejní cenu domu** (`SalePrice`) na základě
+79 vysvětlujících proměnných popisujících (téměř) všechny aspekty domů v Amesu
+v Iowě. Na rozdíl od předchozích úloh jde o **regresi**, ne klasifikaci —
+cílová proměnná je spojité číslo.
+
+Dataset pochází ze soutěže [Kaggle — Housing Prices Competition for Kaggle Learn Users](https://www.kaggle.com/competitions/home-data-for-ml-course).
+Stáhněte si `train.csv` a `test.csv` z [data page](https://www.kaggle.com/competitions/home-data-for-ml-course/data)
+(vyžaduje registraci na Kaggle). Popis všech 79 sloupců najdete v `data_description.txt`.
+
+### Úkol
+
+Natrénujte vlastní regresní model, vygenerujte predikce pro `test.csv`
+a nahrajte submission na Kaggle — [Housing submit](https://www.kaggle.com/competitions/home-data-for-ml-course/submit).
+
+**Cíl: dosáhněte co nejnižší chyby** (MAE — Mean Absolute Error) na
+[leaderboardu](https://www.kaggle.com/competitions/home-data-for-ml-course/leaderboard).
+
+> **Tip**: pro regresní úlohy použijte místo `DecisionTreeClassifier` /
+> `RandomForestClassifier` jejich regresní varianty
+> (`DecisionTreeRegressor`, `RandomForestRegressor`). Silné výsledky dávají
+> gradient boosting modely — `GradientBoostingRegressor`, `XGBRegressor`,
+> `LGBMRegressor`.
+
 ## Další zdroje
 
 - [NumPy dokumentace](https://numpy.org/doc/)
@@ -390,6 +454,8 @@ CSR je efektivnější než hustá matice přibližně od 75–80 % řídkosti.
 - [scikit-learn dokumentace](https://scikit-learn.org/stable/)
 - [PyTorch tutoriály](https://pytorch.org/tutorials/)
 - [Kaggle — Titanic soutěž](https://www.kaggle.com/c/titanic)
+- [Kaggle — Spaceship Titanic soutěž](https://www.kaggle.com/competitions/spaceship-titanic)
+- [Kaggle — Housing Prices soutěž](https://www.kaggle.com/competitions/home-data-for-ml-course)
 - [seaborn dokumentace](https://seaborn.pydata.org/)
 - [matplotlib dokumentace](https://matplotlib.org/stable/)
 
