@@ -95,6 +95,9 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 - [[P](/teoreticka/13-spojove-seznamy-interaktivni.pdf)] [Spojové seznamy](./teoreticka/13-spojove-seznamy.pdf)
 - [[P](/teoreticka/14-rekurze-interaktivni.pdf)] [Rekurze](./teoreticka/14-rekurze.pdf)
 - [[P](/teoreticka/15-rekurzivni-tridici-algoritmy-interaktivni.pdf)] [Rekurzivní třídicí algoritmy](./teoreticka/15-rekurzivni-tridici-algoritmy.pdf)
+- [[P](/teoreticka/16-stromove-struktury-interkativni.pdf)] [Stromové struktury](./teoreticka/16-stromove-struktury.pdf)
+- [[P](/teoreticka/17-binarni-stromy-interkativni.pdf)] [Binární stromy](./teoreticka/17-binarni-stromy.pdf)
+- [[P](/teoreticka/18-binarni-vyhledavaci-strom-interkativni.pdf)] [Binární vyhledávací strom](./teoreticka/18-binarni-vyhledavaci-strom.pdf)
 
 ### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Přednášky pro druhý ročník
 
