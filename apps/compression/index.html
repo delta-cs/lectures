@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Komprese</title>
+<style>
+  body { font-family: monospace; margin: 0; padding: 0; }
+  nav { background: #222; color: #fff; display: flex; align-items: center; flex-wrap: wrap; }
+  nav .title { padding: 0.5em 1em; font-weight: bold; }
+  nav button { background: none; border: none; color: #aaa; font-family: monospace; font-size: 1em; padding: 0.5em 1em; cursor: pointer; border-bottom: 2px solid transparent; }
+  nav button:hover { color: #fff; }
+  nav button.active { color: #fff; border-bottom: 2px solid #fff; }
+  .page { display: none; max-width: 800px; margin: 1.5em auto; padding: 0 1em 3em; }
+  .page.active { display: block; }
+  h2 { font-size: 1.1em; margin-top: 1.5em; border-bottom: 1px solid #ccc; padding-bottom: 0.3em; }
+  h2:first-child { margin-top: 0; }
+  label { font-weight: bold; }
+  input[type="number"] { width: 80px; font-family: monospace; }
+  textarea { font-family: monospace; width: 100%; max-width: 600px; }
+  button { font-family: monospace; padding: 0.3em 1em; cursor: pointer; }
+  table { border-collapse: collapse; margin: 0.5em 0; }
+  th, td { border: 1px solid #ccc; padding: 0.3em 0.6em; text-align: center; font-size: 0.9em; }
+  th { background: #f0f0f0; }
+  td { text-align: left; }
+  .out { font-size: 0.85em; line-height: 1.8; word-break: break-all; max-height: 250px; overflow-y: auto; border: 1px solid #ccc; padding: 0.5em; margin: 0.5em 0; }
+  .lit { background: #d4edda; padding: 0.1em 0.3em; border-radius: 2px; }
+  .mat { background: #cce5ff; padding: 0.1em 0.3em; border-radius: 2px; }
+  .eof { background: #fff3cd; padding: 0.1em 0.3em; border-radius: 2px; }
+  .bar-bg { width: 100%; height: 6px; background: #ddd; margin: 0.3em 0; }
+  .bar-fg { height: 6px; background: #333; width: 0%; }
+  .ok { color: green; font-weight: bold; }
+  .fail { color: red; font-weight: bold; }
+  .note { color: #666; font-size: 0.85em; }
+  .hidden { display: none; }
+  a { color: #004d90; }
+  .input-toggle { display: flex; gap: 0.5em; margin-bottom: 0.3em; }
+  .input-toggle button { font-size: 0.85em; }
+  .input-toggle button.active { font-weight: bold; text-decoration: underline; }
+  .file-name { font-size: 0.9em; margin: 0.3em 0; }
+  .modal-bg { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: center; justify-content: center; }
+  .modal { background: #fff; width: 90vw; max-width: 900px; height: 80vh; display: flex; flex-direction: column; border-radius: 4px; }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; padding: 0.5em 1em; border-bottom: 1px solid #ccc; }
+  .modal-head h3 { font-size: 1em; margin: 0; }
+  .modal-close { background: none; border: none; font-size: 1.3em; cursor: pointer; font-family: monospace; }
+  .modal-search { padding: 0.5em 1em; border-bottom: 1px solid #eee; }
+  .modal-search input { width: 100%; font-family: monospace; padding: 0.3em; border: 1px solid #ccc; border-radius: 3px; }
+  .modal-body { flex: 1; overflow-y: auto; padding: 0.5em 1em; font-size: 0.85em; line-height: 1.6; }
+  .modal-body table { width: 100%; }
+  .modal-info { padding: 0.3em 1em; border-top: 1px solid #eee; font-size: 0.8em; color: #666; }
+  .detail-btn { font-size: 0.85em; color: #004d90; background: none; border: 1px solid #004d90; border-radius: 3px; padding: 0.2em 0.6em; cursor: pointer; }
+  .detail-btn:hover { background: #e8eef5; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="title" style="cursor:pointer" data-page="home">Komprese</span>
+  <button class="active" data-page="home">Přehled</button>
+  <button data-page="huffman">Huffman</button>
+  <button data-page="lz77">LZ77</button>
+  <button data-page="deflate">Deflate</button>
+  <button data-page="lz78">LZ78</button>
+  <button data-page="lzw">LZW</button>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <h2>Kompresní metody – přehled</h2>
+  <table>
+    <tr><th>Metoda</th><th>Typ</th><th>Princip</th><th>Použití</th></tr>
+    <tr><td><a href="?tab=huffman" data-tab="huffman">Huffman</a></td><td>statistická</td><td>častější symboly → kratší kódy</td><td>JPEG, MP3, Deflate</td></tr>
+    <tr><td><a href="?tab=lz77" data-tab="lz77">LZ77</a></td><td>slovníková</td><td>posuvné okno, trojice (offset, délka, znak)</td><td>gzip, zstd</td></tr>
+    <tr><td><a href="?tab=deflate" data-tab="deflate">Deflate</a></td><td>kombinovaná</td><td>LZ77 + Huffman</td><td>ZIP, PNG, HTTP</td></tr>
+    <tr><td><a href="?tab=lz78" data-tab="lz78">LZ78</a></td><td>slovníková</td><td>explicitní slovník, dvojice (index, znak)</td><td>základ LZW</td></tr>
+    <tr><td><a href="?tab=lzw" data-tab="lzw">LZW</a></td><td>slovníková</td><td>vylepšení LZ78, výstup pouze kódy</td><td>GIF, TIFF, PDF</td></tr>
+  </table>
+  <h2>Jak na to</h2>
+  <p>Každá metoda má tři části: <strong>komprese</strong> (text nebo soubor → binární výstup), <strong>dekomprese</strong> (binární soubor → originál) a <strong>porovnání</strong> (bitová kontrola).</p>
+</div>
+
+<!-- HUFFMAN -->
+<div id="huffman" class="page">
+  <h2>Huffman – Komprese</h2>
+  <div class="input-toggle"><button class="active" data-prefix="huf" data-mode="text">Text</button><button data-prefix="huf" data-mode="file">Soubor</button></div>
+  <div id="huf-text-wrap"><textarea id="huf-input" rows="3">ABRACADABRA</textarea></div>
+  <div id="huf-file-wrap" class="hidden"><input type="file" id="huf-enc-file"> <span class="file-name" id="huf-file-name"></span></div>
+  <p><button id="huf-enc-btn">Komprimovat</button></p>
+  <div class="hidden" id="huf-enc-out">
+    <h2>Statistiky</h2>
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Poměr</th><th>Prům. délka kódu</th><th>Čas</th></tr><tr id="huf-enc-row"></tr></table>
+    <p><button id="huf-enc-dl">Stáhnout .huf</button> <button class="detail-btn" id="huf-detail-btn">Zobrazit kódy</button></p>
+  </div>
+  <h2>Huffman – Dekomprese</h2>
+  <p><label>Soubor .huf:</label> <input type="file" id="huf-dec-file" accept=".huf"> <button id="huf-dec-btn" disabled>Dekomprimovat</button></p>
+  <div class="hidden" id="huf-dec-out">
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Čas</th></tr><tr id="huf-dec-row"></tr></table>
+    <p><button id="huf-dec-dl">Stáhnout dekomprimovaný soubor</button></p>
+  </div>
+  <h2>Porovnání</h2>
+  <p><label>Originál:</label> <input type="file" id="huf-cmp1"><br><label>Dekomprimovaný:</label> <input type="file" id="huf-cmp2"> <button id="huf-cmp-btn" disabled>Porovnat</button></p>
+  <div class="hidden" id="huf-cmp-out"></div>
+</div>
+
+<!-- LZ77 -->
+<div id="lz77" class="page">
+  <h2>LZ77 – Komprese</h2>
+  <div class="input-toggle"><button class="active" data-prefix="lz77" data-mode="text">Text</button><button data-prefix="lz77" data-mode="file">Soubor</button></div>
+  <div id="lz77-text-wrap"><textarea id="lz77-input" rows="3">ABCABCABC</textarea></div>
+  <div id="lz77-file-wrap" class="hidden"><input type="file" id="lz77-enc-file"> <span class="file-name" id="lz77-file-name"></span></div>
+  <p>
+    <label>Search buffer:</label> <input type="number" id="lz77-window" value="32768" min="16" max="65535"> bajtů
+    <label>Lookahead:</label> <input type="number" id="lz77-lookahead" value="258" min="3" max="65535"> bajtů
+    <label>Hledání:</label>
+    <select id="lz77-mode" style="font-family:monospace">
+      <option value="naive">naivní</option>
+      <option value="hash" selected>hash</option>
+    </select>
+  </p>
+  <p>
+    <button id="lz77-enc-btn">Komprimovat</button>
+    <button id="lz77-stop-btn" class="hidden" style="background:#c44;color:#fff">Stop</button>
+  </p>
+  <p class="note">
+    Předvolby:
+    <button class="detail-btn" onclick="document.getElementById('lz77-window').value=32768;document.getElementById('lz77-lookahead').value=258">gzip/Deflate</button>
+    <button class="detail-btn" onclick="document.getElementById('lz77-window').value=4096;document.getElementById('lz77-lookahead').value=258">rychlé (4 KB)</button>
+    <button class="detail-btn" onclick="document.getElementById('lz77-window').value=65535;document.getElementById('lz77-lookahead').value=65535">maximum</button>
+    <br><strong>Naivní:</strong> prochází celé okno znak po znaku — O(n·w), pomalé, odpovídá učebnicovému popisu.
+    <br><strong>Hash:</strong> hash tabulka pozic pro 3-bajtové sekvence — O(n), rychlé, používá gzip.
+  </p>
+  <div class="hidden" id="lz77-enc-prog"><div class="bar-bg"><div class="bar-fg" id="lz77-enc-bar"></div></div><span id="lz77-enc-pct">0 %</span></div>
+  <div class="hidden" id="lz77-enc-out">
+    <h2>Statistiky</h2>
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Poměr</th><th>Trojic</th><th>Literálů</th><th>Shod</th><th>Čas</th></tr><tr id="lz77-enc-row"></tr></table>
+    <p><button id="lz77-enc-dl">Stáhnout .lz77</button> <button class="detail-btn" id="lz77-detail-btn">Zobrazit trojice</button></p>
+    <p class="note">Čistý LZ77 bez Huffmanova kódování. V praxi se kombinují (→ Deflate/gzip).</p>
+  </div>
+  <h2>LZ77 – Dekomprese</h2>
+  <p><label>Soubor .lz77:</label> <input type="file" id="lz77-dec-file" accept=".lz77"> <button id="lz77-dec-btn" disabled>Dekomprimovat</button></p>
+  <div class="hidden" id="lz77-dec-out">
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Trojic</th><th>Čas</th></tr><tr id="lz77-dec-row"></tr></table>
+    <p><button id="lz77-dec-dl">Stáhnout dekomprimovaný soubor</button></p>
+  </div>
+  <h2>Porovnání</h2>
+  <p><label>Originál:</label> <input type="file" id="lz77-cmp1"><br><label>Dekomprimovaný:</label> <input type="file" id="lz77-cmp2"> <button id="lz77-cmp-btn" disabled>Porovnat</button></p>
+  <div class="hidden" id="lz77-cmp-out"></div>
+</div>
+
+<!-- DEFLATE -->
+<div id="deflate" class="page">
+  <h2>Deflate – Komprese (LZ77 + Huffman)</h2>
+  <div class="input-toggle"><button class="active" data-prefix="def" data-mode="text">Text</button><button data-prefix="def" data-mode="file">Soubor</button></div>
+  <div id="def-text-wrap"><textarea id="def-input" rows="3">ABCABCABC</textarea></div>
+  <div id="def-file-wrap" class="hidden"><input type="file" id="def-enc-file"> <span class="file-name" id="def-file-name"></span></div>
+  <p>
+    <label>Search buffer:</label> <input type="number" id="def-window" value="32768" min="16" max="65535"> bajtů
+    <label>Lookahead:</label> <input type="number" id="def-lookahead" value="258" min="3" max="65535"> bajtů
+    <label>Hledání:</label>
+    <select id="def-mode" style="font-family:monospace">
+      <option value="naive">naivní</option>
+      <option value="hash" selected>hash</option>
+    </select>
+  </p>
+  <p>
+    <button id="def-enc-btn">Komprimovat</button>
+    <button id="def-stop-btn" class="hidden" style="background:#c44;color:#fff">Stop</button>
+  </p>
+  <p class="note">
+    Předvolby:
+    <button class="detail-btn" onclick="document.getElementById('def-window').value=32768;document.getElementById('def-lookahead').value=258">gzip/Deflate</button>
+    <button class="detail-btn" onclick="document.getElementById('def-window').value=4096;document.getElementById('def-lookahead').value=258">rychlé (4 KB)</button>
+    <button class="detail-btn" onclick="document.getElementById('def-window').value=65535;document.getElementById('def-lookahead').value=65535">maximum</button>
+    <br><strong>Naivní:</strong> prochází celé okno znak po znaku — O(n·w), pomalé, odpovídá učebnicovému popisu.
+    <br><strong>Hash:</strong> hash tabulka pozic pro 3-bajtové sekvence — O(n), rychlé, používá gzip.
+  </p>
+  <div class="hidden" id="def-enc-prog"><div class="bar-bg"><div class="bar-fg" id="def-enc-bar"></div></div><span id="def-enc-pct">0 %</span></div>
+  <div class="hidden" id="def-enc-out">
+    <h2>Statistiky</h2>
+    <table><tr><th>Vstup</th><th>Po LZ77</th><th>Po Huffmanu</th><th>Poměr</th><th>Čas</th></tr><tr id="def-enc-row"></tr></table>
+    <p><button id="def-enc-dl">Stáhnout .deflate</button> <button class="detail-btn" id="def-detail-triples">Zobrazit trojice (LZ77)</button> <button class="detail-btn" id="def-detail-codes">Zobrazit Huffman kódy</button></p>
+    <p class="note">1. krok: LZ77 najde shody. 2. krok: Huffman zakóduje hodnoty kratšími kódy.</p>
+  </div>
+  <h2>Deflate – Dekomprese</h2>
+  <p><label>Soubor .deflate:</label> <input type="file" id="def-dec-file" accept=".deflate"> <button id="def-dec-btn" disabled>Dekomprimovat</button></p>
+  <div class="hidden" id="def-dec-out">
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Čas</th></tr><tr id="def-dec-row"></tr></table>
+    <p><button id="def-dec-dl">Stáhnout dekomprimovaný soubor</button></p>
+  </div>
+  <h2>Porovnání</h2>
+  <p><label>Originál:</label> <input type="file" id="def-cmp1"><br><label>Dekomprimovaný:</label> <input type="file" id="def-cmp2"> <button id="def-cmp-btn" disabled>Porovnat</button></p>
+  <div class="hidden" id="def-cmp-out"></div>
+</div>
+
+<!-- LZ78 -->
+<div id="lz78" class="page">
+  <h2>LZ78 – Komprese</h2>
+  <div class="input-toggle"><button class="active" data-prefix="lz78" data-mode="text">Text</button><button data-prefix="lz78" data-mode="file">Soubor</button></div>
+  <div id="lz78-text-wrap"><textarea id="lz78-input" rows="3">ABABAB</textarea></div>
+  <div id="lz78-file-wrap" class="hidden"><input type="file" id="lz78-enc-file"> <span class="file-name" id="lz78-file-name"></span></div>
+  <p>
+    <label>Max. velikost slovníku:</label> <input type="number" id="lz78-dictsize" value="65536" min="16" max="16777216">
+    <label>Při zaplnění:</label>
+    <select id="lz78-strategy" style="font-family:monospace">
+      <option value="freeze">zmrazit</option>
+      <option value="reset">resetovat</option>
+    </select>
+    <button id="lz78-enc-btn">Komprimovat</button>
+  </p>
+  <p class="note">
+    Předvolby:
+    <button class="detail-btn" onclick="document.getElementById('lz78-dictsize').value=4096;document.getElementById('lz78-strategy').value='reset'">4 096 + reset</button>
+    <button class="detail-btn" onclick="document.getElementById('lz78-dictsize').value=65536;document.getElementById('lz78-strategy').value='freeze'">65 536 + zmrazení</button>
+  </p>
+  <div class="hidden" id="lz78-enc-out">
+    <h2>Statistiky</h2>
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Poměr</th><th>Dvojic</th><th>Čas</th></tr><tr id="lz78-enc-row"></tr></table>
+    <p><button id="lz78-enc-dl">Stáhnout .lz78</button> <button class="detail-btn" id="lz78-detail-dict">Zobrazit slovník</button> <button class="detail-btn" id="lz78-detail-pairs">Zobrazit dvojice</button></p>
+  </div>
+  <h2>LZ78 – Dekomprese</h2>
+  <p><label>Soubor .lz78:</label> <input type="file" id="lz78-dec-file" accept=".lz78"> <button id="lz78-dec-btn" disabled>Dekomprimovat</button></p>
+  <div class="hidden" id="lz78-dec-out">
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Dvojic</th><th>Čas</th></tr><tr id="lz78-dec-row"></tr></table>
+    <p><button id="lz78-dec-dl">Stáhnout dekomprimovaný soubor</button></p>
+  </div>
+  <h2>Porovnání</h2>
+  <p><label>Originál:</label> <input type="file" id="lz78-cmp1"><br><label>Dekomprimovaný:</label> <input type="file" id="lz78-cmp2"> <button id="lz78-cmp-btn" disabled>Porovnat</button></p>
+  <div class="hidden" id="lz78-cmp-out"></div>
+</div>
+
+<!-- LZW -->
+<div id="lzw" class="page">
+  <h2>LZW – Komprese</h2>
+  <div class="input-toggle"><button class="active" data-prefix="lzw" data-mode="text">Text</button><button data-prefix="lzw" data-mode="file">Soubor</button></div>
+  <div id="lzw-text-wrap"><textarea id="lzw-input" rows="3">ABABAB</textarea></div>
+  <div id="lzw-file-wrap" class="hidden"><input type="file" id="lzw-enc-file"> <span class="file-name" id="lzw-file-name"></span></div>
+  <p>
+    <label>Max. velikost slovníku:</label> <input type="number" id="lzw-dictsize" value="65536" min="256" max="16777216">
+    <label>Při zaplnění:</label>
+    <select id="lzw-strategy" style="font-family:monospace">
+      <option value="freeze">zmrazit</option>
+      <option value="reset">resetovat</option>
+    </select>
+    <button id="lzw-enc-btn">Komprimovat</button>
+  </p>
+  <p class="note">
+    Předvolby:
+    <button class="detail-btn" onclick="document.getElementById('lzw-dictsize').value=4096;document.getElementById('lzw-strategy').value='reset'">GIF (4 096 + reset)</button>
+    <button class="detail-btn" onclick="document.getElementById('lzw-dictsize').value=65536;document.getElementById('lzw-strategy').value='freeze'">Unix compress (65 536)</button>
+  </p>
+  <div class="hidden" id="lzw-enc-out">
+    <h2>Statistiky</h2>
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Poměr</th><th>Kódů</th><th>Čas</th></tr><tr id="lzw-enc-row"></tr></table>
+    <p><button id="lzw-enc-dl">Stáhnout .lzw</button> <button class="detail-btn" id="lzw-detail-dict">Zobrazit slovník</button> <button class="detail-btn" id="lzw-detail-codes">Zobrazit kódy</button></p>
+  </div>
+  <h2>LZW – Dekomprese</h2>
+  <p><label>Soubor .lzw:</label> <input type="file" id="lzw-dec-file" accept=".lzw"> <button id="lzw-dec-btn" disabled>Dekomprimovat</button></p>
+  <div class="hidden" id="lzw-dec-out">
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Kódů</th><th>Čas</th></tr><tr id="lzw-dec-row"></tr></table>
+    <p><button id="lzw-dec-dl">Stáhnout dekomprimovaný soubor</button></p>
+  </div>
+  <h2>Porovnání</h2>
+  <p><label>Originál:</label> <input type="file" id="lzw-cmp1"><br><label>Dekomprimovaný:</label> <input type="file" id="lzw-cmp2"> <button id="lzw-cmp-btn" disabled>Porovnat</button></p>
+  <div class="hidden" id="lzw-cmp-out"></div>
+</div>
+
+<script>
+// === Navigace ===
+
+function switchTab(id) {
+  const btn = document.querySelector(`nav button[data-page="${id}"]`);
+  if (!btn) return;
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(id).classList.add("active");
+  history.replaceState(null, "", new URL(`?tab=${id}`, location));
+}
+document.querySelectorAll("nav button").forEach(b => b.addEventListener("click", () => switchTab(b.dataset.page)));
+document.querySelector("nav .title").addEventListener("click", () => switchTab("home"));
+document.querySelectorAll("a[data-tab]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); switchTab(a.dataset.tab); }));
+{ const t = new URLSearchParams(location.search).get("tab"); if (t && document.getElementById(t)) switchTab(t); }
+
+// === Sdílené ===
+
+function fmtSize(b) {
+  const exact = b.toLocaleString() + " B";
+  if (b < 1000) return exact;
+  if (b < 1000000) return (b/1000).toFixed(1) + " KB (" + exact + ")";
+  return (b/1000000).toFixed(2) + " MB (" + exact + ")";
+}
+function fmtChar(b) { return b >= 32 && b <= 126 ? String.fromCharCode(b) : "0x"+b.toString(16).padStart(2,"0"); }
+function dl(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; a.click(); }
+
+// === Modal ===
+// items: [{text:"searchable", html:"<tr>...</tr>"}]
+// tableHead: optional "<tr><th>...</th></tr>" — wraps rows in <table>
+
+function openModal(title, items, tableHead) {
+  const bg = document.createElement("div"); bg.className = "modal-bg";
+  bg.innerHTML = `<div class="modal">
+    <div class="modal-head"><h3></h3><button class="modal-close">✕</button></div>
+    <div class="modal-search"><input type="text" placeholder="Hledat…"></div>
+    <div class="modal-body"></div>
+    <div class="modal-info"></div>
+  </div>`;
+  bg.querySelector("h3").textContent = title;
+  const body = bg.querySelector(".modal-body");
+  const info = bg.querySelector(".modal-info");
+  const input = bg.querySelector("input");
+  document.body.appendChild(bg);
+
+  const PAGE = 500;
+
+  function render(filter) {
+    const f = filter.toLowerCase();
+    const filtered = f ? items.filter(r => r.text.toLowerCase().includes(f)) : items;
+    let loaded = Math.min(PAGE, filtered.length);
+    const wrap = h => tableHead ? `<table style="width:100%">${tableHead}${h}</table>` : h;
+    body.innerHTML = wrap(filtered.slice(0, loaded).map(r => r.html).join(""));
+    info.textContent = `${loaded.toLocaleString()} / ${filtered.length.toLocaleString()} záznamů`;
+
+    body.onscroll = () => {
+      if (loaded < filtered.length && body.scrollTop + body.clientHeight >= body.scrollHeight - 200) {
+        const next = filtered.slice(loaded, loaded + PAGE);
+        if (tableHead) {
+          body.querySelector("table").insertAdjacentHTML("beforeend", next.map(r => r.html).join(""));
+        } else {
+          body.insertAdjacentHTML("beforeend", next.map(r => r.html).join(""));
+        }
+        loaded += next.length;
+        info.textContent = `${loaded.toLocaleString()} / ${filtered.length.toLocaleString()} záznamů`;
+      }
+    };
+  }
+  render("");
+  input.addEventListener("input", () => render(input.value));
+  bg.querySelector(".modal-close").addEventListener("click", () => bg.remove());
+  bg.addEventListener("click", e => { if (e.target === bg) bg.remove(); });
+  const esc = e => { if (e.key === "Escape") { bg.remove(); document.removeEventListener("keydown", esc); } };
+  document.addEventListener("keydown", esc);
+  input.focus();
+}
+
+function inputMode(prefix, mode) {
+  const toggle = document.querySelector(`#${prefix}-text-wrap`)?.parentElement.querySelector('.input-toggle');
+  if (toggle) { toggle.querySelectorAll('button').forEach((b,i) => b.classList.toggle('active', (mode==='text'?i===0:i===1))); }
+  document.getElementById(prefix+'-text-wrap')?.classList.toggle('hidden', mode!=='text');
+  document.getElementById(prefix+'-file-wrap')?.classList.toggle('hidden', mode!=='file');
+}
+document.querySelectorAll('.input-toggle button').forEach(b => {
+  b.addEventListener('click', () => inputMode(b.dataset.prefix, b.dataset.mode));
+});
+
+function getInput(textId, fileId) {
+  const textWrap = document.getElementById(textId)?.closest('[id$="-text-wrap"]');
+  const fileEl = document.getElementById(fileId);
+  if (textWrap && !textWrap.classList.contains('hidden')) {
+    const text = document.getElementById(textId).value;
+    return Promise.resolve({ data: new TextEncoder().encode(text), name: "text.txt" });
+  }
+  if (fileEl && fileEl.files.length > 0) return fileEl.files[0].arrayBuffer().then(b => ({ data: new Uint8Array(b), name: fileEl.files[0].name }));
+  const text = document.getElementById(textId)?.value || "";
+  return Promise.resolve({ data: new TextEncoder().encode(text), name: "text.txt" });
+}
+
+function cmpFiles(a, b) {
+  const max = Math.max(a.length, b.length);
+  if (a.length === b.length && a.every((v,i) => v === b[i])) return `<p class="ok">Soubory jsou identické (${fmtSize(a.length)})</p>`;
+  const diffs = []; let total = 0;
+  for (let i = 0; i < max; i++) { if ((a[i]??-1) !== (b[i]??-1)) { total++; if (diffs.length < 50) diffs.push({pos:i, a:a[i], b:b[i]}); } }
+  let h = `<p class="fail">Liší se: ${total.toLocaleString()} rozdílů z ${max.toLocaleString()} bajtů`;
+  if (a.length !== b.length) h += ` (${fmtSize(a.length)} vs ${fmtSize(b.length)})`;
+  h += `</p><table><tr><th>Pozice</th><th>Originál</th><th>Dekomprimovaný</th></tr>`;
+  for (const d of diffs) h += `<tr><td>${d.pos}</td><td>${d.a!=null?fmtChar(d.a):"–"}</td><td>${d.b!=null?fmtChar(d.b):"–"}</td></tr>`;
+  return h + `</table>` + (total > 50 ? `<p class="note">Prvních 50 z ${total.toLocaleString()} rozdílů.</p>` : "");
+}
+
+function setupCmp(prefix) {
+  let f1, f2;
+  document.getElementById(prefix+"-cmp1").addEventListener("change", e => { e.target.files[0]?.arrayBuffer().then(b => { f1 = new Uint8Array(b); document.getElementById(prefix+"-cmp-btn").disabled = !(f1&&f2); }); });
+  document.getElementById(prefix+"-cmp2").addEventListener("change", e => { e.target.files[0]?.arrayBuffer().then(b => { f2 = new Uint8Array(b); document.getElementById(prefix+"-cmp-btn").disabled = !(f1&&f2); }); });
+  document.getElementById(prefix+"-cmp-btn").addEventListener("click", () => { const o = document.getElementById(prefix+"-cmp-out"); o.innerHTML = cmpFiles(f1,f2); o.classList.remove("hidden"); });
+}
+setupCmp("huf"); setupCmp("lz77"); setupCmp("def"); setupCmp("lz78"); setupCmp("lzw");
+
+// === Huffman ===
+
+function hufBuildTree(freq) {
+  const entries = Object.entries(freq);
+  if (!entries.length) return {};
+  if (entries.length === 1) { const c = {}; c[entries[0][0]] = "0"; return c; }
+  const nodes = entries.map(([s,f]) => ({s,f,l:null,r:null}));
+  while (nodes.length > 1) { nodes.sort((a,b) => a.f-b.f); const l=nodes.shift(), r=nodes.shift(); nodes.push({s:null,f:l.f+r.f,l,r}); }
+  const codes = {};
+  (function w(n,p) { if (!n) return; if (n.s!==null) { codes[n.s]=p||"0"; return; } w(n.l,p+"0"); w(n.r,p+"1"); })(nodes[0],"");
+  return codes;
+}
+
+function hufEncode(data) {
+  const freq = {};
+  for (const b of data) freq[b] = (freq[b]||0) + 1;
+  const codes = hufBuildTree(freq);
+  let bits = "";
+  for (const b of data) bits += codes[b];
+  return { codes, bits, freq };
+}
+
+function hufDecode(codes, bits, origSize) {
+  const rev = {}; for (const [s,c] of Object.entries(codes)) rev[c] = parseInt(s);
+  const out = new Uint8Array(origSize);
+  let pos = 0, cur = "";
+  for (const ch of bits) { cur += ch; if (cur in rev) { out[pos++] = rev[cur]; cur = ""; } }
+  return out;
+}
+
+function hufSerialize(codes, bits, origSize) {
+  const entries = Object.entries(codes);
+  let cbSize = 0;
+  for (const [,c] of entries) cbSize += 3 + Math.ceil(c.length / 8);
+  const dataBytes = Math.ceil(bits.length / 8);
+  const buf = new Uint8Array(14 + cbSize + dataBytes);
+  const v = new DataView(buf.buffer);
+  buf[0]=72; buf[1]=85; buf[2]=70; buf[3]=70; // "HUFF"
+  v.setUint32(4, origSize, true);
+  v.setUint16(8, entries.length, true);
+  v.setUint32(10, bits.length, true);
+  let p = 14;
+  for (const [s,c] of entries) {
+    v.setUint16(p, parseInt(s), true); p += 2;
+    buf[p++] = c.length;
+    for (let i = 0; i < c.length; i++) if (c[i]==="1") buf[p+(i>>3)] |= 1<<(7-(i&7));
+    p += Math.ceil(c.length / 8);
+  }
+  for (let i = 0; i < bits.length; i++) if (bits[i]==="1") buf[p+(i>>3)] |= 1<<(7-(i&7));
+  return buf.buffer;
+}
+
+function hufDeserialize(buf) {
+  const d = new Uint8Array(buf), v = new DataView(buf);
+  if (String.fromCharCode(d[0],d[1],d[2],d[3]) !== "HUFF") throw new Error("Neplatný formát");
+  const origSize = v.getUint32(4,true), numSym = v.getUint16(8,true), bitLen = v.getUint32(10,true);
+  let p = 14; const codes = {};
+  for (let i = 0; i < numSym; i++) {
+    const sym = v.getUint16(p,true); p += 2;
+    const cl = d[p++]; let c = "";
+    for (let j = 0; j < cl; j++) c += (d[p+(j>>3)] & (1<<(7-(j&7)))) ? "1" : "0";
+    p += Math.ceil(cl/8);
+    codes[sym] = c;
+  }
+  let bits = "";
+  for (let i = 0; i < bitLen; i++) bits += (d[p+(i>>3)] & (1<<(7-(i&7)))) ? "1" : "0";
+  return { codes, bits, origSize };
+}
+
+let hufBuf, hufName, hufCodesData;
+document.getElementById("huf-enc-btn").addEventListener("click", async () => {
+  const { data, name } = await getInput("huf-input", "huf-enc-file");
+  hufName = name;
+  const t0 = performance.now();
+  const { codes, bits, freq } = hufEncode(data);
+  hufBuf = hufSerialize(codes, bits, data.length);
+  const ms = performance.now() - t0;
+  hufCodesData = Object.entries(codes).sort((a,b) => a[1].length - b[1].length).map(([s,c]) => ({ sym: parseInt(s), code: c, freq: freq[s] }));
+  const avgLen = Object.entries(codes).reduce((s,[k,c]) => s + (freq[k]/data.length)*c.length, 0);
+  document.getElementById("huf-enc-row").innerHTML = `<td>${fmtSize(data.length)}</td><td>${fmtSize(hufBuf.byteLength)}</td><td>${(hufBuf.byteLength/data.length*100).toFixed(1)} %</td><td>${avgLen.toFixed(2)} b/sym</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("huf-enc-out").classList.remove("hidden");
+});
+document.getElementById("huf-enc-dl").addEventListener("click", () => { if (hufBuf) dl(new Blob([hufBuf]), hufName+".huf"); });
+document.getElementById("huf-detail-btn").addEventListener("click", () => {
+  if (!hufCodesData) return;
+  openModal(
+    `Huffmanovy kódy (${hufCodesData.length} symbolů)`,
+    hufCodesData.map(r => ({ text: `${fmtChar(r.sym)} ${r.code} ${r.freq}`, html: `<tr><td>${fmtChar(r.sym)}</td><td>${r.code}</td><td>${r.code.length}</td><td>${r.freq}</td></tr>` })),
+    `<tr><th>Symbol</th><th>Kód</th><th>Délka</th><th>Frekvence</th></tr>`
+  );
+});
+
+let hufDecResult, hufDecName;
+document.getElementById("huf-dec-file").addEventListener("change", e => { if (e.target.files[0]) document.getElementById("huf-dec-btn").disabled = false; });
+document.getElementById("huf-dec-btn").addEventListener("click", async () => {
+  const f = document.getElementById("huf-dec-file").files[0]; if (!f) return;
+  hufDecName = f.name.replace(/\.huf$/,"");
+  const buf = await f.arrayBuffer();
+  const t0 = performance.now();
+  const { codes, bits, origSize } = hufDeserialize(buf);
+  hufDecResult = hufDecode(codes, bits, origSize);
+  const ms = performance.now() - t0;
+  document.getElementById("huf-dec-row").innerHTML = `<td>${fmtSize(buf.byteLength)}</td><td>${fmtSize(hufDecResult.length)}</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("huf-dec-out").classList.remove("hidden");
+});
+document.getElementById("huf-dec-dl").addEventListener("click", () => { if (hufDecResult) dl(new Blob([hufDecResult]), hufDecName); });
+
+// === LZ77 ===
+
+function lz77StepNaive(data, win, la, i) {
+  let bo = 0, bl = 0;
+  const ss = Math.max(0, i - win);
+  for (let j = ss; j < i; j++) {
+    let l = 0; const d = i-j;
+    while (i+l < data.length && l < la && data[j+(l%d)] === data[i+l]) l++;
+    if (l > bl) { bl=l; bo=d; }
+  }
+  if (i+bl >= data.length && bl > 0) return {offset:bo, length:bl, char:0, eof:true, adv:bl};
+  return {offset:bo, length:bl, char:data[i+bl], eof:false, adv:bl+1};
+}
+
+function lz77EncodeHash(data, win, la, onProg, signal) {
+  return new Promise((res, rej) => {
+    const HASH_SIZE = 65521;
+    const MAX_CHAIN = 4096;
+    const MIN_MATCH = 3;
+    const head = new Int32Array(HASH_SIZE).fill(-1);
+    const prev = new Int32Array(data.length).fill(-1);
+    const tr = [];
+    let i = 0;
+
+    function hash3(a, b, c) { return ((a << 10) ^ (b << 5) ^ c) % HASH_SIZE; }
+
+    function go() {
+      if (signal && signal.aborted) { rej(new DOMException("Zrušeno", "AbortError")); return; }
+      const deadline = performance.now() + 16;
+      while (i < data.length) {
+        let bo = 0, bl = 0;
+
+        if (i + 2 < data.length) {
+          const h = hash3(data[i], data[i+1], data[i+2]);
+          let cand = head[h], minPos = Math.max(0, i - win), chain = 0;
+          while (cand >= minPos && chain < MAX_CHAIN) {
+            let l = 0; const d = i - cand;
+            while (i+l < data.length && l < la && data[cand+(l%d)] === data[i+l]) l++;
+            if (l > bl) { bl = l; bo = d; }
+            cand = prev[cand]; chain++;
+          }
+          prev[i] = head[h]; head[h] = i;
+        }
+
+        if (bl < MIN_MATCH) {
+          bl = 0; bo = 0;
+          for (let j = i - 1; j >= Math.max(0, i - win); j--) {
+            if (data[j] === data[i]) {
+              let l = 1; const d = i - j;
+              while (i+l < data.length && l < la && data[j+(l%d)] === data[i+l]) l++;
+              if (l > bl) { bo = d; bl = l; }
+            }
+          }
+        }
+
+        let adv;
+        if (bl > 0 && i+bl >= data.length) {
+          tr.push({offset:bo, length:bl, char:0, eof:true}); adv = bl;
+        } else {
+          tr.push({offset:bo, length:bl, char:data[i+bl], eof:false}); adv = bl + 1;
+        }
+        for (let k = 1; k < adv && i+k+2 < data.length; k++) {
+          const hk = hash3(data[i+k], data[i+k+1], data[i+k+2]);
+          prev[i+k] = head[hk]; head[hk] = i+k;
+        }
+        i += adv;
+        if (performance.now() >= deadline) break;
+      }
+      onProg(Math.min(i / data.length, 1));
+      if (i < data.length) setTimeout(go, 0); else res(tr);
+    }
+    go();
+  });
+}
+
+function lz77Async(data, win, la, mode, onProg, signal) {
+  if (mode === "hash") return lz77EncodeHash(data, win, la, onProg, signal);
+  return new Promise((res, rej) => {
+    const tr = []; let i = 0;
+    function go() {
+      if (signal && signal.aborted) { rej(new DOMException("Zrušeno", "AbortError")); return; }
+      const dl = performance.now()+50;
+      while (i < data.length && performance.now() < dl) { const r = lz77StepNaive(data,win,la,i); tr.push({offset:r.offset,length:r.length,char:r.char,eof:r.eof}); i += r.adv; }
+      onProg(Math.min(i/data.length,1));
+      if (i < data.length) setTimeout(go,0); else res(tr);
+    }
+    go();
+  });
+}
+
+function lz77Decode(tr, os) {
+  const out = new Uint8Array(os); let p = 0;
+  for (const t of tr) {
+    if (t.length > 0) { const s = p-t.offset; for (let j=0; j<t.length&&p<os; j++) out[p++] = out[s+(j%t.offset)]; }
+    if (p >= os) break; if (!t.eof) out[p++] = t.char;
+  }
+  return out;
+}
+
+function lz77Ser(tr, win, os) {
+  const buf = new ArrayBuffer(14+tr.length*6), v = new DataView(buf);
+  v.setUint8(0,76); v.setUint8(1,90); v.setUint8(2,55); v.setUint8(3,55);
+  v.setUint16(4,win,true); v.setUint32(6,os,true); v.setUint32(10,tr.length,true);
+  for (let i=0; i<tr.length; i++) { const b=14+i*6; v.setUint16(b,tr[i].offset,true); v.setUint16(b+2,tr[i].length,true); v.setUint8(b+4,tr[i].char); v.setUint8(b+5,tr[i].eof?1:0); }
+  return buf;
+}
+
+function lz77Deser(buf) {
+  const v = new DataView(buf);
+  if (String.fromCharCode(v.getUint8(0),v.getUint8(1),v.getUint8(2),v.getUint8(3)) !== "LZ77") throw new Error("Neplatný formát");
+  const ws=v.getUint16(4,true), os=v.getUint32(6,true), n=v.getUint32(10,true), tr=[];
+  for (let i=0;i<n;i++) { const b=14+i*6; tr.push({offset:v.getUint16(b,true),length:v.getUint16(b+2,true),char:v.getUint8(b+4),eof:v.getUint8(b+5)===1}); }
+  return {ws,os,tr};
+}
+
+let lz77Buf, lz77Name, lz77Triples, lz77Abort;
+document.getElementById("lz77-enc-btn").addEventListener("click", async () => {
+  const { data, name } = await getInput("lz77-input", "lz77-enc-file");
+  lz77Name = name;
+  const win = parseInt(document.getElementById("lz77-window").value)||32768;
+  const la = parseInt(document.getElementById("lz77-lookahead").value)||258;
+  const mode = document.getElementById("lz77-mode").value;
+  const btn = document.getElementById("lz77-enc-btn"); btn.disabled = true;
+  const stopBtn = document.getElementById("lz77-stop-btn"); stopBtn.classList.remove("hidden");
+  const prog = document.getElementById("lz77-enc-prog"); prog.classList.remove("hidden");
+  document.getElementById("lz77-enc-out").classList.add("hidden");
+  lz77Abort = new AbortController();
+  const t0 = performance.now();
+  try {
+    lz77Triples = await lz77Async(data, win, la, mode, p => { document.getElementById("lz77-enc-bar").style.width=Math.round(p*100)+"%"; document.getElementById("lz77-enc-pct").textContent=Math.round(p*100)+" %"; }, lz77Abort.signal);
+    document.getElementById("lz77-enc-pct").textContent = "Serializuji…";
+    document.getElementById("lz77-enc-bar").style.width = "100%";
+    await new Promise(r => setTimeout(r, 0));
+    lz77Buf = lz77Ser(lz77Triples, win, data.length);
+    const ms = performance.now()-t0;
+    let lits = 0; for (const t of lz77Triples) if (t.length===0&&!t.eof) lits++;
+    document.getElementById("lz77-enc-row").innerHTML = `<td>${fmtSize(data.length)}</td><td>${fmtSize(lz77Buf.byteLength)}</td><td>${(lz77Buf.byteLength/data.length*100).toFixed(1)} %</td><td>${lz77Triples.length.toLocaleString()}</td><td>${lits.toLocaleString()}</td><td>${(lz77Triples.length-lits).toLocaleString()}</td><td>${(ms/1000).toFixed(1)} s</td>`;
+    document.getElementById("lz77-enc-out").classList.remove("hidden");
+  } catch(e) { if (e.name !== "AbortError") throw e; }
+  prog.classList.add("hidden"); stopBtn.classList.add("hidden"); btn.disabled = false;
+});
+document.getElementById("lz77-stop-btn").addEventListener("click", () => { if (lz77Abort) lz77Abort.abort(); });
+document.getElementById("lz77-enc-dl").addEventListener("click", () => { if (lz77Buf) dl(new Blob([lz77Buf]), lz77Name+".lz77"); });
+document.getElementById("lz77-detail-btn").addEventListener("click", () => {
+  if (!lz77Triples) return;
+  openModal(
+    `LZ77 trojice (${lz77Triples.length.toLocaleString()})`,
+    lz77Triples.map((t,i) => {
+      const ch = t.eof ? "$" : fmtChar(t.char);
+      const cls = t.eof ? "eof" : t.length === 0 ? "lit" : "mat";
+      return { text: `${i} ${t.offset} ${t.length} ${ch}`, html: `<tr><td>${i}</td><td>${t.offset}</td><td>${t.length}</td><td><span class="${cls}">${ch}</span></td></tr>` };
+    }),
+    `<tr><th>#</th><th>Offset</th><th>Délka</th><th>Znak</th></tr>`
+  );
+});
+
+let lz77DecRes, lz77DecName;
+document.getElementById("lz77-dec-file").addEventListener("change", e => { if (e.target.files[0]) document.getElementById("lz77-dec-btn").disabled = false; });
+document.getElementById("lz77-dec-btn").addEventListener("click", async () => {
+  const f = document.getElementById("lz77-dec-file").files[0]; if (!f) return;
+  lz77DecName = f.name.replace(/\.lz77$/,"");
+  const buf = await f.arrayBuffer();
+  const t0 = performance.now();
+  const {ws,os,tr} = lz77Deser(buf);
+  lz77DecRes = lz77Decode(tr, os);
+  const ms = performance.now()-t0;
+  document.getElementById("lz77-dec-row").innerHTML = `<td>${fmtSize(buf.byteLength)}</td><td>${fmtSize(lz77DecRes.length)}</td><td>${tr.length.toLocaleString()}</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("lz77-dec-out").classList.remove("hidden");
+});
+document.getElementById("lz77-dec-dl").addEventListener("click", () => { if (lz77DecRes) dl(new Blob([lz77DecRes]), lz77DecName); });
+
+// === Deflate (LZ77 + Huffman) ===
+
+function defSymbolize(tr) {
+  const s = [];
+  for (const t of tr) { if (t.length===0&&!t.eof) { s.push(t.char); } else { s.push(256+t.length); s.push(t.offset); s.push(t.eof?65535:t.char); } }
+  return s;
+}
+
+function defUnsymbolize(s) {
+  const tr = []; let i = 0;
+  while (i < s.length) { const v=s[i++]; if (v<256) tr.push({offset:0,length:0,char:v,eof:false}); else { const l=v-256, o=s[i++], c=s[i++]; tr.push({offset:o,length:l,char:c===65535?0:c,eof:c===65535}); } }
+  return tr;
+}
+
+function defSerializeAsync(tr, win, os, onProg, signal) {
+  return new Promise((res, rej) => {
+    const syms = defSymbolize(tr);
+    const freq = {}; for (const s of syms) freq[s]=(freq[s]||0)+1;
+    const codes = hufBuildTree(freq);
+
+    // Pre-compute: convert codes to bit arrays for fast packing
+    const codeBits = {};
+    for (const [s, c] of Object.entries(codes)) {
+      codeBits[s] = new Uint8Array(c.length);
+      for (let i = 0; i < c.length; i++) codeBits[s][i] = c[i] === "1" ? 1 : 0;
+    }
+
+    // Count total bits
+    let totalBits = 0;
+    for (const s of syms) totalBits += codeBits[s].length;
+
+    // Build codebook buffer
+    const entries = Object.entries(codes);
+    let cbSize = 0; for (const [,c] of entries) cbSize += 4 + Math.ceil(c.length/8);
+    const dataBytes = Math.ceil(totalBits / 8);
+    const buf = new Uint8Array(16 + cbSize + dataBytes);
+    const v = new DataView(buf.buffer);
+    buf[0]=68; buf[1]=70; buf[2]=76; buf[3]=84;
+    v.setUint16(4,win,true); v.setUint32(6,os,true); v.setUint16(10,entries.length,true); v.setUint32(12,totalBits,true);
+    let p = 16;
+    for (const [s,c] of entries) {
+      v.setUint16(p,parseInt(s),true); p+=2;
+      buf[p++] = c.length;
+      for (let i=0;i<c.length;i++) if(c[i]==="1") buf[p+(i>>3)]|=1<<(7-(i&7));
+      p += Math.ceil(c.length/8);
+    }
+
+    // Pack bits async (this is the slow part)
+    let si = 0, bitPos = 0;
+    const dataStart = p;
+
+    function packChunk() {
+      if (signal && signal.aborted) { rej(new DOMException("Zrušeno", "AbortError")); return; }
+      const deadline = performance.now() + 16;
+      while (si < syms.length) {
+        const cb = codeBits[syms[si]];
+        for (let j = 0; j < cb.length; j++) {
+          if (cb[j]) buf[dataStart + (bitPos >> 3)] |= 1 << (7 - (bitPos & 7));
+          bitPos++;
+        }
+        si++;
+        if (si % 4096 === 0 && performance.now() >= deadline) break;
+      }
+      onProg(Math.min(si / syms.length, 1));
+      if (si < syms.length) setTimeout(packChunk, 0);
+      else res({ buffer: buf.buffer, lz77Size: tr.length*6+14, huffCodes: codes, huffFreq: freq });
+    }
+    packChunk();
+  });
+}
+
+function defDeserialize(buf) {
+  const d = new Uint8Array(buf), v = new DataView(buf);
+  if (String.fromCharCode(d[0],d[1],d[2],d[3])!=="DFLT") throw new Error("Neplatný formát");
+  const win=v.getUint16(4,true), os=v.getUint32(6,true), numSym=v.getUint16(10,true), bitLen=v.getUint32(12,true);
+  let p=16; const codeToSym={};
+  for (let i=0;i<numSym;i++) {
+    const sym=v.getUint16(p,true); p+=2; const cl=d[p++]; let c="";
+    for (let j=0;j<cl;j++) c+=(d[p+(j>>3)]&(1<<(7-(j&7))))?"1":"0";
+    p+=Math.ceil(cl/8); codeToSym[c]=sym;
+  }
+  const syms=[]; let cur="", bi=0;
+  while(bi<bitLen) { cur+=(d[p+(bi>>3)]&(1<<(7-(bi&7))))?"1":"0"; bi++; if(cur in codeToSym){syms.push(codeToSym[cur]);cur="";} }
+  return {os, tr: defUnsymbolize(syms)};
+}
+
+let defBuf, defName, defTriples, defHuffCodes, defHuffFreq, defAbort;
+document.getElementById("def-enc-btn").addEventListener("click", async () => {
+  const { data, name } = await getInput("def-input", "def-enc-file");
+  defName = name;
+  const win = parseInt(document.getElementById("def-window").value)||32768;
+  const la = parseInt(document.getElementById("def-lookahead").value)||258;
+  const mode = document.getElementById("def-mode").value;
+  const btn = document.getElementById("def-enc-btn"); btn.disabled = true;
+  const stopBtn = document.getElementById("def-stop-btn"); stopBtn.classList.remove("hidden");
+  const prog = document.getElementById("def-enc-prog"); prog.classList.remove("hidden");
+  document.getElementById("def-enc-out").classList.add("hidden");
+  defAbort = new AbortController();
+  const t0 = performance.now();
+  try {
+    defTriples = await lz77Async(data, win, la, mode, p => {
+      document.getElementById("def-enc-bar").style.width=Math.round(p*50)+"%";
+      document.getElementById("def-enc-pct").textContent="LZ77: "+Math.round(p*100)+" %";
+    }, defAbort.signal);
+    const { buffer, lz77Size, huffCodes, huffFreq } = await defSerializeAsync(defTriples, win, data.length, p => {
+      document.getElementById("def-enc-bar").style.width=Math.round(50+p*50)+"%";
+      document.getElementById("def-enc-pct").textContent="Huffman: "+Math.round(p*100)+" %";
+    }, defAbort.signal);
+    defBuf = buffer; defHuffCodes = huffCodes; defHuffFreq = huffFreq;
+    const ms = performance.now()-t0;
+    document.getElementById("def-enc-row").innerHTML = `<td>${fmtSize(data.length)}</td><td>${fmtSize(lz77Size)}</td><td>${fmtSize(buffer.byteLength)}</td><td>${(buffer.byteLength/data.length*100).toFixed(1)} %</td><td>${(ms/1000).toFixed(1)} s</td>`;
+    document.getElementById("def-enc-out").classList.remove("hidden");
+  } catch(e) { if (e.name !== "AbortError") throw e; }
+  prog.classList.add("hidden"); stopBtn.classList.add("hidden"); btn.disabled = false;
+});
+document.getElementById("def-stop-btn").addEventListener("click", () => { if (defAbort) defAbort.abort(); });
+document.getElementById("def-enc-dl").addEventListener("click", () => { if (defBuf) dl(new Blob([defBuf]), defName+".deflate"); });
+document.getElementById("def-detail-triples").addEventListener("click", () => {
+  if (!defTriples) return;
+  openModal(`Deflate – LZ77 trojice (${defTriples.length.toLocaleString()})`,
+    defTriples.map((t,i) => {
+      const ch = t.eof ? "$" : fmtChar(t.char);
+      const cls = t.eof ? "eof" : t.length === 0 ? "lit" : "mat";
+      return { text: `${i} ${t.offset} ${t.length} ${ch}`, html: `<tr><td>${i}</td><td>${t.offset}</td><td>${t.length}</td><td><span class="${cls}">${ch}</span></td></tr>` };
+    }),
+    `<tr><th>#</th><th>Offset</th><th>Délka</th><th>Znak</th></tr>`
+  );
+});
+document.getElementById("def-detail-codes").addEventListener("click", () => {
+  if (!defHuffCodes) return;
+  const sorted = Object.entries(defHuffCodes).sort((a,b) => a[1].length - b[1].length);
+  openModal(`Deflate – Huffman kódy (${sorted.length} symbolů)`,
+    sorted.map(([s,c]) => {
+      const sym = parseInt(s);
+      const label = sym < 256 ? fmtChar(sym) : sym === 65535 ? "EOF" : `match(${sym - 256})`;
+      return { text: `${label} ${c} ${defHuffFreq[s]||0}`, html: `<tr><td>${label}</td><td>${c}</td><td>${c.length}</td><td>${defHuffFreq[s]||0}</td></tr>` };
+    }),
+    `<tr><th>Symbol</th><th>Kód</th><th>Délka</th><th>Frekvence</th></tr>`
+  );
+});
+
+let defDecRes, defDecName;
+document.getElementById("def-dec-file").addEventListener("change", e => { if (e.target.files[0]) document.getElementById("def-dec-btn").disabled = false; });
+document.getElementById("def-dec-btn").addEventListener("click", async () => {
+  const f = document.getElementById("def-dec-file").files[0]; if (!f) return;
+  defDecName = f.name.replace(/\.deflate$/,"");
+  const buf = await f.arrayBuffer();
+  const t0 = performance.now();
+  const {os,tr} = defDeserialize(buf);
+  defDecRes = lz77Decode(tr, os);
+  const ms = performance.now()-t0;
+  document.getElementById("def-dec-row").innerHTML = `<td>${fmtSize(buf.byteLength)}</td><td>${fmtSize(defDecRes.length)}</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("def-dec-out").classList.remove("hidden");
+});
+document.getElementById("def-dec-dl").addEventListener("click", () => { if (defDecRes) dl(new Blob([defDecRes]), defDecName); });
+
+// === LZ78 ===
+
+function lz78Encode(data, maxDict, strategy) {
+  const dict = new Map(); dict.set("", 0);
+  let next = 1; const pairs = []; let w = "";
+  for (const b of data) {
+    const wc = w + String.fromCharCode(b);
+    if (dict.has(wc)) { w = wc; }
+    else {
+      pairs.push({index: dict.get(w), char: b, eof: false});
+      if (next < maxDict) {
+        dict.set(wc, next++);
+      } else if (strategy === "reset") {
+        dict.clear(); dict.set("", 0); next = 1;
+        dict.set(wc, next++);
+      }
+      w = "";
+    }
+  }
+  if (w.length > 0) pairs.push({index: dict.get(w), char: 0, eof: true});
+  const dictEntries = []; dict.forEach((v,k) => { if (k) dictEntries.push({code:v, str:k}); });
+  dictEntries.sort((a,b) => a.code-b.code);
+  return { pairs, dictEntries };
+}
+
+function lz78Decode(pairs, os, maxDict, strategy) {
+  const dict = new Map(); dict.set(0, new Uint8Array(0));
+  let next = 1; const out = new Uint8Array(os); let pos = 0;
+  for (const p of pairs) {
+    const prev = dict.get(p.index) || new Uint8Array(0);
+    if (p.eof) {
+      out.set(prev, pos); pos += prev.length;
+    } else {
+      const entry = new Uint8Array(prev.length + 1);
+      entry.set(prev); entry[prev.length] = p.char;
+      if (next < maxDict) {
+        dict.set(next++, entry);
+      } else if (strategy === "reset") {
+        dict.clear(); dict.set(0, new Uint8Array(0)); next = 1;
+        dict.set(next++, entry);
+      }
+      out.set(entry, pos); pos += entry.length;
+    }
+  }
+  return out.slice(0, pos);
+}
+
+function lz78Ser(pairs, os, maxDict, strategy) {
+  const bpi = maxDict <= 256 ? 1 : maxDict <= 65536 ? 2 : 4;
+  const pairSize = bpi + 2;
+  const hdr = 18;
+  const buf = new ArrayBuffer(hdr + pairs.length * pairSize);
+  const v = new DataView(buf);
+  v.setUint8(0,76); v.setUint8(1,90); v.setUint8(2,55); v.setUint8(3,56); // "LZ78"
+  v.setUint32(4, os, true); v.setUint32(8, pairs.length, true);
+  v.setUint32(12, maxDict, true);
+  v.setUint8(16, strategy === "reset" ? 1 : 0);
+  v.setUint8(17, bpi);
+  for (let i = 0; i < pairs.length; i++) {
+    const b = hdr + i * pairSize;
+    if (bpi === 1) v.setUint8(b, pairs[i].index);
+    else if (bpi === 2) v.setUint16(b, pairs[i].index, true);
+    else v.setUint32(b, pairs[i].index, true);
+    v.setUint8(b + bpi, pairs[i].char);
+    v.setUint8(b + bpi + 1, pairs[i].eof ? 1 : 0);
+  }
+  return buf;
+}
+
+function lz78Deser(buf) {
+  const v = new DataView(buf);
+  if (String.fromCharCode(v.getUint8(0),v.getUint8(1),v.getUint8(2),v.getUint8(3))!=="LZ78") throw new Error("Neplatný formát");
+  const os=v.getUint32(4,true), n=v.getUint32(8,true);
+  const maxDict=v.getUint32(12,true), strategy=v.getUint8(16)===1?"reset":"freeze";
+  const bpi=v.getUint8(17), hdr=18, pairSize=bpi+2, pairs=[];
+  for (let i=0;i<n;i++) {
+    const b=hdr+i*pairSize;
+    let idx;
+    if (bpi===1) idx=v.getUint8(b);
+    else if (bpi===2) idx=v.getUint16(b,true);
+    else idx=v.getUint32(b,true);
+    pairs.push({index:idx, char:v.getUint8(b+bpi), eof:v.getUint8(b+bpi+1)===1});
+  }
+  return {os,pairs,maxDict,strategy};
+}
+
+let lz78Buf, lz78Name, lz78PairsData, lz78DictData;
+document.getElementById("lz78-enc-btn").addEventListener("click", async () => {
+  const { data, name } = await getInput("lz78-input", "lz78-enc-file");
+  lz78Name = name;
+  const t0 = performance.now();
+  const maxDict = parseInt(document.getElementById("lz78-dictsize").value) || 65536;
+  const strategy = document.getElementById("lz78-strategy").value;
+  const { pairs, dictEntries } = lz78Encode(data, maxDict, strategy);
+  lz78Buf = lz78Ser(pairs, data.length, maxDict, strategy);
+  const ms = performance.now()-t0;
+  lz78PairsData = pairs;
+  lz78DictData = dictEntries;
+  document.getElementById("lz78-enc-row").innerHTML = `<td>${fmtSize(data.length)}</td><td>${fmtSize(lz78Buf.byteLength)}</td><td>${(lz78Buf.byteLength/data.length*100).toFixed(1)} %</td><td>${pairs.length.toLocaleString()}</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("lz78-enc-out").classList.remove("hidden");
+});
+document.getElementById("lz78-enc-dl").addEventListener("click", () => { if (lz78Buf) dl(new Blob([lz78Buf]), lz78Name+".lz78"); });
+document.getElementById("lz78-detail-dict").addEventListener("click", () => {
+  if (!lz78DictData) return;
+  openModal(`LZ78 slovník (${lz78DictData.length.toLocaleString()} záznamů)`,
+    [{text:"0 (prázdný)", html:`<tr><td>0</td><td>(prázdný)</td></tr>`}].concat(
+    lz78DictData.map(d => {
+      const s = [...d.str].map(c => fmtChar(c.charCodeAt(0))).join("");
+      return {text:`${d.code} ${s}`, html:`<tr><td>${d.code}</td><td>${s}</td></tr>`};
+    })),
+    `<tr><th>Kód</th><th>Záznam</th></tr>`
+  );
+});
+document.getElementById("lz78-detail-pairs").addEventListener("click", () => {
+  if (!lz78PairsData) return;
+  openModal(`LZ78 dvojice (${lz78PairsData.length.toLocaleString()})`,
+    lz78PairsData.map((p,i) => {
+      const ch = p.eof ? "$" : fmtChar(p.char);
+      return {text:`${i} ${p.index} ${ch}`, html:`<tr><td>${i}</td><td>${p.index}</td><td>${ch}</td></tr>`};
+    }),
+    `<tr><th>#</th><th>Index</th><th>Znak</th></tr>`
+  );
+});
+
+let lz78DecRes, lz78DecName;
+document.getElementById("lz78-dec-file").addEventListener("change", e => { if (e.target.files[0]) document.getElementById("lz78-dec-btn").disabled = false; });
+document.getElementById("lz78-dec-btn").addEventListener("click", async () => {
+  const f = document.getElementById("lz78-dec-file").files[0]; if (!f) return;
+  lz78DecName = f.name.replace(/\.lz78$/,"");
+  const buf = await f.arrayBuffer();
+  const t0 = performance.now();
+  const {os,pairs,maxDict,strategy} = lz78Deser(buf);
+  lz78DecRes = lz78Decode(pairs, os, maxDict, strategy);
+  const ms = performance.now()-t0;
+  document.getElementById("lz78-dec-row").innerHTML = `<td>${fmtSize(buf.byteLength)}</td><td>${fmtSize(lz78DecRes.length)}</td><td>${pairs.length.toLocaleString()}</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("lz78-dec-out").classList.remove("hidden");
+});
+document.getElementById("lz78-dec-dl").addEventListener("click", () => { if (lz78DecRes) dl(new Blob([lz78DecRes]), lz78DecName); });
+
+// === LZW ===
+
+function lzwEncode(data, maxDict, strategy) {
+  const initDict = () => { const d = new Map(); for (let i = 0; i < 256; i++) d.set(String.fromCharCode(i), i); return d; };
+  let dict = initDict();
+  let next = 256; const codes = [], newEntries = []; let w = "";
+  for (const b of data) {
+    const c = String.fromCharCode(b);
+    if (dict.has(w+c)) { w += c; }
+    else {
+      codes.push(dict.get(w));
+      if (next < maxDict) {
+        dict.set(w+c, next); newEntries.push({code:next,str:w+c}); next++;
+      } else if (strategy === "reset") {
+        dict = initDict(); next = 256;
+        dict.set(w+c, next); newEntries.push({code:next,str:w+c}); next++;
+      }
+      w = c;
+    }
+  }
+  if (w.length > 0) codes.push(dict.get(w));
+  return { codes, newEntries };
+}
+
+function lzwDecode(codes, os, maxDict, strategy) {
+  const initDict = () => { const d = new Map(); for (let i=0;i<256;i++) d.set(i, String.fromCharCode(i)); return d; };
+  let dict = initDict();
+  let next = 256;
+  let prev = dict.get(codes[0]), output = prev;
+  for (let i = 1; i < codes.length; i++) {
+    let entry;
+    if (dict.has(codes[i])) entry = dict.get(codes[i]);
+    else entry = prev + prev[0];
+    output += entry;
+    if (next < maxDict) {
+      dict.set(next++, prev + entry[0]);
+    } else if (strategy === "reset") {
+      dict = initDict(); next = 256;
+      dict.set(next++, prev + entry[0]);
+    }
+    prev = entry;
+  }
+  const out = new Uint8Array(output.length);
+  for (let i = 0; i < output.length; i++) out[i] = output.charCodeAt(i);
+  return out.slice(0, os);
+}
+
+function lzwSer(codes, os, maxDict, strategy) {
+  const bpc = maxDict <= 256 ? 1 : maxDict <= 65536 ? 2 : 4;
+  const hdr = 18;
+  const buf = new ArrayBuffer(hdr + codes.length * bpc);
+  const v = new DataView(buf);
+  v.setUint8(0,76); v.setUint8(1,90); v.setUint8(2,87); v.setUint8(3,48); // "LZW0"
+  v.setUint32(4, os, true); v.setUint32(8, codes.length, true);
+  v.setUint32(12, maxDict, true);
+  v.setUint8(16, strategy === "reset" ? 1 : 0);
+  v.setUint8(17, bpc);
+  for (let i = 0; i < codes.length; i++) {
+    const b = hdr + i * bpc;
+    if (bpc === 1) v.setUint8(b, codes[i]);
+    else if (bpc === 2) v.setUint16(b, codes[i], true);
+    else v.setUint32(b, codes[i], true);
+  }
+  return buf;
+}
+
+function lzwDeser(buf) {
+  const v = new DataView(buf);
+  if (String.fromCharCode(v.getUint8(0),v.getUint8(1),v.getUint8(2),v.getUint8(3))!=="LZW0") throw new Error("Neplatný formát");
+  const os=v.getUint32(4,true), n=v.getUint32(8,true);
+  const maxDict=v.getUint32(12,true), strategy=v.getUint8(16)===1?"reset":"freeze";
+  const bpc=v.getUint8(17), hdr=18, codes=[];
+  for (let i=0;i<n;i++) {
+    const b = hdr + i * bpc;
+    if (bpc === 1) codes.push(v.getUint8(b));
+    else if (bpc === 2) codes.push(v.getUint16(b, true));
+    else codes.push(v.getUint32(b, true));
+  }
+  return {os,codes,maxDict,strategy};
+}
+
+let lzwBuf, lzwName, lzwCodesData, lzwDictData;
+document.getElementById("lzw-enc-btn").addEventListener("click", async () => {
+  const { data, name } = await getInput("lzw-input", "lzw-enc-file");
+  lzwName = name;
+  const t0 = performance.now();
+  const maxDict = parseInt(document.getElementById("lzw-dictsize").value) || 65536;
+  const strategy = document.getElementById("lzw-strategy").value;
+  const { codes, newEntries } = lzwEncode(data, maxDict, strategy);
+  lzwBuf = lzwSer(codes, data.length, maxDict, strategy);
+  const ms = performance.now()-t0;
+  lzwCodesData = codes;
+  lzwDictData = newEntries;
+  document.getElementById("lzw-enc-row").innerHTML = `<td>${fmtSize(data.length)}</td><td>${fmtSize(lzwBuf.byteLength)}</td><td>${(lzwBuf.byteLength/data.length*100).toFixed(1)} %</td><td>${codes.length.toLocaleString()}</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("lzw-enc-out").classList.remove("hidden");
+});
+document.getElementById("lzw-enc-dl").addEventListener("click", () => { if (lzwBuf) dl(new Blob([lzwBuf]), lzwName+".lzw"); });
+document.getElementById("lzw-detail-dict").addEventListener("click", () => {
+  if (!lzwDictData) return;
+  openModal(`LZW slovník (256 + ${lzwDictData.length.toLocaleString()} nových)`,
+    [{text:"0-255 ASCII", html:`<tr><td>0–255</td><td>jednotlivé ASCII znaky</td></tr>`}].concat(
+    lzwDictData.map(e => {
+      const s = [...e.str].map(c => fmtChar(c.charCodeAt(0))).join("");
+      return {text:`${e.code} ${s}`, html:`<tr><td>${e.code}</td><td>${s}</td></tr>`};
+    })),
+    `<tr><th>Kód</th><th>Záznam</th></tr>`
+  );
+});
+document.getElementById("lzw-detail-codes").addEventListener("click", () => {
+  if (!lzwCodesData) return;
+  openModal(`LZW kódy (${lzwCodesData.length.toLocaleString()})`,
+    lzwCodesData.map((c,i) => ({text:`${i} ${c}`, html:`<tr><td>${i}</td><td>${c}</td></tr>`})),
+    `<tr><th>#</th><th>Kód</th></tr>`
+  );
+});
+
+let lzwDecRes, lzwDecName;
+document.getElementById("lzw-dec-file").addEventListener("change", e => { if (e.target.files[0]) document.getElementById("lzw-dec-btn").disabled = false; });
+document.getElementById("lzw-dec-btn").addEventListener("click", async () => {
+  const f = document.getElementById("lzw-dec-file").files[0]; if (!f) return;
+  lzwDecName = f.name.replace(/\.lzw$/,"");
+  const buf = await f.arrayBuffer();
+  const t0 = performance.now();
+  const {os,codes,maxDict,strategy} = lzwDeser(buf);
+  lzwDecRes = lzwDecode(codes, os, maxDict, strategy);
+  const ms = performance.now()-t0;
+  document.getElementById("lzw-dec-row").innerHTML = `<td>${fmtSize(buf.byteLength)}</td><td>${fmtSize(lzwDecRes.length)}</td><td>${codes.length.toLocaleString()}</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("lzw-dec-out").classList.remove("hidden");
+});
+document.getElementById("lzw-dec-dl").addEventListener("click", () => { if (lzwDecRes) dl(new Blob([lzwDecRes]), lzwDecName); });
+</script>
+</body>
+</html>
