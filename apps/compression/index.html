@@ -57,11 +57,15 @@
 <nav>
   <span class="title" style="cursor:pointer" data-page="home">Komprese</span>
   <button class="active" data-page="home">Přehled</button>
+  <button data-page="arith">Aritmetické</button>
   <button data-page="huffman">Huffman</button>
   <button data-page="lz77">LZ77</button>
   <button data-page="deflate">Deflate</button>
   <button data-page="lz78">LZ78</button>
   <button data-page="lzw">LZW</button>
+  <button data-page="ppm">PPM</button>
+  <button data-page="dca">DCA</button>
+  <button data-page="acb">ACB</button>
 </nav>
 
 <!-- HOME -->
@@ -69,14 +73,57 @@
   <h2>Kompresní metody – přehled</h2>
   <table>
     <tr><th>Metoda</th><th>Typ</th><th>Princip</th><th>Použití</th></tr>
+    <tr><td><a href="?tab=arith" data-tab="arith">Aritmetické</a></td><td>statistická</td><td>celá zpráva → jedno číslo z intervalu [0, 1)</td><td>JPEG 2000, H.265, VP9</td></tr>
     <tr><td><a href="?tab=huffman" data-tab="huffman">Huffman</a></td><td>statistická</td><td>častější symboly → kratší kódy</td><td>JPEG, MP3, Deflate</td></tr>
     <tr><td><a href="?tab=lz77" data-tab="lz77">LZ77</a></td><td>slovníková</td><td>posuvné okno, trojice (offset, délka, znak)</td><td>gzip, zstd</td></tr>
     <tr><td><a href="?tab=deflate" data-tab="deflate">Deflate</a></td><td>kombinovaná</td><td>LZ77 + Huffman</td><td>ZIP, PNG, HTTP</td></tr>
     <tr><td><a href="?tab=lz78" data-tab="lz78">LZ78</a></td><td>slovníková</td><td>explicitní slovník, dvojice (index, znak)</td><td>základ LZW</td></tr>
     <tr><td><a href="?tab=lzw" data-tab="lzw">LZW</a></td><td>slovníková</td><td>vylepšení LZ78, výstup pouze kódy</td><td>GIF, TIFF, PDF</td></tr>
+    <tr><td><a href="?tab=ppm" data-tab="ppm">PPM</a></td><td>kontextová</td><td>predikce z kontextu, escape na nižší řád</td><td>7-Zip, RAR (PPMd)</td></tr>
+    <tr><td><a href="?tab=dca" data-tab="dca">DCA</a></td><td>kontextová</td><td>zakázaná slova → vynechané bity</td><td>výzkumná metoda (DCA)</td></tr>
+    <tr><td><a href="?tab=acb" data-tab="acb">ACB</a></td><td>kontextová</td><td>LZ77 řízené kontextem, pořadí + délka</td><td>experimentální (Buyanovsky)</td></tr>
   </table>
   <h2>Jak na to</h2>
   <p>Každá metoda má tři části: <strong>komprese</strong> (text nebo soubor → binární výstup), <strong>dekomprese</strong> (binární soubor → originál) a <strong>porovnání</strong> (bitová kontrola).</p>
+</div>
+
+<!-- ARITH -->
+<div id="arith" class="page">
+  <h2>Aritmetické kódování – Komprese</h2>
+  <div class="input-toggle"><button class="active" data-prefix="arith" data-mode="text">Text</button><button data-prefix="arith" data-mode="file">Soubor</button></div>
+  <div id="arith-text-wrap"><textarea id="arith-input" rows="3">ABRACADABRA</textarea></div>
+  <div id="arith-file-wrap" class="hidden"><input type="file" id="arith-enc-file"> <span class="file-name" id="arith-file-name"></span></div>
+  <p>
+    <label>Přesnost registru:</label>
+    <select id="arith-precision" style="font-family:monospace">
+      <option value="8">8 bitů (výukové)</option>
+      <option value="16">16 bitů</option>
+      <option value="32" selected>32 bitů</option>
+    </select>
+    <button id="arith-enc-btn">Komprimovat</button>
+  </p>
+  <p class="note">
+    Předvolby:
+    <button class="detail-btn" onclick="document.getElementById('arith-precision').value=8">8 bitů (jako v přednášce)</button>
+    <button class="detail-btn" onclick="document.getElementById('arith-precision').value=32">32 bitů (praktické)</button>
+    <br><strong>8 bitů:</strong> registr 0–255, odpovídá příkladu z přednášky. Max. vstup 64 B.
+    <br><strong>32 bitů:</strong> plná přesnost pro praktické soubory.
+  </p>
+  <div class="hidden" id="arith-enc-out">
+    <h2>Statistiky</h2>
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Poměr</th><th>Entropie</th><th>Prům. bitů/sym</th><th>Čas</th></tr><tr id="arith-enc-row"></tr></table>
+    <p><button id="arith-enc-dl">Stáhnout .arith</button> <button class="detail-btn" id="arith-detail-freq">Zobrazit frekvence</button> <button class="detail-btn" id="arith-detail-real">Reálné kroky</button> <button class="detail-btn" id="arith-detail-int">Celočíselné kroky</button></p>
+    <p class="note">Celočíselná varianta s E3 škálováním (underflow handling). Délka zprávy uložena v hlavičce.</p>
+  </div>
+  <h2>Aritmetické kódování – Dekomprese</h2>
+  <p><label>Soubor .arith:</label> <input type="file" id="arith-dec-file" accept=".arith"> <button id="arith-dec-btn" disabled>Dekomprimovat</button></p>
+  <div class="hidden" id="arith-dec-out">
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Čas</th></tr><tr id="arith-dec-row"></tr></table>
+    <p><button id="arith-dec-dl">Stáhnout dekomprimovaný soubor</button></p>
+  </div>
+  <h2>Porovnání</h2>
+  <p><label>Originál:</label> <input type="file" id="arith-cmp1"><br><label>Dekomprimovaný:</label> <input type="file" id="arith-cmp2"> <button id="arith-cmp-btn" disabled>Porovnat</button></p>
+  <div class="hidden" id="arith-cmp-out"></div>
 </div>
 
 <!-- HUFFMAN -->
@@ -264,6 +311,121 @@
   <div class="hidden" id="lzw-cmp-out"></div>
 </div>
 
+<!-- PPM -->
+<div id="ppm" class="page">
+  <h2>PPM – Komprese</h2>
+  <div class="input-toggle"><button class="active" data-prefix="ppm" data-mode="text">Text</button><button data-prefix="ppm" data-mode="file">Soubor</button></div>
+  <div id="ppm-text-wrap"><textarea id="ppm-input" rows="3">AABAB</textarea></div>
+  <div id="ppm-file-wrap" class="hidden"><input type="file" id="ppm-enc-file"> <span class="file-name" id="ppm-file-name"></span></div>
+  <p>
+    <label>Max. řád:</label> <input type="number" id="ppm-order" value="3" min="0" max="8">
+    <label>Escape:</label>
+    <select id="ppm-escape" style="font-family:monospace">
+      <option value="A">PPMA – 1/(n+1)</option>
+      <option value="C" selected>PPMC – d/(n+d)</option>
+      <option value="D">PPMD – d/(2n)</option>
+    </select>
+  </p>
+  <p>
+    <button id="ppm-enc-btn">Komprimovat</button>
+    <button id="ppm-stop-btn" class="hidden" style="background:#c44;color:#fff">Stop</button>
+  </p>
+  <p class="note">
+    Předvolby:
+    <button class="detail-btn" onclick="document.getElementById('ppm-order').value=1">řád 1 (jako v přednášce)</button>
+    <button class="detail-btn" onclick="document.getElementById('ppm-order').value=3">řád 3 (kompromis)</button>
+    <button class="detail-btn" onclick="document.getElementById('ppm-order').value=6">řád 6 (pomalé, nejlepší)</button>
+    <br>Symboly i escapy jdou do adaptivního aritmetického kodéru. Řád −1 = rovnoměrné rozdělení přes 256 hodnot bajtu.
+    <br>Bez exclusion principu. Escape z prázdného kontextu se nekóduje – má pravděpodobnost 1, takže nestojí žádné bity (viz přednáška).
+  </p>
+  <div class="hidden" id="ppm-enc-prog"><div class="bar-bg"><div class="bar-fg" id="ppm-enc-bar"></div></div><span id="ppm-enc-pct">0 %</span></div>
+  <div class="hidden" id="ppm-enc-out">
+    <h2>Statistiky</h2>
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Poměr</th><th>Escapů</th><th>Prům. bitů/sym</th><th>Čas</th></tr><tr id="ppm-enc-row"></tr></table>
+    <p><button id="ppm-enc-dl">Stáhnout .ppmd</button> <button class="detail-btn" id="ppm-detail-steps">Zobrazit kroky</button></p>
+    <p class="note">Zkuste vstup <code>AABAB</code> s řádem 1 – kroky odpovídají tabulce z přednášky (krok 5 bez escape).</p>
+  </div>
+  <h2>PPM – Dekomprese</h2>
+  <p><label>Soubor .ppmd:</label> <input type="file" id="ppm-dec-file" accept=".ppmd"> <button id="ppm-dec-btn" disabled>Dekomprimovat</button></p>
+  <div class="hidden" id="ppm-dec-prog"><div class="bar-bg"><div class="bar-fg" id="ppm-dec-bar"></div></div><span id="ppm-dec-pct">0 %</span></div>
+  <div class="hidden" id="ppm-dec-out">
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Čas</th></tr><tr id="ppm-dec-row"></tr></table>
+    <p><button id="ppm-dec-dl">Stáhnout dekomprimovaný soubor</button></p>
+  </div>
+  <h2>Porovnání</h2>
+  <p><label>Originál:</label> <input type="file" id="ppm-cmp1"><br><label>Dekomprimovaný:</label> <input type="file" id="ppm-cmp2"> <button id="ppm-cmp-btn" disabled>Porovnat</button></p>
+  <div class="hidden" id="ppm-cmp-out"></div>
+</div>
+
+<!-- DCA (antislovnik) -->
+<div id="dca" class="page">
+  <h2>Antislovník (DCA) – Komprese</h2>
+  <div class="input-toggle"><button class="active" data-prefix="dca" data-mode="text">Text</button><button data-prefix="dca" data-mode="file">Soubor</button></div>
+  <div id="dca-text-wrap"><textarea id="dca-input" rows="3">AABABAA</textarea></div>
+  <div id="dca-file-wrap" class="hidden"><input type="file" id="dca-enc-file"> <span class="file-name" id="dca-file-name"></span></div>
+  <p>
+    <label>Max. délka zakázaného slova:</label> <input type="number" id="dca-maxlen" value="12" min="2" max="16"> bitů
+    <button id="dca-enc-btn">Komprimovat</button>
+    <button id="dca-stop-btn" class="hidden" style="background:#c44;color:#fff">Stop</button>
+  </p>
+  <p class="note">
+    Pracuje <strong>po bitech</strong>: minimální zakázaná slova (MFW) se najdou automaticky a uloží do hlavičky.
+    Bit, který by jinak vytvořil zakázané slovo, je <strong>vynucený</strong> – do výstupu se vůbec neposílá.
+    <br>Delší max. délka = víc zakázaných slov = víc vynechaných bitů, ale větší hlavička. U ASCII textu pomáhá už délka 9 (nejvyšší bit bajtu je vždy 0).
+  </p>
+  <div class="hidden" id="dca-enc-prog"><div class="bar-bg"><div class="bar-fg" id="dca-enc-bar"></div></div><span id="dca-enc-pct">0 %</span></div>
+  <div class="hidden" id="dca-enc-out">
+    <h2>Statistiky</h2>
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Poměr</th><th>Antislovník</th><th>Vynecháno bitů</th><th>Čas</th></tr><tr id="dca-enc-row"></tr></table>
+    <p><button id="dca-enc-dl">Stáhnout .dca</button> <button class="detail-btn" id="dca-detail-mfw">Zobrazit antislovník</button> <button class="detail-btn" id="dca-detail-steps">Zobrazit kroky</button></p>
+    <p class="note">U malých vstupů hlavička s antislovníkem převáží úsporu – poměr přes 100 % je očekávaný. Zkuste delší text.</p>
+  </div>
+  <h2>Antislovník – Dekomprese</h2>
+  <p><label>Soubor .dca:</label> <input type="file" id="dca-dec-file" accept=".dca"> <button id="dca-dec-btn" disabled>Dekomprimovat</button></p>
+  <div class="hidden" id="dca-dec-prog"><div class="bar-bg"><div class="bar-fg" id="dca-dec-bar"></div></div><span id="dca-dec-pct">0 %</span></div>
+  <div class="hidden" id="dca-dec-out">
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Čas</th></tr><tr id="dca-dec-row"></tr></table>
+    <p><button id="dca-dec-dl">Stáhnout dekomprimovaný soubor</button></p>
+  </div>
+  <h2>Porovnání</h2>
+  <p><label>Originál:</label> <input type="file" id="dca-cmp1"><br><label>Dekomprimovaný:</label> <input type="file" id="dca-cmp2"> <button id="dca-cmp-btn" disabled>Porovnat</button></p>
+  <div class="hidden" id="dca-cmp-out"></div>
+</div>
+
+<!-- ACB -->
+<div id="acb" class="page">
+  <h2>ACB – Komprese</h2>
+  <div class="input-toggle"><button class="active" data-prefix="acb" data-mode="text">Text</button><button data-prefix="acb" data-mode="file">Soubor</button></div>
+  <div id="acb-text-wrap"><textarea id="acb-input" rows="3">ABCDEABCDFABCDE</textarea></div>
+  <div id="acb-file-wrap" class="hidden"><input type="file" id="acb-enc-file"> <span class="file-name" id="acb-file-name"></span></div>
+  <p>
+    <label>Řád kontextu:</label> <input type="number" id="acb-order" value="2" min="1" max="8">
+    <label>Max. kandidátů:</label> <input type="number" id="acb-maxc" value="16" min="1" max="255">
+    <button id="acb-enc-btn">Komprimovat</button>
+    <button id="acb-stop-btn" class="hidden" style="background:#c44;color:#fff">Stop</button>
+  </p>
+  <p class="note">
+    Zjednodušená varianta z přednášky: kandidáti = předchozí výskyty stejného kontextu (číslováno od nejnovějšího),
+    kóduje se dvojice (<strong>pořadí</strong>, <strong>délka shody</strong>). Shody kratší než 2 bajty se posílají jako literály.
+    <br>Zkuste vstup <code>ABCDEABCDFABCDE</code> s řádem 2 – poslední token odpovídá příkladu z přednášky.
+  </p>
+  <div class="hidden" id="acb-enc-prog"><div class="bar-bg"><div class="bar-fg" id="acb-enc-bar"></div></div><span id="acb-enc-pct">0 %</span></div>
+  <div class="hidden" id="acb-enc-out">
+    <h2>Statistiky</h2>
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Poměr</th><th>Tokenů</th><th>Literálů</th><th>Shod</th><th>Čas</th></tr><tr id="acb-enc-row"></tr></table>
+    <p><button id="acb-enc-dl">Stáhnout .acb</button> <button class="detail-btn" id="acb-detail-tokens">Zobrazit tokeny</button></p>
+  </div>
+  <h2>ACB – Dekomprese</h2>
+  <p><label>Soubor .acb:</label> <input type="file" id="acb-dec-file" accept=".acb"> <button id="acb-dec-btn" disabled>Dekomprimovat</button></p>
+  <div class="hidden" id="acb-dec-out">
+    <table><tr><th>Vstup</th><th>Výstup</th><th>Tokenů</th><th>Čas</th></tr><tr id="acb-dec-row"></tr></table>
+    <p><button id="acb-dec-dl">Stáhnout dekomprimovaný soubor</button></p>
+  </div>
+  <h2>Porovnání</h2>
+  <p><label>Originál:</label> <input type="file" id="acb-cmp1"><br><label>Dekomprimovaný:</label> <input type="file" id="acb-cmp2"> <button id="acb-cmp-btn" disabled>Porovnat</button></p>
+  <div class="hidden" id="acb-cmp-out"></div>
+</div>
+
 <script>
 // === Navigace ===
 
@@ -382,7 +544,7 @@ function setupCmp(prefix) {
   document.getElementById(prefix+"-cmp2").addEventListener("change", e => { e.target.files[0]?.arrayBuffer().then(b => { f2 = new Uint8Array(b); document.getElementById(prefix+"-cmp-btn").disabled = !(f1&&f2); }); });
   document.getElementById(prefix+"-cmp-btn").addEventListener("click", () => { const o = document.getElementById(prefix+"-cmp-out"); o.innerHTML = cmpFiles(f1,f2); o.classList.remove("hidden"); });
 }
-setupCmp("huf"); setupCmp("lz77"); setupCmp("def"); setupCmp("lz78"); setupCmp("lzw");
+setupCmp("huf"); setupCmp("lz77"); setupCmp("def"); setupCmp("lz78"); setupCmp("lzw"); setupCmp("arith");
 
 // === Huffman ===
 
@@ -1087,6 +1249,803 @@ document.getElementById("lzw-dec-btn").addEventListener("click", async () => {
   document.getElementById("lzw-dec-out").classList.remove("hidden");
 });
 document.getElementById("lzw-dec-dl").addEventListener("click", () => { if (lzwDecRes) dl(new Blob([lzwDecRes]), lzwDecName); });
+
+// === Aritmetické kódování ===
+
+function arithEncode(data, precision) {
+  const freqMap = {};
+  for (const b of data) freqMap[b] = (freqMap[b] || 0) + 1;
+  const syms = Object.keys(freqMap).map(Number).sort((a, b) => a - b);
+  const cumLow = {};
+  let total = 0;
+  for (const s of syms) { cumLow[s] = total; total += freqMap[s]; }
+  const P = BigInt(precision), WHOLE = 1n << P, HALF = WHOLE >> 1n, QTR = WHOLE >> 2n, THREE_QTR = HALF + QTR, T = BigInt(total);
+  let lo = 0n, hi = WHOLE - 1n, pending = 0;
+  const bits = [];
+  function emit(bit) { bits.push(bit); while (pending > 0) { bits.push(1 - bit); pending--; } }
+  for (const byte of data) {
+    const cl = BigInt(cumLow[byte]), ch = cl + BigInt(freqMap[byte]), range = hi - lo + 1n;
+    const newHi = lo + (range * ch) / T - 1n;
+    lo = lo + (range * cl) / T; hi = newHi;
+    while (true) {
+      if (hi < HALF) { emit(0); lo <<= 1n; hi = (hi << 1n) | 1n; }
+      else if (lo >= HALF) { emit(1); lo = (lo - HALF) << 1n; hi = ((hi - HALF) << 1n) | 1n; }
+      else if (lo >= QTR && hi < THREE_QTR) { pending++; lo = (lo - QTR) << 1n; hi = ((hi - QTR) << 1n) | 1n; }
+      else break;
+    }
+  }
+  pending++;
+  if (lo < QTR) emit(0); else emit(1);
+  return { bits, freqMap, total };
+}
+
+function arithDecode(bits, freqMap, total, origSize, precision) {
+  const syms = Object.keys(freqMap).map(Number).sort((a, b) => a - b);
+  const cumLow = {};
+  let cum = 0;
+  for (const s of syms) { cumLow[s] = cum; cum += freqMap[s]; }
+  const P = BigInt(precision), WHOLE = 1n << P, HALF = WHOLE >> 1n, QTR = WHOLE >> 2n, THREE_QTR = HALF + QTR, T = BigInt(total), prec = Number(P);
+  let lo = 0n, hi = WHOLE - 1n, val = 0n, bitPos = 0;
+  for (let i = 0; i < prec; i++) val = (val << 1n) | BigInt(bitPos < bits.length ? bits[bitPos++] : 0);
+  const out = new Uint8Array(origSize);
+  for (let i = 0; i < origSize; i++) {
+    const range = hi - lo + 1n, s = Number(((val - lo + 1n) * T - 1n) / range);
+    let sym = syms[0];
+    for (const k of syms) { if (s >= cumLow[k] && s < cumLow[k] + freqMap[k]) { sym = k; break; } }
+    out[i] = sym;
+    const cl = BigInt(cumLow[sym]), ch = cl + BigInt(freqMap[sym]);
+    const newHi = lo + (range * ch) / T - 1n;
+    lo = lo + (range * cl) / T; hi = newHi;
+    while (true) {
+      if (hi < HALF) { lo <<= 1n; hi = (hi << 1n) | 1n; val = (val << 1n) | BigInt(bitPos < bits.length ? bits[bitPos++] : 0); }
+      else if (lo >= HALF) { lo = (lo - HALF) << 1n; hi = ((hi - HALF) << 1n) | 1n; val = ((val - HALF) << 1n) | BigInt(bitPos < bits.length ? bits[bitPos++] : 0); }
+      else if (lo >= QTR && hi < THREE_QTR) { lo = (lo - QTR) << 1n; hi = ((hi - QTR) << 1n) | 1n; val = ((val - QTR) << 1n) | BigInt(bitPos < bits.length ? bits[bitPos++] : 0); }
+      else break;
+    }
+  }
+  return out;
+}
+
+function arithSer(bits, freqMap, origSize, precision) {
+  const entries = Object.entries(freqMap);
+  const hdr = 15 + entries.length * 6;
+  const dataBytes = Math.ceil(bits.length / 8);
+  const buf = new Uint8Array(hdr + dataBytes);
+  const v = new DataView(buf.buffer);
+  buf[0]=65; buf[1]=82; buf[2]=73; buf[3]=84;
+  buf[4] = precision;
+  v.setUint32(5, origSize, true);
+  v.setUint16(9, entries.length, true);
+  let p = 11;
+  for (const [sym, freq] of entries) { v.setUint16(p, parseInt(sym), true); p += 2; v.setUint32(p, freq, true); p += 4; }
+  v.setUint32(p, bits.length, true); p += 4;
+  for (let i = 0; i < bits.length; i++) if (bits[i]) buf[p + (i >> 3)] |= 1 << (7 - (i & 7));
+  return buf.buffer;
+}
+
+function arithDeser(buf) {
+  const d = new Uint8Array(buf), v = new DataView(buf);
+  if (String.fromCharCode(d[0],d[1],d[2],d[3]) !== "ARIT") throw new Error("Neplatný formát");
+  const precision = d[4], origSize = v.getUint32(5, true), numSyms = v.getUint16(9, true);
+  let p = 11;
+  const freqMap = {};
+  let total = 0;
+  for (let i = 0; i < numSyms; i++) { const sym = v.getUint16(p, true); p += 2; const freq = v.getUint32(p, true); p += 4; freqMap[sym] = freq; total += freq; }
+  const bitCount = v.getUint32(p, true); p += 4;
+  const bits = [];
+  for (let i = 0; i < bitCount; i++) bits.push((d[p + (i >> 3)] & (1 << (7 - (i & 7)))) ? 1 : 0);
+  return { bits, freqMap, total, origSize, precision };
+}
+
+function bigFrac(num, den, digits) {
+  const intPart = num / den;
+  let rem = num % den, s = intPart.toString() + ".";
+  for (let i = 0; i < digits; i++) { rem *= 10n; s += (rem / den).toString(); rem %= den; }
+  s = s.replace(/0+$/, ""); if (s.endsWith(".")) s += "0";
+  return s;
+}
+
+let arithBuf, arithName, arithFreqInfo, arithStepsSlice, arithPrecVal;
+
+document.getElementById("arith-enc-btn").addEventListener("click", async () => {
+  const { data, name } = await getInput("arith-input", "arith-enc-file");
+  if (data.length === 0) return;
+  const precision = parseInt(document.getElementById("arith-precision").value);
+  const maxInput = 1 << (precision - 2);
+  if (data.length > maxInput) { alert(`Vstup (${data.length.toLocaleString()} B) je příliš velký pro ${precision}-bitovou přesnost (max ${maxInput.toLocaleString()} B). Zvyšte přesnost registru.`); return; }
+  arithName = name; arithPrecVal = precision; arithStepsSlice = data.slice(0, 200);
+  const t0 = performance.now();
+  const { bits, freqMap, total } = arithEncode(data, precision);
+  arithBuf = arithSer(bits, freqMap, data.length, precision);
+  const ms = performance.now() - t0;
+  arithFreqInfo = { freqMap, total };
+  const entropy = Object.values(freqMap).reduce((h, f) => { const p = f / total; return h - p * Math.log2(p); }, 0);
+  const avgBits = bits.length / data.length;
+  document.getElementById("arith-enc-row").innerHTML = `<td>${fmtSize(data.length)}</td><td>${fmtSize(arithBuf.byteLength)}</td><td>${(arithBuf.byteLength/data.length*100).toFixed(1)} %</td><td>${entropy.toFixed(3)} b/sym</td><td>${avgBits.toFixed(3)} b/sym</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("arith-enc-out").classList.remove("hidden");
+});
+document.getElementById("arith-enc-dl").addEventListener("click", () => { if (arithBuf) dl(new Blob([arithBuf]), arithName + ".arith"); });
+
+document.getElementById("arith-detail-freq").addEventListener("click", () => {
+  if (!arithFreqInfo) return;
+  const { freqMap, total } = arithFreqInfo;
+  const syms = Object.keys(freqMap).map(Number).sort((a, b) => a - b);
+  let cum = 0;
+  const items = syms.map(s => {
+    const f = freqMap[s], p = f / total, cl = cum; cum += f;
+    const ib = -Math.log2(p);
+    return { text: `${fmtChar(s)} ${f} ${(p*100).toFixed(1)} ${cl} ${cum} ${ib.toFixed(2)}`, html: `<tr><td>${fmtChar(s)}</td><td>${f}</td><td>${(p*100).toFixed(1)}%</td><td>${cl}</td><td>${cum}</td><td>${ib.toFixed(2)}</td></tr>` };
+  });
+  openModal(`Frekvenční tabulka (${syms.length} symbolů, celkem ${total})`, items, `<tr><th>Symbol</th><th>Četnost</th><th>Pravděp.</th><th>C<sub>l</sub></th><th>C<sub>h</sub></th><th>Ideál bitů</th></tr>`);
+});
+
+document.getElementById("arith-detail-real").addEventListener("click", () => {
+  if (!arithStepsSlice || !arithFreqInfo) return;
+  const data = arithStepsSlice;
+  const { freqMap, total } = arithFreqInfo;
+  const syms = Object.keys(freqMap).map(Number).sort((a, b) => a - b);
+  const cumLow = {}; let cum = 0;
+  for (const s of syms) { cumLow[s] = cum; cum += freqMap[s]; }
+  const T = BigInt(total);
+  let loN = 0n, hiN = 1n, den = 1n;
+  const limit = Math.min(data.length, 100);
+  const items = [];
+  for (let i = 0; i < limit; i++) {
+    const sym = data[i];
+    const cl = BigInt(cumLow[sym]), ch = cl + BigInt(freqMap[sym]);
+    const range = hiN - loN;
+    const newLoN = loN * T + range * cl, newHiN = loN * T + range * ch;
+    loN = newLoN; hiN = newHiN; den *= T;
+    const width = bigFrac(hiN - loN, den, 10);
+    items.push({ text: `${i+1} ${fmtChar(sym)}`, html: `<tr><td>${i+1}</td><td>${fmtChar(sym)}</td><td>[${bigFrac(loN, den, 10)},&nbsp;${bigFrac(hiN, den, 10)})</td><td>${width}</td></tr>` });
+  }
+  const note = data.length > limit ? `<br>Prvních ${limit} z ${data.length} kroků.` : "";
+  openModal(`Reálné aritmetické kódování – zužování intervalu${note}`, items, `<tr><th>#</th><th>Symbol</th><th>Interval [lo, hi)</th><th>Šířka</th></tr>`);
+});
+
+document.getElementById("arith-detail-int").addEventListener("click", () => {
+  if (!arithStepsSlice || !arithFreqInfo) return;
+  const data = arithStepsSlice;
+  const { freqMap, total } = arithFreqInfo;
+  const precision = arithPrecVal;
+  const syms = Object.keys(freqMap).map(Number).sort((a, b) => a - b);
+  const cumLow = {}; let cum = 0;
+  for (const s of syms) { cumLow[s] = cum; cum += freqMap[s]; }
+  const P = BigInt(precision), WHOLE = 1n << P, HALF = WHOLE >> 1n, QTR = WHOLE >> 2n, THREE_QTR = HALF + QTR, T = BigInt(total);
+  let lo = 0n, hi = WHOLE - 1n, pending = 0;
+  const limit = Math.min(data.length, 200);
+  const items = [];
+  for (let idx = 0; idx < limit; idx++) {
+    const byte = data[idx];
+    const cl = BigInt(cumLow[byte]), ch = cl + BigInt(freqMap[byte]), range = hi - lo + 1n;
+    const newHi = lo + (range * ch) / T - 1n;
+    lo = lo + (range * cl) / T; hi = newHi;
+    const emitted = [];
+    while (true) {
+      if (hi < HALF) { emitted.push(0); for (let j = 0; j < pending; j++) emitted.push(1); pending = 0; lo <<= 1n; hi = (hi << 1n) | 1n; }
+      else if (lo >= HALF) { emitted.push(1); for (let j = 0; j < pending; j++) emitted.push(0); pending = 0; lo = (lo - HALF) << 1n; hi = ((hi - HALF) << 1n) | 1n; }
+      else if (lo >= QTR && hi < THREE_QTR) { pending++; lo = (lo - QTR) << 1n; hi = ((hi - QTR) << 1n) | 1n; }
+      else break;
+    }
+    const bitsStr = emitted.length > 0 ? emitted.join("") : "–";
+    items.push({ text: `${idx+1} ${fmtChar(byte)} ${Number(lo)} ${Number(hi)} ${bitsStr} ${pending}`, html: `<tr><td>${idx+1}</td><td>${fmtChar(byte)}</td><td>${Number(lo)}</td><td>${Number(hi)}</td><td><code>${bitsStr}</code></td><td>${pending}</td></tr>` });
+  }
+  const note = data.length > limit ? `<br>Prvních ${limit} z ${data.length} kroků.` : "";
+  openModal(`Celočíselné aritmetické kódování (${precision}-bit)${note}`, items, `<tr><th>#</th><th>Symbol</th><th>lo</th><th>hi</th><th>Výstupní bity</th><th>Pending</th></tr>`);
+});
+
+let arithDecRes, arithDecName;
+document.getElementById("arith-dec-file").addEventListener("change", e => { if (e.target.files[0]) document.getElementById("arith-dec-btn").disabled = false; });
+document.getElementById("arith-dec-btn").addEventListener("click", async () => {
+  const f = document.getElementById("arith-dec-file").files[0]; if (!f) return;
+  arithDecName = f.name.replace(/\.arith$/, "");
+  const buf = await f.arrayBuffer();
+  const t0 = performance.now();
+  const { bits, freqMap, total, origSize, precision } = arithDeser(buf);
+  arithDecRes = arithDecode(bits, freqMap, total, origSize, precision);
+  const ms = performance.now() - t0;
+  document.getElementById("arith-dec-row").innerHTML = `<td>${fmtSize(buf.byteLength)}</td><td>${fmtSize(arithDecRes.length)}</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("arith-dec-out").classList.remove("hidden");
+});
+document.getElementById("arith-dec-dl").addEventListener("click", () => { if (arithDecRes) dl(new Blob([arithDecRes]), arithDecName); });
+
+// === PPM ===
+// Incremental adaptive arithmetic coder (32-bit, same scheme as arithEncode above)
+
+function acNewEncoder() {
+  const WHOLE = 1n << 32n, HALF = WHOLE >> 1n, QTR = WHOLE >> 2n, THREE_QTR = HALF + QTR;
+  let lo = 0n, hi = WHOLE - 1n, pending = 0;
+  const bits = [];
+  function emit(bit) { bits.push(bit); while (pending > 0) { bits.push(1 - bit); pending--; } }
+  return {
+    encode(cl, ch, total) {
+      const range = hi - lo + 1n, T = BigInt(total);
+      const newHi = lo + (range * BigInt(ch)) / T - 1n;
+      lo = lo + (range * BigInt(cl)) / T; hi = newHi;
+      while (true) {
+        if (hi < HALF) { emit(0); lo <<= 1n; hi = (hi << 1n) | 1n; }
+        else if (lo >= HALF) { emit(1); lo = (lo - HALF) << 1n; hi = ((hi - HALF) << 1n) | 1n; }
+        else if (lo >= QTR && hi < THREE_QTR) { pending++; lo = (lo - QTR) << 1n; hi = ((hi - QTR) << 1n) | 1n; }
+        else break;
+      }
+    },
+    finish() { pending++; if (lo < QTR) emit(0); else emit(1); return bits; },
+  };
+}
+
+function acNewDecoder(bits) {
+  const WHOLE = 1n << 32n, HALF = WHOLE >> 1n, QTR = WHOLE >> 2n, THREE_QTR = HALF + QTR;
+  let lo = 0n, hi = WHOLE - 1n, val = 0n, bitPos = 0;
+  const next = () => BigInt(bitPos < bits.length ? bits[bitPos++] : 0);
+  for (let i = 0; i < 32; i++) val = (val << 1n) | next();
+  return {
+    target(total) { const range = hi - lo + 1n; return Number(((val - lo + 1n) * BigInt(total) - 1n) / range); },
+    update(cl, ch, total) {
+      const range = hi - lo + 1n, T = BigInt(total);
+      const newHi = lo + (range * BigInt(ch)) / T - 1n;
+      lo = lo + (range * BigInt(cl)) / T; hi = newHi;
+      while (true) {
+        if (hi < HALF) { lo <<= 1n; hi = (hi << 1n) | 1n; val = (val << 1n) | next(); }
+        else if (lo >= HALF) { lo = (lo - HALF) << 1n; hi = ((hi - HALF) << 1n) | 1n; val = ((val - HALF) << 1n) | next(); }
+        else if (lo >= QTR && hi < THREE_QTR) { lo = (lo - QTR) << 1n; hi = ((hi - QTR) << 1n) | 1n; val = ((val - QTR) << 1n) | next(); }
+        else break;
+      }
+    },
+  };
+}
+
+function ppmCtxKey(buf, i, o) { let k = ""; for (let j = i - o; j < i; j++) k += String.fromCharCode(buf[j]); return k; }
+
+function ppmModelNew(order) { const m = []; for (let o = 0; o <= order; o++) m.push(new Map()); return m; }
+
+// Symbol weights in Map insertion order (first occurrence) — encoder and decoder
+// update the model identically, so the order matches on both sides.
+function ppmDist(ctx, escMode) {
+  const syms = [], weights = [];
+  let total = 0;
+  for (const [s, c] of ctx.counts) {
+    const w = escMode === "D" ? 2 * c - 1 : c;
+    syms.push(s); weights.push(w); total += w;
+  }
+  const escW = escMode === "A" ? 1 : ctx.distinct;
+  return { syms, weights, escW, total: total + escW };
+}
+
+function ppmUpdate(model, buf, i, sym, order) {
+  const maxO = Math.min(order, i);
+  for (let o = 0; o <= maxO; o++) {
+    const key = ppmCtxKey(buf, i, o);
+    let ctx = model[o].get(key);
+    if (!ctx) { ctx = { counts: new Map(), distinct: 0 }; model[o].set(key, ctx); }
+    const c = ctx.counts.get(sym) || 0;
+    if (c === 0) ctx.distinct++;
+    ctx.counts.set(sym, c + 1);
+  }
+}
+
+// Encode one symbol; empty contexts are skipped silently (escape prob. 1 = 0 bits)
+function ppmEncodeSym(enc, model, buf, i, sym, order, escMode, log) {
+  let escapes = 0;
+  const maxO = Math.min(order, i);
+  for (let o = maxO; o >= 0; o--) {
+    const ctx = model[o].get(ppmCtxKey(buf, i, o));
+    if (!ctx) { if (log) log.push({ o, kind: "empty" }); continue; }
+    const { syms, weights, escW, total } = ppmDist(ctx, escMode);
+    let cl = 0, found = -1;
+    for (let j = 0; j < syms.length; j++) { if (syms[j] === sym) { found = j; break; } cl += weights[j]; }
+    if (found >= 0) {
+      enc.encode(cl, cl + weights[found], total);
+      if (log) log.push({ o, kind: "found" });
+      return escapes;
+    }
+    enc.encode(total - escW, total, total);
+    escapes++;
+    if (log) log.push({ o, kind: "esc" });
+  }
+  enc.encode(sym, sym + 1, 256);
+  if (log) log.push({ o: -1, kind: "found" });
+  return escapes;
+}
+
+function ppmDecodeSym(dec, model, buf, i, order, escMode) {
+  const maxO = Math.min(order, i);
+  for (let o = maxO; o >= 0; o--) {
+    const ctx = model[o].get(ppmCtxKey(buf, i, o));
+    if (!ctx) continue;
+    const { syms, weights, escW, total } = ppmDist(ctx, escMode);
+    const t = dec.target(total);
+    if (t >= total - escW) { dec.update(total - escW, total, total); continue; }
+    let cl = 0;
+    for (let j = 0; j < syms.length; j++) {
+      if (t < cl + weights[j]) { dec.update(cl, cl + weights[j], total); return syms[j]; }
+      cl += weights[j];
+    }
+  }
+  const t = dec.target(256);
+  dec.update(t, t + 1, 256);
+  return t;
+}
+
+function ppmEncodeAsync(data, order, escMode, onProg, signal) {
+  return new Promise((res, rej) => {
+    const enc = acNewEncoder();
+    const model = ppmModelNew(order);
+    let i = 0, escCount = 0;
+    const steps = [];
+    function go() {
+      if (signal && signal.aborted) { rej(new DOMException("Zrušeno", "AbortError")); return; }
+      const deadline = performance.now() + 16;
+      while (i < data.length) {
+        const log = steps.length < 200 ? [] : null;
+        escCount += ppmEncodeSym(enc, model, data, i, data[i], order, escMode, log);
+        if (log) steps.push({ i, sym: data[i], ctx: ppmCtxKey(data, i, Math.min(order, i)), log });
+        ppmUpdate(model, data, i, data[i], order);
+        i++;
+        if ((i & 63) === 0 && performance.now() >= deadline) break;
+      }
+      onProg(data.length ? Math.min(i / data.length, 1) : 1);
+      if (i < data.length) setTimeout(go, 0); else res({ bits: enc.finish(), escCount, steps });
+    }
+    go();
+  });
+}
+
+function ppmDecodeAsync(bits, origSize, order, escMode, onProg) {
+  return new Promise(res => {
+    const dec = acNewDecoder(bits);
+    const model = ppmModelNew(order);
+    const out = new Uint8Array(origSize);
+    let i = 0;
+    function go() {
+      const deadline = performance.now() + 16;
+      while (i < origSize) {
+        const sym = ppmDecodeSym(dec, model, out, i, order, escMode);
+        out[i] = sym;
+        ppmUpdate(model, out, i, sym, order);
+        i++;
+        if ((i & 63) === 0 && performance.now() >= deadline) break;
+      }
+      onProg(origSize ? Math.min(i / origSize, 1) : 1);
+      if (i < origSize) setTimeout(go, 0); else res(out);
+    }
+    go();
+  });
+}
+
+function ppmSer(bits, origSize, order, escMode) {
+  const buf = new Uint8Array(14 + Math.ceil(bits.length / 8));
+  const v = new DataView(buf.buffer);
+  buf[0]=80; buf[1]=80; buf[2]=77; buf[3]=48; // "PPM0"
+  v.setUint32(4, origSize, true);
+  buf[8] = order;
+  buf[9] = escMode === "A" ? 0 : escMode === "C" ? 1 : 2;
+  v.setUint32(10, bits.length, true);
+  for (let i = 0; i < bits.length; i++) if (bits[i]) buf[14 + (i >> 3)] |= 1 << (7 - (i & 7));
+  return buf.buffer;
+}
+
+function ppmDeser(buf) {
+  const d = new Uint8Array(buf), v = new DataView(buf);
+  if (String.fromCharCode(d[0],d[1],d[2],d[3]) !== "PPM0") throw new Error("Neplatný formát");
+  const origSize = v.getUint32(4, true), order = d[8];
+  const escMode = d[9] === 0 ? "A" : d[9] === 1 ? "C" : "D";
+  const bitLen = v.getUint32(10, true);
+  const bits = [];
+  for (let i = 0; i < bitLen; i++) bits.push((d[14 + (i >> 3)] & (1 << (7 - (i & 7)))) ? 1 : 0);
+  return { bits, origSize, order, escMode };
+}
+
+let ppmBuf, ppmName, ppmSteps, ppmAbort;
+document.getElementById("ppm-enc-btn").addEventListener("click", async () => {
+  const { data, name } = await getInput("ppm-input", "ppm-enc-file");
+  if (data.length === 0) return;
+  ppmName = name;
+  const order = Math.min(8, Math.max(0, parseInt(document.getElementById("ppm-order").value) || 0));
+  const escMode = document.getElementById("ppm-escape").value;
+  const btn = document.getElementById("ppm-enc-btn"); btn.disabled = true;
+  const stopBtn = document.getElementById("ppm-stop-btn"); stopBtn.classList.remove("hidden");
+  const prog = document.getElementById("ppm-enc-prog"); prog.classList.remove("hidden");
+  document.getElementById("ppm-enc-out").classList.add("hidden");
+  ppmAbort = new AbortController();
+  const t0 = performance.now();
+  try {
+    const { bits, escCount, steps } = await ppmEncodeAsync(data, order, escMode, p => {
+      document.getElementById("ppm-enc-bar").style.width = Math.round(p*100)+"%";
+      document.getElementById("ppm-enc-pct").textContent = Math.round(p*100)+" %";
+    }, ppmAbort.signal);
+    ppmBuf = ppmSer(bits, data.length, order, escMode);
+    ppmSteps = steps;
+    const ms = performance.now() - t0;
+    document.getElementById("ppm-enc-row").innerHTML = `<td>${fmtSize(data.length)}</td><td>${fmtSize(ppmBuf.byteLength)}</td><td>${(ppmBuf.byteLength/data.length*100).toFixed(1)} %</td><td>${escCount.toLocaleString()}</td><td>${(bits.length/data.length).toFixed(3)} b/sym</td><td>${(ms/1000).toFixed(1)} s</td>`;
+    document.getElementById("ppm-enc-out").classList.remove("hidden");
+  } catch(e) { if (e.name !== "AbortError") throw e; }
+  prog.classList.add("hidden"); stopBtn.classList.add("hidden"); btn.disabled = false;
+});
+document.getElementById("ppm-stop-btn").addEventListener("click", () => { if (ppmAbort) ppmAbort.abort(); });
+document.getElementById("ppm-enc-dl").addEventListener("click", () => { if (ppmBuf) dl(new Blob([ppmBuf]), ppmName+".ppmd"); });
+document.getElementById("ppm-detail-steps").addEventListener("click", () => {
+  if (!ppmSteps) return;
+  openModal(`PPM kroky (prvních ${ppmSteps.length})`,
+    ppmSteps.map(s => {
+      const path = s.log.map(e =>
+        e.o === -1 ? "řád −1: nalezen" :
+        e.kind === "empty" ? `řád ${e.o}: prázdný (zdarma)` :
+        e.kind === "esc" ? `řád ${e.o}: <span class="eof">escape</span>` : `řád ${e.o}: <span class="lit">nalezen</span>`
+      ).join(" → ");
+      const ctx = s.ctx ? [...s.ctx].map(c => fmtChar(c.charCodeAt(0))).join("") : "–";
+      return { text: `${s.i} ${fmtChar(s.sym)} ${ctx}`, html: `<tr><td>${s.i}</td><td>${fmtChar(s.sym)}</td><td>${ctx}</td><td>${path}</td></tr>` };
+    }),
+    `<tr><th>#</th><th>Znak</th><th>Kontext</th><th>Průchod řády</th></tr>`);
+});
+
+let ppmDecRes, ppmDecName;
+document.getElementById("ppm-dec-file").addEventListener("change", e => { if (e.target.files[0]) document.getElementById("ppm-dec-btn").disabled = false; });
+document.getElementById("ppm-dec-btn").addEventListener("click", async () => {
+  const f = document.getElementById("ppm-dec-file").files[0]; if (!f) return;
+  ppmDecName = f.name.replace(/\.ppmd$/, "");
+  const buf = await f.arrayBuffer();
+  const prog = document.getElementById("ppm-dec-prog"); prog.classList.remove("hidden");
+  const t0 = performance.now();
+  const { bits, origSize, order, escMode } = ppmDeser(buf);
+  ppmDecRes = await ppmDecodeAsync(bits, origSize, order, escMode, p => {
+    document.getElementById("ppm-dec-bar").style.width = Math.round(p*100)+"%";
+    document.getElementById("ppm-dec-pct").textContent = Math.round(p*100)+" %";
+  });
+  const ms = performance.now() - t0;
+  prog.classList.add("hidden");
+  document.getElementById("ppm-dec-row").innerHTML = `<td>${fmtSize(buf.byteLength)}</td><td>${fmtSize(ppmDecRes.length)}</td><td>${(ms/1000).toFixed(1)} s</td>`;
+  document.getElementById("ppm-dec-out").classList.remove("hidden");
+});
+document.getElementById("ppm-dec-dl").addEventListener("click", () => { if (ppmDecRes) dl(new Blob([ppmDecRes]), ppmDecName); });
+
+// === Antislovnik (DCA) ===
+
+function dcaToBits(data) {
+  const bits = new Uint8Array(data.length * 8);
+  for (let i = 0; i < data.length; i++) for (let j = 0; j < 8; j++) bits[i*8+j] = (data[i] >> (7-j)) & 1;
+  return bits;
+}
+function dcaToBytes(bits, nBytes) {
+  const out = new Uint8Array(nBytes);
+  for (let i = 0; i < nBytes; i++) { let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i*8+j]; out[i] = b; }
+  return out;
+}
+
+function dcaForbTables(mfw, L) {
+  const forb = [null];
+  for (let l = 1; l <= L; l++) forb.push(new Uint8Array(1 << l));
+  for (const m of mfw) forb[m.len][m.val] = 1;
+  return forb;
+}
+
+function dcaEncodeAsync(data, L, onProg, signal) {
+  return new Promise((res, rej) => {
+    const bits = dcaToBits(data);
+    const present = [null];
+    let l = 1;
+    function buildPresence() {
+      if (signal && signal.aborted) { rej(new DOMException("Zrušeno", "AbortError")); return; }
+      const pr = new Uint8Array(1 << l), mask = (1 << l) - 1;
+      let v = 0;
+      for (let i = 0; i < bits.length; i++) { v = ((v << 1) | bits[i]) & mask; if (i >= l - 1) pr[v] = 1; }
+      present.push(pr);
+      onProg(0.5 * l / L);
+      if (++l <= L) setTimeout(buildPresence, 0); else encode();
+    }
+    function encode() {
+      // Minimal forbidden word w = avb: w absent, prefix av present, suffix vb present
+      const mfw = [];
+      for (let ll = 1; ll <= L; ll++) {
+        const half = (1 << (ll - 1)) - 1;
+        for (let w = 0; w < (1 << ll); w++) {
+          if (present[ll][w]) continue;
+          if (ll === 1 || (present[ll-1][w >> 1] && present[ll-1][w & half])) mfw.push({ len: ll, val: w });
+        }
+      }
+      const forb = dcaForbTables(mfw, L);
+      const ctx = new Array(L + 1).fill(0); // ctx[l] = last l bits as integer
+      const kept = []; let skipped = 0; const steps = [];
+      let i = 0;
+      function go() {
+        if (signal && signal.aborted) { rej(new DOMException("Zrušeno", "AbortError")); return; }
+        const deadline = performance.now() + 16;
+        while (i < bits.length) {
+          const b = bits[i], alt = b ^ 1;
+          let forced = false;
+          for (let ll = 1; ll <= L && ll <= i + 1; ll++) {
+            if (forb[ll][(ctx[ll-1] << 1) | alt]) { forced = true; break; }
+          }
+          if (forced) skipped++; else kept.push(b);
+          if (steps.length < 200) steps.push({ i, b, forced });
+          for (let ll = 1; ll <= L; ll++) ctx[ll] = ((ctx[ll] << 1) | b) & ((1 << ll) - 1);
+          i++;
+          if ((i & 1023) === 0 && performance.now() >= deadline) break;
+        }
+        onProg(0.5 + 0.5 * (bits.length ? i / bits.length : 1));
+        if (i < bits.length) setTimeout(go, 0); else res({ kept, skipped, mfw, steps });
+      }
+      go();
+    }
+    if (bits.length) buildPresence(); else res({ kept: [], skipped: 0, mfw: [], steps: [] });
+  });
+}
+
+function dcaDecodeAsync(kept, nBits, mfw, L, onProg) {
+  return new Promise(res => {
+    const forb = dcaForbTables(mfw, L);
+    const ctx = new Array(L + 1).fill(0);
+    const bits = new Uint8Array(nBits);
+    let i = 0, kp = 0;
+    function go() {
+      const deadline = performance.now() + 16;
+      while (i < nBits) {
+        let f0 = false, f1 = false;
+        for (let l = 1; l <= L && l <= i + 1; l++) {
+          const base = ctx[l-1] << 1;
+          if (forb[l][base]) { f0 = true; break; }
+          if (forb[l][base | 1]) { f1 = true; break; }
+        }
+        const b = f0 ? 1 : f1 ? 0 : (kp < kept.length ? kept[kp++] : 0);
+        bits[i] = b;
+        for (let l = 1; l <= L; l++) ctx[l] = ((ctx[l] << 1) | b) & ((1 << l) - 1);
+        i++;
+        if ((i & 1023) === 0 && performance.now() >= deadline) break;
+      }
+      onProg(nBits ? i / nBits : 1);
+      if (i < nBits) setTimeout(go, 0); else res(bits);
+    }
+    go();
+  });
+}
+
+function dcaSer(kept, origSize, L, mfw) {
+  const hdr = 17 + mfw.length * 3;
+  const buf = new Uint8Array(hdr + Math.ceil(kept.length / 8));
+  const v = new DataView(buf.buffer);
+  buf[0]=68; buf[1]=67; buf[2]=65; buf[3]=48; // "DCA0"
+  v.setUint32(4, origSize, true);
+  buf[8] = L;
+  v.setUint32(9, mfw.length, true);
+  v.setUint32(13, kept.length, true);
+  let p = 17;
+  for (const m of mfw) { buf[p++] = m.len; v.setUint16(p, m.val, true); p += 2; }
+  for (let i = 0; i < kept.length; i++) if (kept[i]) buf[p + (i >> 3)] |= 1 << (7 - (i & 7));
+  return buf.buffer;
+}
+
+function dcaDeser(buf) {
+  const d = new Uint8Array(buf), v = new DataView(buf);
+  if (String.fromCharCode(d[0],d[1],d[2],d[3]) !== "DCA0") throw new Error("Neplatný formát");
+  const origSize = v.getUint32(4, true), L = d[8], mfwCount = v.getUint32(9, true), keptLen = v.getUint32(13, true);
+  let p = 17; const mfw = [];
+  for (let i = 0; i < mfwCount; i++) { const len = d[p++], val = v.getUint16(p, true); p += 2; mfw.push({ len, val }); }
+  const kept = new Uint8Array(keptLen);
+  for (let i = 0; i < keptLen; i++) kept[i] = (d[p + (i >> 3)] & (1 << (7 - (i & 7)))) ? 1 : 0;
+  return { kept, origSize, L, mfw };
+}
+
+let dcaBuf, dcaName, dcaMfwData, dcaStepsData, dcaAbort;
+document.getElementById("dca-enc-btn").addEventListener("click", async () => {
+  const { data, name } = await getInput("dca-input", "dca-enc-file");
+  if (data.length === 0) return;
+  dcaName = name;
+  const L = Math.min(16, Math.max(2, parseInt(document.getElementById("dca-maxlen").value) || 12));
+  const btn = document.getElementById("dca-enc-btn"); btn.disabled = true;
+  const stopBtn = document.getElementById("dca-stop-btn"); stopBtn.classList.remove("hidden");
+  const prog = document.getElementById("dca-enc-prog"); prog.classList.remove("hidden");
+  document.getElementById("dca-enc-out").classList.add("hidden");
+  dcaAbort = new AbortController();
+  const t0 = performance.now();
+  try {
+    const { kept, skipped, mfw, steps } = await dcaEncodeAsync(data, L, p => {
+      document.getElementById("dca-enc-bar").style.width = Math.round(p*100)+"%";
+      document.getElementById("dca-enc-pct").textContent = Math.round(p*100)+" %";
+    }, dcaAbort.signal);
+    dcaBuf = dcaSer(kept, data.length, L, mfw);
+    dcaMfwData = mfw; dcaStepsData = steps;
+    const ms = performance.now() - t0;
+    const nBits = data.length * 8;
+    document.getElementById("dca-enc-row").innerHTML = `<td>${fmtSize(data.length)}</td><td>${fmtSize(dcaBuf.byteLength)}</td><td>${(dcaBuf.byteLength/data.length*100).toFixed(1)} %</td><td>${mfw.length.toLocaleString()} slov (${fmtSize(mfw.length*3)})</td><td>${skipped.toLocaleString()} z ${nBits.toLocaleString()} (${(skipped/nBits*100).toFixed(1)} %)</td><td>${(ms/1000).toFixed(1)} s</td>`;
+    document.getElementById("dca-enc-out").classList.remove("hidden");
+  } catch(e) { if (e.name !== "AbortError") throw e; }
+  prog.classList.add("hidden"); stopBtn.classList.add("hidden"); btn.disabled = false;
+});
+document.getElementById("dca-stop-btn").addEventListener("click", () => { if (dcaAbort) dcaAbort.abort(); });
+document.getElementById("dca-enc-dl").addEventListener("click", () => { if (dcaBuf) dl(new Blob([dcaBuf]), dcaName+".dca"); });
+document.getElementById("dca-detail-mfw").addEventListener("click", () => {
+  if (!dcaMfwData) return;
+  openModal(`Antislovník (${dcaMfwData.length.toLocaleString()} minimálních zakázaných slov)`,
+    dcaMfwData.map((m, idx) => {
+      const w = m.val.toString(2).padStart(m.len, "0");
+      return { text: `${w} ${m.len}`, html: `<tr><td>${idx}</td><td><code>${w}</code></td><td>${m.len}</td></tr>` };
+    }),
+    `<tr><th>#</th><th>Zakázané slovo</th><th>Bitů</th></tr>`);
+});
+document.getElementById("dca-detail-steps").addEventListener("click", () => {
+  if (!dcaStepsData) return;
+  openModal(`DCA kroky (prvních ${dcaStepsData.length} bitů)`,
+    dcaStepsData.map(s => ({
+      text: `${s.i} ${s.b} ${s.forced ? "vynechán" : "poslán"}`,
+      html: `<tr><td>${s.i}</td><td>${s.b}</td><td>${s.forced ? '<span class="mat">vynechán (vynucený)</span>' : '<span class="lit">poslán</span>'}</td></tr>`,
+    })),
+    `<tr><th>Pozice (bit)</th><th>Bit</th><th>Výstup</th></tr>`);
+});
+
+let dcaDecRes, dcaDecName;
+document.getElementById("dca-dec-file").addEventListener("change", e => { if (e.target.files[0]) document.getElementById("dca-dec-btn").disabled = false; });
+document.getElementById("dca-dec-btn").addEventListener("click", async () => {
+  const f = document.getElementById("dca-dec-file").files[0]; if (!f) return;
+  dcaDecName = f.name.replace(/\.dca$/, "");
+  const buf = await f.arrayBuffer();
+  const prog = document.getElementById("dca-dec-prog"); prog.classList.remove("hidden");
+  const t0 = performance.now();
+  const { kept, origSize, L, mfw } = dcaDeser(buf);
+  const bits = await dcaDecodeAsync(kept, origSize * 8, mfw, L, p => {
+    document.getElementById("dca-dec-bar").style.width = Math.round(p*100)+"%";
+    document.getElementById("dca-dec-pct").textContent = Math.round(p*100)+" %";
+  });
+  dcaDecRes = dcaToBytes(bits, origSize);
+  const ms = performance.now() - t0;
+  prog.classList.add("hidden");
+  document.getElementById("dca-dec-row").innerHTML = `<td>${fmtSize(buf.byteLength)}</td><td>${fmtSize(dcaDecRes.length)}</td><td>${(ms/1000).toFixed(1)} s</td>`;
+  document.getElementById("dca-dec-out").classList.remove("hidden");
+});
+document.getElementById("dca-dec-dl").addEventListener("click", () => { if (dcaDecRes) dl(new Blob([dcaDecRes]), dcaDecName); });
+
+// === ACB ===
+
+function acbKey(buf, i, k) { let s = ""; for (let j = i - k; j < i; j++) s += String.fromCharCode(buf[j]); return s; }
+
+const ACB_MINLEN = 2;
+
+function acbEncodeAsync(data, k, maxc, onProg, signal) {
+  return new Promise((res, rej) => {
+    const map = new Map(); const tokens = []; let i = 0, lits = 0, matches = 0;
+    function reg(p) {
+      if (p < k) return;
+      const key = acbKey(data, p, k);
+      let a = map.get(key); if (!a) { a = []; map.set(key, a); }
+      a.push(p);
+    }
+    function go() {
+      if (signal && signal.aborted) { rej(new DOMException("Zrušeno", "AbortError")); return; }
+      const deadline = performance.now() + 16;
+      while (i < data.length) {
+        let done = false;
+        if (i >= k) {
+          const list = map.get(acbKey(data, i, k));
+          if (list) {
+            // Candidates numbered from the most recent occurrence
+            const m = Math.min(list.length, maxc);
+            let bl = 0, br = 0;
+            for (let r = 0; r < m; r++) {
+              const p = list[list.length - 1 - r];
+              let l = 0;
+              while (i + l < data.length && l < 65535 && data[p + l] === data[i + l]) l++;
+              if (l > bl) { bl = l; br = r; }
+            }
+            if (bl >= ACB_MINLEN) {
+              tokens.push({ lit: false, rank: br, len: bl });
+              matches++;
+              for (let j = 0; j < bl; j++) reg(i + j);
+              i += bl; done = true;
+            }
+          }
+        }
+        if (!done) { tokens.push({ lit: true, ch: data[i] }); lits++; reg(i); i++; }
+        if ((tokens.length & 255) === 0 && performance.now() >= deadline) break;
+      }
+      onProg(data.length ? Math.min(i / data.length, 1) : 1);
+      if (i < data.length) setTimeout(go, 0); else res({ tokens, lits, matches });
+    }
+    go();
+  });
+}
+
+function acbDecode(tokens, origSize, k) {
+  const out = new Uint8Array(origSize);
+  const map = new Map(); let i = 0;
+  function reg(p) {
+    if (p < k) return;
+    const key = acbKey(out, p, k);
+    let a = map.get(key); if (!a) { a = []; map.set(key, a); }
+    a.push(p);
+  }
+  for (const t of tokens) {
+    if (t.lit) { out[i] = t.ch; reg(i); i++; }
+    else {
+      const list = map.get(acbKey(out, i, k));
+      const p = list[list.length - 1 - t.rank];
+      for (let j = 0; j < t.len; j++) out[i + j] = out[p + j];
+      for (let j = 0; j < t.len; j++) reg(i + j);
+      i += t.len;
+    }
+  }
+  return out;
+}
+
+function acbSer(tokens, origSize, k, maxc) {
+  let size = 14;
+  for (const t of tokens) size += t.lit ? 2 : 4;
+  const buf = new Uint8Array(size);
+  const v = new DataView(buf.buffer);
+  buf[0]=65; buf[1]=67; buf[2]=66; buf[3]=48; // "ACB0"
+  v.setUint32(4, origSize, true);
+  buf[8] = k; buf[9] = maxc;
+  v.setUint32(10, tokens.length, true);
+  let p = 14;
+  for (const t of tokens) {
+    if (t.lit) { buf[p++] = 0; buf[p++] = t.ch; }
+    else { buf[p++] = 1; buf[p++] = t.rank; v.setUint16(p, t.len, true); p += 2; }
+  }
+  return buf.buffer;
+}
+
+function acbDeser(buf) {
+  const d = new Uint8Array(buf), v = new DataView(buf);
+  if (String.fromCharCode(d[0],d[1],d[2],d[3]) !== "ACB0") throw new Error("Neplatný formát");
+  const origSize = v.getUint32(4, true), k = d[8], maxc = d[9], n = v.getUint32(10, true);
+  let p = 14; const tokens = [];
+  for (let i = 0; i < n; i++) {
+    if (d[p++] === 0) tokens.push({ lit: true, ch: d[p++] });
+    else { const rank = d[p++], len = v.getUint16(p, true); p += 2; tokens.push({ lit: false, rank, len }); }
+  }
+  return { tokens, origSize, k, maxc };
+}
+
+let acbBuf, acbName, acbTokensData, acbAbort;
+document.getElementById("acb-enc-btn").addEventListener("click", async () => {
+  const { data, name } = await getInput("acb-input", "acb-enc-file");
+  if (data.length === 0) return;
+  acbName = name;
+  const k = Math.min(8, Math.max(1, parseInt(document.getElementById("acb-order").value) || 2));
+  const maxc = Math.min(255, Math.max(1, parseInt(document.getElementById("acb-maxc").value) || 16));
+  const btn = document.getElementById("acb-enc-btn"); btn.disabled = true;
+  const stopBtn = document.getElementById("acb-stop-btn"); stopBtn.classList.remove("hidden");
+  const prog = document.getElementById("acb-enc-prog"); prog.classList.remove("hidden");
+  document.getElementById("acb-enc-out").classList.add("hidden");
+  acbAbort = new AbortController();
+  const t0 = performance.now();
+  try {
+    const { tokens, lits, matches } = await acbEncodeAsync(data, k, maxc, p => {
+      document.getElementById("acb-enc-bar").style.width = Math.round(p*100)+"%";
+      document.getElementById("acb-enc-pct").textContent = Math.round(p*100)+" %";
+    }, acbAbort.signal);
+    acbBuf = acbSer(tokens, data.length, k, maxc);
+    acbTokensData = tokens;
+    const ms = performance.now() - t0;
+    document.getElementById("acb-enc-row").innerHTML = `<td>${fmtSize(data.length)}</td><td>${fmtSize(acbBuf.byteLength)}</td><td>${(acbBuf.byteLength/data.length*100).toFixed(1)} %</td><td>${tokens.length.toLocaleString()}</td><td>${lits.toLocaleString()}</td><td>${matches.toLocaleString()}</td><td>${(ms/1000).toFixed(1)} s</td>`;
+    document.getElementById("acb-enc-out").classList.remove("hidden");
+  } catch(e) { if (e.name !== "AbortError") throw e; }
+  prog.classList.add("hidden"); stopBtn.classList.add("hidden"); btn.disabled = false;
+});
+document.getElementById("acb-stop-btn").addEventListener("click", () => { if (acbAbort) acbAbort.abort(); });
+document.getElementById("acb-enc-dl").addEventListener("click", () => { if (acbBuf) dl(new Blob([acbBuf]), acbName+".acb"); });
+document.getElementById("acb-detail-tokens").addEventListener("click", () => {
+  if (!acbTokensData) return;
+  openModal(`ACB tokeny (${acbTokensData.length.toLocaleString()})`,
+    acbTokensData.map((t, i) => t.lit
+      ? { text: `${i} literál ${fmtChar(t.ch)}`, html: `<tr><td>${i}</td><td><span class="lit">literál</span></td><td>${fmtChar(t.ch)}</td><td>–</td></tr>` }
+      : { text: `${i} shoda ${t.rank} ${t.len}`, html: `<tr><td>${i}</td><td><span class="mat">shoda</span></td><td>pořadí ${t.rank}</td><td>${t.len}</td></tr>` }),
+    `<tr><th>#</th><th>Typ</th><th>Znak / pořadí</th><th>Délka</th></tr>`);
+});
+
+let acbDecRes, acbDecName;
+document.getElementById("acb-dec-file").addEventListener("change", e => { if (e.target.files[0]) document.getElementById("acb-dec-btn").disabled = false; });
+document.getElementById("acb-dec-btn").addEventListener("click", async () => {
+  const f = document.getElementById("acb-dec-file").files[0]; if (!f) return;
+  acbDecName = f.name.replace(/\.acb$/, "");
+  const buf = await f.arrayBuffer();
+  const t0 = performance.now();
+  const { tokens, origSize, k } = acbDeser(buf);
+  acbDecRes = acbDecode(tokens, origSize, k);
+  const ms = performance.now() - t0;
+  document.getElementById("acb-dec-row").innerHTML = `<td>${fmtSize(buf.byteLength)}</td><td>${fmtSize(acbDecRes.length)}</td><td>${tokens.length.toLocaleString()}</td><td>${ms.toFixed(0)} ms</td>`;
+  document.getElementById("acb-dec-out").classList.remove("hidden");
+});
+document.getElementById("acb-dec-dl").addEventListener("click", () => { if (acbDecRes) dl(new Blob([acbDecRes]), acbDecName); });
+
+setupCmp("ppm"); setupCmp("dca"); setupCmp("acb");
 </script>
 </body>
 </html>
