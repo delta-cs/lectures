@@ -1,65 +1,127 @@
 # Registrace do programu DELTA TopGun
 
 - [Pravidla](#pravidla)
+- [Úlohy](#ulohy)
+- [Jak odevzdat](#jak-odevzdat)
+- [Umělá inteligence](#umela-inteligence)
 - [Časté dotazy](#caste-dotazy)
 
 ## <a name="pravidla"></a> Pravidla
 
-Registrace do programu DELTA TopGun je otevřena **do konce září**.
+Registrace do programu DELTA TopGun je otevřená **do 30. září včetně**.
 
-> Registrace je určená pro žáky **prvního ročníku**.
+> Registrace je určená pro žáky **prvního ročníku** naší školy.
 
-Pro úspěšné přihlášení do programu je nutné splnit následující **podmínky**:
+Pro přihlášení do programu musíš vyřešit **dvě úlohy** a poslat je e-mailem.
+Obě zadání najdeš níže. Jsou veřejná, takže se do nich můžeš pustit hned.
 
-- Odevzdat algoritmickou úlohu
-- Odevzdat programovací úlohu
+Úlohy **nebodujeme**. Procházíme je osobně podle kritérií, která jsou vypsaná
+u každého zadání. Zajímá nás hlavně to, jak přemýšlíš a jestli svému řešení
+rozumíš.
 
-Obě úlohy jsou zadávány na platformě [Pardubický Hacker](https://pardubicky-hacker.cz).
+Dotazy posílej na e-mail <lubos.zapotocny@delta-skola.cz>.
 
-[Zaregistrujte si](https://pardubicky-hacker.cz/register) nový účet v **kategorii "Vstupenka TopGun 20XX"**.
+---
 
-Po přihlášení budete mít přístup k zadání úloh a pomocí zeleného tlačítka **Submit** můžete odevzdat svá řešení.
+## <a name="ulohy"></a> Úlohy
 
-- Algoritmická úloha je automaticky hodnocená.
-  - Je nutné získat alespoň **80 bodů** ze 100 možných.
-- Programovací úloha je hodnocena osobně a na tuto platformu pouze odevzáváte svůj kód ve formě zdrojového souboru a nebo ZIP archivu.
-  - Výsledek hodnocení se dozvíte přes učitele po skončení časového limitu registrace.
+### 1. Algoritmická úloha
 
-Případné **dotazy** můžete zaslat na email <lubos.zapotocny@delta-skola.cz>.
+[Kolik vody zůstane v horách](uloha-algoritmicka.md)
+
+Ověřuje, jestli si poradíš s problémem, na který nestačí opsat postup z hodiny.
+
+### 2. Objektová úloha
+
+[Rezervace v kině](uloha-oop.md)
+
+Tady jde o to, jestli umíš rozvrhnout program do tříd a rozdělit mezi ně
+odpovědnosti.
+
+---
+
+## <a name="jak-odevzdat"></a> Jak odevzdat
+
+Řešení pošli na <lubos.zapotocny@delta-skola.cz> jako **ZIP archiv**, jeden
+pro každou úlohu. V archivu má být:
+
+1. Zdrojové kódy tvého programu.
+2. Soubor `README` (stačí textový, `README.txt` i `README.md` jsou v pořádku)
+   a v něm:
+   - jak se program přeloží a spustí,
+   - kterou část úlohy máš hotovou,
+   - pár vět vlastními slovy o tom, jak řešení funguje a jak tě napadlo.
+
+Posíláš jenom zdrojové kódy a `README`, takže celý archiv má mít nejvýš pár
+megabajtů. Do archivu nepatří:
+
+- přeložené programy a mezivýsledky překladu, tedy `.exe`, `.class`, `.o`
+  a obsah složek `bin/`, `obj/`, `build/`, `target/`
+- stažené knihovny, tedy `node_modules/`, `.venv/`, `venv/`, `packages/`,
+  `__pycache__/`
+- složka `.git/` a dočasné soubory editoru
+
+Programy si přeložíme sami, stačí nám k tomu zdrojáky a tvůj návod v `README`.
+Velké přílohy navíc nemusí přes e-mail projít.
+
+**Posílej hotovou a funkční verzi**, ne rozpracované kusy. Když s odevzdaným
+řešením něco nebude v pořádku, ozveme se ti e-mailem a doladíme to spolu.
+Počet pokusů omezený není.
+
+---
+
+## <a name="umela-inteligence"></a> Umělá inteligence
+
+Vstupní úlohy ti chatbot vyřeší za pár vteřin. Víme o tom a ze samotného kódu
+se to poznat nedá.
+
+Vstupenka do TopGunu je ale jenom první krok, těžší je v programu zůstat.
+Na většinu věcí si tam musíš přijít sám nebo sama, učit se z materiálů, které
+ti nikdo nerozžvýká, a odladit si všechno bez cizí pomoci. Kdo se dovnitř dostane s cizí prací,
+narazí na to za pár týdnů a bude to o dost nepříjemnější.
+
+Zeptat se na syntaxi jazyka nebo na to, co znamená chybová hláška, patří
+k běžné práci programátora a nikdo ti to nezakazuje. Nechat si vymyslet postup
+je něco jiného, protože právě ten nás na tvém odevzdání zajímá.
+
+Proto po tobě chceme vysvětlení v `README` a budeme se ti na řešení doptávat
+e-mailem. Když svému programu rozumíš, nemáš se čeho bát.
+
+Používání AI ti nezakazujeme, ale napiš do `README`, k čemu jsi ji použil.
+Zamlčené je to horší než přiznané.
 
 ---
 
 ## <a name="caste-dotazy"></a> Časté dotazy
 
-### <a name="pocet-pokusu"></a> Počet pokusů na odevzdání úlohy
+### <a name="jazyk"></a> V jakém jazyce mám úlohy napsat?
 
-Počet pokusů na odevzdání úlohy je **neomezený**.
+V jakémkoliv, který umíme spustit. C, C++, C#, Java, Python, JavaScript
+a podobně. Do `README` napiš, jak se program přeloží a spustí.
+U objektové úlohy potřebuješ jazyk, který umí třídy, takže v čistém C ji
+nenapíšeš.
 
-### <a name="chybne-reseni"></a> Systém označuje řešení jako chybné, ale nezobrazuje proč
+### <a name="format"></a> Musím dodržet přesný formát vstupu a výstupu?
 
-Úlohy obsahují také **skryté** testy a pokud na nich program nepracuje správně, tak je odevzdání označeno jako chybné.
+Ne. Píšeš konzolovou aplikaci, ale jak bude vypadat, je na tobě. Program se
+může ptát, vypisovat menu nebo načítat ze souboru. Počítáme jen s tím, že
+uživatel něco zadá a na výstupu uvidí výsledek.
 
-V těchto testech jsou různé vstupní data testující mezní případy, velké vstupy a podobně.
+### <a name="pocet-pokusu"></a> Kolikrát můžu odevzdat?
 
-### <a name="vstupni-data"></a> Kde vezmu vstupní data a jak mám generovat výstup
+Kolikrát bude potřeba. Pokaždé ale posílej celé hotové řešení. Když bude co
+doladit, domluvíme se e-mailem.
 
-Vstupní data jsou předávány spuštěném programu pomocí takzvaného **standardního vstupu** (`stdin`).
+### <a name="hodnoceni"></a> Kolik bodů musím získat?
 
-Výstupní data musejí být zapsány do **standardního výstupu** (`stdout`).
+Žádné body se neudělují. U každé úlohy najdeš tabulku kritérií a podle ní tvoje
+řešení projdeme osobně.
 
-Jedná se o podobný přístup jako když píšete konzolovou aplikaci a tedy lze používat například následující příkazy:
+### <a name="knihovny"></a> Můžu použít cizí knihovny?
 
-| Jazyk | Funkce |
-|------|--------|
-| C | `scanf` a `printf` |
-| C++ | `std::cin` a `std::cout` |
-| C# | `Console.ReadLine` a `Console.WriteLine` |
-| Java | `new Scanner(System.in)` a `System.out.println` |
-| Python | `input` a `print` |
-| JavaScript | `readline` a `console.log` |
+Vystač si se standardní knihovnou svého jazyka. Když přesto něco použiješ,
+napiš to do `README` a knihovnu do archivu nepřikládej.
 
-Více informací o standardním vstupu a výstupu naleznete například na stránce se [studijními materiály k Pardubickému Hackerovi](https://github.com/delta-cs/seminar/tree/main/studijni-materialy).
+---
 
---- 
-
-Více o programu DELTA TopGun naleznete na [hlavní stránce](../README.md).
+Více o programu DELTA TopGun najdeš na [hlavní stránce](../README.md).
