@@ -35,8 +35,8 @@ Ověřuje, jestli si poradíš s problémem, na který nestačí opsat postup z 
 
 [Rezervace v kině](uloha-oop.md)
 
-Tady jde o to, jestli umíš rozvrhnout program do tříd a rozdělit mezi ně
-odpovědnosti.
+Program u ní musí být napsaný objektově. Jde o to, jestli ho umíš rozvrhnout
+do tříd a rozdělit mezi ně odpovědnosti.
 
 ---
 

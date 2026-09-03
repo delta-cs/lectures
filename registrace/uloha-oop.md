@@ -1,8 +1,8 @@
 # Objektová úloha: Rezervace v kině
 
 > Vstupní úloha do programu DELTA TopGun.
-> Chytrý algoritmus k ní znát nemusíš. Nejvíc času ti zabere rozmyslet si,
-> jak program rozvrhnout na části.
+> Chytrý algoritmus k ní znát nemusíš. Program ale musí být napsaný objektově
+> a nejvíc času ti zabere rozmyslet si, jak ho rozvrhnout do tříd.
 
 ## Příběh
 
@@ -23,6 +23,21 @@ Program je konzolová aplikace, kterou obsluhuje pokladní. Musí umět:
 
 Sály se liší velikostí a rozložením sedadel. Data o filmech, sálech
 a projekcích si nastav rovnou v kódu, žádné soubory kvůli tomu vymýšlet nemusíš.
+
+## Jak to má být napsané
+
+Tohle je objektová úloha, takže **program musí být napsaný objektově**. Je to
+podmínka, ne doporučení. Řešení, kde je všechno v jedné dlouhé funkci nebo
+v sadě globálních proměnných a funkcí nad nimi, neuznáme, i kdyby fungovalo
+bezchybně.
+
+Znamená to, že věci ze světa kina mají v programu svoje třídy. Každá si drží
+svoje data a sama hlídá, co se s nimi smí dělat. Které třídy to budou a jak si
+mezi ně rozdělíš práci, je na tobě, a je to zároveň to hlavní, co na odevzdaném
+řešení hodnotíme.
+
+Jestli je pro tebe třída nová věc, nauč se to teď. Bez ní úlohu neodevzdáš
+a v programu ji budeš potřebovat hned na začátku.
 
 ### Jak to může vypadat
 
@@ -64,8 +79,9 @@ Odevzdej tu nejvyšší, kterou zvládneš. I samotná úroveň 1 je platné ode
 
 ### Úroveň 1 – Ať to funguje
 
-Program umí všechny čtyři věci ze seznamu výše. Rezervace vydrží po dobu běhu
-programu, po ukončení se na ně může zapomenout.
+Program umí všechny čtyři věci ze seznamu výše a je od začátku rozdělený do
+tříd. Rezervace vydrží po dobu běhu programu, po ukončení se na ně může
+zapomenout.
 
 ### Úroveň 2 – Ať to nejde rozbít
 
@@ -96,7 +112,7 @@ Konkrétní ceny a slevy si vymysli sám. Rozmysli si taky, co se stane, když n
 jednu rezervaci sedí víc slev najednou, a napiš to do `README`.
 
 Zajímá nás přitom hlavně jedna věc: **která místa v programu jsi kvůli tomu
-musel otevřít a přepsat.** Napiš to do `README` na rovinu. Právě tady se ukáže,
+musel otevřít a přepsat.** Napiš to do `README`. Právě tady se ukáže,
 jak dobře máš program rozvržený.
 
 ### Bonus (nepovinný)
@@ -123,8 +139,9 @@ megabajtů. Podrobnosti k odevzdávání najdeš na [stránce registrace](readme
 
 | Kritérium | Co sledujeme |
 |---|---|
+| Objektový návrh | Program je opravdu rozdělený do tříd. Bez toho ho dál nehodnotíme. |
 | Funguje to | Program dělá, co má, a dá se ovládat. |
-| Rozdělení programu | Každá část má jednu jasnou úlohu a z názvu jde poznat, co dělá. |
+| Rozdělení odpovědností | Každá třída má jednu jasnou úlohu a z názvu jde poznat, co dělá. |
 | Kdo hlídá pravidla | Je z programu poznat, co v něm rozhoduje o tom, jestli rezervace projde. |
 | Odolnost | Program nespadne na překlepu ani na nesmyslném vstupu. |
 | Snadnost změny | Kolik míst v programu bylo nutné otevřít kvůli úrovni 3. |
@@ -136,8 +153,6 @@ megabajtů. Podrobnosti k odevzdávání najdeš na [stránce registrace](readme
   JavaScript a podobně. Napiš do `README`, jak se program přeloží a spustí.
 - Formát vstupu a výstupu je taky na tobě, žádný přesný tvar dodržovat nemusíš.
 - Rozvržení programu na části je celé na tobě, s tím ti radit nebudeme.
-- Jestli je pro tebe třída nová věc, nauč se to teď. Budeš ji potřebovat hned
-  na začátku.
 - Posílej hotovou a funkční verzi, ne rozpracované kusy. Když s odevzdaným
   řešením něco nebude v pořádku, ozveme se ti e-mailem a doladíme to spolu.
   Počet pokusů omezený není.
