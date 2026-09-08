@@ -3,6 +3,8 @@
 > Vstupní úloha do programu DELTA TopGun.
 > Žádné chytré algoritmy k ní znát nemusíš, vystačíš si s polem, cyklem
 > a podmínkou. Přemýšlet ale budeš muset.
+>
+> Odevzdat je potřeba do **28. září 2026, 23:59:59**.
 
 ## Příběh
 

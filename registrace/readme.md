@@ -8,7 +8,8 @@
 
 ## <a name="pravidla"></a> Pravidla
 
-Registrace do programu DELTA TopGun je otevřená **do 30. září včetně**.
+Registrace do programu DELTA TopGun je otevřená **do 28. září 2026, 23:59:59**.
+Rozhoduje čas odeslání e-mailu.
 
 > Registrace je určená pro žáky **prvního ročníku** naší školy.
 

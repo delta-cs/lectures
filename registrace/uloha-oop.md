@@ -3,6 +3,8 @@
 > Vstupní úloha do programu DELTA TopGun.
 > Chytrý algoritmus k ní znát nemusíš. Program ale musí být napsaný objektově
 > a nejvíc času ti zabere rozmyslet si, jak ho rozvrhnout do tříd.
+>
+> Odevzdat je potřeba do **28. září 2026, 23:59:59**.
 
 ## Příběh
 
