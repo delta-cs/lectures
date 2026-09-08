@@ -54,9 +54,12 @@ máš v úvaze chybu, přestože ti první ukázka vyšla správně.
 
 ## Úrovně
 
-Úloha je rozdělená na úrovně. Vyšší úroveň předpokládá, že máš hotové
-i předchozí, ale nemusí to všechno umět jeden program (viz úroveň 3).
-Odevzdej tu nejvyšší, kterou zvládneš. I samotná úroveň 1 je platné odevzdání.
+Úloha je rozdělená na úrovně. Úroveň 1 je základ, na kterém stojí všechno
+ostatní. Úrovně 2 a 3 jsou na sobě nezávislé, takže se do nich můžeš pustit
+v libovolném pořadí, klidně i každou zvlášť.
+
+Odevzdej, co máš. I samotná úroveň 1 je platné odevzdání a úroveň 3 bez
+kreslení taky.
 
 ### Úroveň 1 – Spočítej to
 
@@ -71,7 +74,7 @@ A nesmí spadnout, ani když mu někdo zadá něco, co terén vůbec není.
 
 ### Úroveň 2 – Nakresli to
 
-Program navíc terén i vodu vykreslí podobně jako v ukázce výše:
+Program terén i vodu vykreslí podobně jako v ukázce výše:
 
 - `#` = skála
 - `~` = voda
@@ -80,6 +83,9 @@ Program navíc terén i vodu vykreslí podobně jako v ukázce výše:
 Kreslí se odshora dolů a výška obrázku odpovídá nejvyššímu sloupci. Kreslení
 stačí do zhruba třiceti sloupců a výšky třicet, větší obrázek se do konzole
 stejně nevejde.
+
+Není to algoritmicky těžké, je to práce s výstupem. Za obrázek si ale sám
+zkontroluješ, jestli ti výpočet sedí.
 
 ### Úroveň 3 – Zvládni velké pohoří
 
@@ -112,7 +118,8 @@ Pošli na <lubos.zapotocny@delta-skola.cz> ZIP archiv, ve kterém bude:
 2. Soubor `README` (stačí textový) a v něm:
    - jak se program přeloží a spustí,
    - kterou nejvyšší úroveň máš hotovou a jestli máš hotový bonus,
-   - pár vět vlastními slovy o tom, jak řešení funguje a jak tě napadlo,
+   - pár vět vlastními slovy o tom, jak řešení funguje a jak tě napadlo
+     (a jestli jsi tuhle úlohu už někde viděl, napiš to, nevadí to),
    - u úrovně 3 kolikrát program projde terénem a proč to stačí,
    - k čemu jsi případně použil umělou inteligenci.
 

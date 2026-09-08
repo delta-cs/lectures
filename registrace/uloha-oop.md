@@ -41,6 +41,11 @@ svoje data a sama hlídá, co se s nimi smí dělat. Které třídy to budou a j
 mezi ně rozdělíš práci, je na tobě, a je to zároveň to hlavní, co na odevzdaném
 řešení hodnotíme.
 
+Pozor na opačný extrém. Rozsekat program na patnáct tříd, které si jen podávají
+data dál a samy o ničem nerozhodují, je stejná chyba jako jedna velká funkce.
+Třída, která se jmenuje `SpravceRezervaci` a umí jediné, totiž uložit rezervaci
+do seznamu, nic nevyřešila, jen přejmenovala.
+
 Nejpřísněji se díváme na části, které drží data kina. Menu a výpisy do konzole
 můžou být jednodušší.
 
@@ -159,7 +164,7 @@ megabajtů. Podrobnosti k odevzdávání najdeš na [stránce registrace](readme
 |---|---|
 | Objektový návrh | Program je opravdu rozdělený do tříd. Bez toho ho dál nehodnotíme. |
 | Funguje to | Program dělá, co má, a dá se ovládat. |
-| Rozdělení odpovědností | Každá třída má jednu jasnou úlohu, z názvu jde poznat, co dělá, a je vidět, co z nich rozhoduje o tom, jestli rezervace projde. |
+| Rozdělení odpovědností | Každá třída má jednu jasnou úlohu, z názvu jde poznat, co dělá, a je vidět, co z nich rozhoduje o tom, jestli rezervace projde. Ani jedna není prázdná schránka na data. |
 | Odolnost | Program nespadne na překlepu ani na nesmyslném vstupu. |
 | Snadnost změny | Kolik míst v programu bylo nutné otevřít kvůli úrovni 3 a jestli odpověď o permanentkách sedí s tím, jak je program napsaný. |
 | Vysvětlení v README | Umíš zdůvodnit, proč je program rozdělený zrovna takhle. |

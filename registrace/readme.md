@@ -19,6 +19,9 @@ Obě zadání najdeš níže. Jsou veřejná, takže se do nich můžeš pustit 
 u každého zadání. Zajímá nás hlavně to, jak přemýšlíš a jestli svému řešení
 rozumíš.
 
+Počítáme s tím, že nad oběma úlohami strávíš pár večerů. Obě jsou rozdělené na
+úrovně a dojít až na konec nemusíš, odevzdat se dá i rozpracovaná cesta.
+
 Dotazy posílej na e-mail <lubos.zapotocny@delta-skola.cz>.
 
 ---
@@ -59,10 +62,14 @@ megabajtů. Do archivu nepatří:
   a obsah složek `bin/`, `obj/`, `build/`, `target/`
 - stažené knihovny, tedy `node_modules/`, `.venv/`, `venv/`, `packages/`,
   `__pycache__/`
-- složka `.git/` a dočasné soubory editoru
+- dočasné soubory editoru
 
 Programy si přeložíme sami, stačí nám k tomu zdrojáky a tvůj návod v `README`.
 Velké přílohy navíc nemusí přes e-mail projít.
+
+Jestli používáš git, klidně přilož i složku `.git/` nebo pošli odkaz na
+repozitář. Není to podmínka, ale při hodnocení nám to pomůže: je z toho vidět,
+jak řešení vznikalo.
 
 **Posílej hotovou a funkční verzi**, ne rozpracované kusy. Když s odevzdaným
 řešením něco nebude v pořádku, ozveme se ti e-mailem a doladíme to spolu.
