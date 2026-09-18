@@ -97,6 +97,7 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 - [[P](/teoreticka/16-stromove-struktury-interaktivni.pdf)] [Stromové struktury](./teoreticka/16-stromove-struktury.pdf)
 - [[P](/teoreticka/17-binarni-stromy-interaktivni.pdf)] [Binární stromy](./teoreticka/17-binarni-stromy.pdf)
 - [[P](/teoreticka/18-binarni-vyhledavaci-strom-interaktivni.pdf)] [Binární vyhledávací strom](./teoreticka/18-binarni-vyhledavaci-strom.pdf)
+- [[P](/teoreticka/19-vyvazene-stromy-interaktivni.pdf)] [Vyvážené stromy](./teoreticka/19-vyvazene-stromy.pdf)
 
 ### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Přednášky pro druhý ročník
 
