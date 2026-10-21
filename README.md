@@ -102,6 +102,7 @@ a v případě neúspěšného řešení může žák kontaktovat přednášejí
 ### <a name="teoreticka-informatika-prednasky-druhy-rocnik"></a> Přednášky pro druhý ročník
 
 - [[P](/teoreticka/40-grafy-interaktivni.pdf)] [Úvod do teorie grafů](./teoreticka/40-grafy.pdf)
+- [[P](/teoreticka/41-pruchody-grafem-interaktivni.pdf)] [Průchody grafem](./teoreticka/41-pruchody-grafem.pdf)
 - [[P](/teoreticka/48-tsp-dp-interaktivni.pdf)] [TSP pomocí dynamického programování](./teoreticka/48-tsp-dp.pdf)
 - [[P](/teoreticka/49-hashovani-interaktivni.pdf)] [Hashování](./teoreticka/49-hashovani.pdf)
 - [[P](/teoreticka/50-komprese-statisticke-metody-interaktivni.pdf)] [Komprese: Statistické metody](./teoreticka/50-komprese-statisticke-metody.pdf)
